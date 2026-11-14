@@ -80,10 +80,39 @@ details{margin-top:14px;border-top:1px solid var(--bd);padding-top:10px}summary{
 .tbl td:first-child,.tbl th:first-child{text-align:left;position:sticky;left:0;background:var(--card);z-index:1;min-width:130px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tbl td.hm{background:hsl(var(--h) 65% 46%/.22)}.tbl .g{border-left:2px solid var(--bd)}
 .ctl{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+
+#tabP,#tabR{max-width:1000px}.tabs button{padding:10px 4px;font-size:13.5px}
+.kpi small{font-size:13px;color:var(--mut);font-weight:600}.kpi.sm b{font-size:16px;line-height:1.25}
+.tcs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.tc{border:1px solid var(--bd);border-radius:16px;padding:14px;background:linear-gradient(180deg,var(--card),var(--bg))}
+.tc .tn{font-weight:700;display:flex;justify-content:space-between}.tc .tp{font-size:36px;font-weight:800;letter-spacing:-1px;color:var(--c);margin:2px 0}
+.mb{display:grid;grid-template-columns:44px 1fr auto;gap:8px;align-items:center;font-size:12px;margin-top:6px}
+.mb .bar,.gb .bar{width:100%;margin:0}.mb .bar i,.gb .bar i{background:var(--c)}
+.drow{display:grid;grid-template-columns:150px 1fr;gap:8px 14px;padding:10px 0;border-top:1px solid var(--bd);align-items:center}.drow>b{font-size:13.5px}.drow .mut{font-size:11.5px;font-weight:500}
+.gbs{display:grid;gap:5px}.gb{display:grid;grid-template-columns:44px 1fr 42px;gap:8px;align-items:center;font-size:12px}.gb em{font-style:normal;color:var(--mut);font-weight:600}.gb b{text-align:right}
+.dist{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--bd);min-width:100px}.dist i{display:block;height:100%}
+.lg{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin:8px 0}.lg span:before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--k);margin-right:5px}
+.qd{display:grid;grid-template-columns:34px 110px 1fr 42px;gap:8px;align-items:center;font-size:12px;padding:5px 0;border-top:1px solid var(--bd)}.qd b:last-child{text-align:right}
+.rts{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:14px}
+.rt{display:block;text-align:left;background:var(--bg);color:var(--tx);border:1.5px solid var(--bd);border-radius:14px;padding:12px;font-weight:500}.rt b{display:block;margin-bottom:2px}.rt span{font-size:12px;color:var(--mut)}.rt.on{border-color:var(--pri);background:var(--priS)}
+.rh{border-bottom:2px solid var(--pri);padding-bottom:8px;margin-bottom:12px}.rh b{font-size:17px}
+.rp td,.rp th{text-align:left!important;position:static!important;max-width:none!important;white-space:normal!important;min-width:0!important}
+@media(max-width:560px){.drow{grid-template-columns:1fr}.qd{grid-template-columns:30px 70px 1fr 40px}}
+@media print{.hero,.noprint,details{display:none!important}body{background:#fff;color:#000;padding:0}main{margin:0!important;max-width:none!important;padding:0}.step{box-shadow:none;border:0;padding:0}.tw{overflow:visible}.tbl{font-size:10.5px}tr{break-inside:avoid}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+#esp{position:fixed;inset:0;background:rgba(8,12,20,.7);display:none;align-items:flex-end;justify-content:center;z-index:8}
+#esp .pn{background:var(--card);color:var(--tx);width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:18px 16px calc(env(safe-area-inset-bottom,0px) + 16px)}
+@media(min-width:700px){#esp{align-items:center}#esp .pn{border-radius:20px}}
+.eh{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.eh h3{margin:0;font-size:18px}
+.big2{font-size:40px;font-weight:800;line-height:1;letter-spacing:-1px;text-align:right}.big2 small{font-size:16px;color:var(--mut)}
+.ek{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 2px}
+.eqs{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:6px}
+.eq{border-radius:10px;padding:6px;text-align:center;font-size:11px;line-height:1.25}.eq b{display:block;font-size:12px}.eq span{font-size:18px;font-weight:800;display:block}
+.eq.c{background:var(--okS);color:var(--ok)}.eq.e{background:var(--badS);color:var(--bad)}.eq.b{background:var(--bg);color:var(--mut)}.eq.u{background:var(--warnS);color:var(--warn)}
+.ed{margin-top:12px}
 </style>
 </head>
 <body>
-<header class="hero"><div class="brand"><div class="logo">✓</div><div><h1>Corretor de Gabaritos</h1><p>Escola Municipal Albertina Alves do Nascimento · Avaliação Trimestral · 3ª etapa</p></div></div><nav class="tabs"><button id="tbC" class="on">📝 Correção</button><button id="tbP">📊 Panorama</button></nav></header>
+<header class="hero"><div class="brand"><div class="logo">✓</div><div><h1>Corretor de Gabaritos</h1><p>Escola Municipal Albertina Alves do Nascimento · Avaliação Trimestral · 3ª etapa</p></div></div><nav class="tabs"><button id="tbC" class="on">📝 Correção</button><button id="tbP">📊 Panorama</button><button id="tbR">📑 Relatórios</button></nav></header>
 <main id="tabC">
 
 <section class="step" id="st1"><div class="sh"><span class="num">1</span><div><h2>Turma e lista de alunos</h2><p class="sub">Escolha a turma e envie os nomes</p></div><span class="chip" id="c1">pendente</span></div>
@@ -103,6 +132,7 @@ details{margin-top:14px;border-top:1px solid var(--bd);padding-top:10px}summary{
 <div class="row"><label class="btn" for="fc" style="flex:1">📷 Tirar foto</label><input id="fc" type="file" accept="image/*" capture="environment">
 <label class="btn ghost" for="fg" style="flex:1">🖼️ Galeria</label><input id="fg" type="file" accept="image/*"></div>
 <div id="busy" class="mut" style="margin-top:10px;font-weight:600"></div>
+<label class="mut" style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="auto" checked> Abrir o espelho (certas e erradas) depois de cada correção</label>
 <div class="help"><b>Dica:</b> fotografe de cima, com a folha inteira, boa luz, sem sombra e com os quadrados pretos visíveis. Depois da leitura, o próximo aluno é selecionado automaticamente.</div></section>
 
 <section class="step" id="st3"><div class="sh"><span class="num">3</span><div><h2>Conferir leituras</h2><p class="sub">Revise avisos e corrija o registro, se preciso</p></div><span class="chip" id="c3">aguardando</span></div>
@@ -112,9 +142,16 @@ details{margin-top:14px;border-top:1px solid var(--bd);padding-top:10px}summary{
 <button id="exp" class="big">⬇️ Baixar Excel</button><div id="msg" class="mut" style="margin-top:8px;text-align:center"></div></section>
 </main>
 <main id="tabP" hidden>
-<section class="step"><div class="sh"><span class="num">📊</span><div><h2>Panorama das respostas</h2><p class="sub">Acertos por dia e por disciplina</p></div></div>
-<div class="ctl"><label class="field">Turma<select id="pT"></select></label><label class="field">Ordenar alunos por<select id="pO"><option value="nome">Nome</option><option value="maior">Maior acerto</option><option value="menor">Menor acerto</option></select></label></div>
+<section class="step"><div class="sh"><span class="num">📊</span><div><h2>Panorama das respostas</h2><p class="sub">Acertos por turma, dia e disciplina</p></div></div>
+<div class="ctl"><label class="field">Turma<select id="pT"></select></label><label class="field">Dia<select id="pD"><option value="0">Dia 1 + Dia 2</option><option value="1">Só Dia 1</option><option value="2">Só Dia 2</option></select></label><label class="field">Ordenar alunos<select id="pO"><option value="nome">Nome</option><option value="maior">Maior acerto</option><option value="menor">Menor acerto</option></select></label><label class="field" style="flex:1;min-width:140px">Buscar aluno<input type="text" id="pQ" placeholder="Digite o nome…"></label></div>
 <div id="pan"></div></section></main>
+<main id="tabR" hidden>
+<section class="step"><div class="sh noprint"><span class="num">📑</span><div><h2>Relatórios</h2><p class="sub">Escolha o modelo, o recorte e como quer receber</p></div></div>
+<div class="rts noprint" id="rT"></div>
+<div class="ctl noprint"><label class="field">Recorte<select id="rS"></select></label><label class="field">Dia<select id="rD"><option value="0">Dias 1 e 2</option><option value="1">Só Dia 1</option><option value="2">Só Dia 2</option></select></label><label class="field">Nota de corte (%)<input id="rC" type="number" value="60" min="0" max="100" style="width:90px"></label><label class="field">Top N (ranking)<input id="rN" type="number" value="10" min="1" max="200" style="width:90px"></label></div>
+<div class="row noprint"><button id="bPr" disabled>🖨️ Imprimir / PDF</button><button id="bXl" class="ghost" disabled>📗 Excel</button><button id="bCs" class="ghost" disabled>📄 CSV</button><button id="bCp" class="ghost" disabled>📋 Copiar resumo</button></div>
+<div id="rMsg" class="mut noprint" style="margin:8px 0 12px"></div><div id="rOut"></div></section></main>
+<div id="esp"><div class="pn" id="espc"></div></div>
 <div id="modal"><img id="mimg" alt="conferência"><span class="mut" style="color:#cbd5e1">Toque para fechar</span></div>
 
 <script>/*! xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
@@ -285,8 +322,7 @@ async function processar(f){
   else{const rs=Object.values(item.resp).slice(0,NQ[d]),br=rs.filter(r=>r[1]==="BRANCO").length,mu=rs.filter(r=>r[1]==="MÚLTIPLA").length;
     $("busy").innerHTML=`<span class="ok">✓ ${alunos[ai].nome}: ${acertos(item,d)}/${NQ[d]} acertos</span>${br||mu?` <span style="color:var(--warn)">(${br} em branco, ${mu} dupla)</span>`:""}`;
     for(let k=1;k<=alunos.length;k++){const j=(ai+k)%alunos.length;if(!folhaDe(d,j)){sel=j;break}}}
-  render()}
-
+  render();if(!item.erro&&$("auto").checked)espelho(d,ai)}
 function render(){
   const nA=alunos.length;let alerts=0,h="";
   const n1=folhas[1].length,n2=folhas[2].length;
@@ -307,7 +343,7 @@ function render(){
       const ac=f.erro?null:acertos(f,d);
       h+=`<div class="sheet ${f.erro||dup?"err":""}"><div class="who"><div class="nm"><b>${alunos[f.ai].nome}</b><div class="tags">${t.map(x=>`<span class="tag ${x[0]}">${x[1]}</span>`).join("")}</div></div></div>
 <div class="score">${ac===null?"—":ac}<small>${ac===null?"":"/"+NQ[d]}</small>${ac===null?"":`<div class="bar"><i style="width:${Math.round(ac*100/NQ[d])}%"></i></div>`}</div>
-<div class="act">${f.thumb?`<button class="ghost sm" onclick="ver(${d},${f.ai})">🔍 Ver folha</button>`:""}<button class="ghost sm" onclick="refazer(${d},${f.ai})">📷 Refazer</button><button class="ghost sm" onclick="del(${d},${f.ai})">Remover</button></div></div>`}}
+<div class="act">${f.thumb?`<button class="ghost sm" onclick="ver(${d},${f.ai})">🔍 Ver folha</button>`:""}${f.erro?"":`<button class="ghost sm" onclick="espelho(${d},${f.ai})">🪞 Espelho</button>`}<button class="ghost sm" onclick="refazer(${d},${f.ai})">📷 Refazer</button><button class="ghost sm" onclick="del(${d},${f.ai})">Remover</button></div></div>`}}
   $("res").innerHTML=(n1+n2)?h:'<div class="empty">As folhas lidas aparecerão aqui.</div>';
   $("stats").innerHTML=(n1+n2)?`<div class="tile"><b>${n1}/${nA}</b><span>Dia 1</span></div><div class="tile"><b>${n2}/${nA}</b><span>Dia 2</span></div><div class="tile"><b style="color:var(${alerts?"--warn":"--ok"})">${alerts}</b><span>com avisos</span></div>`:"";
   $("c1").textContent=nA?$("turma").value+" · "+nA+" alunos":"pendente";$("st1").classList.toggle("done",!!nA&&!!$("turma").value);
@@ -330,63 +366,164 @@ $("selT").onchange=e=>{if(alunos[sel]){alunos[sel].tipo=e.target.value;render()}
 $("sg1").onclick=()=>{dia=1;$("busy").textContent="";render()};$("sg2").onclick=()=>{dia=2;$("busy").textContent="";render()};
 for(const id of ["fc","fg"])$(id).onchange=e=>{const f=e.target.files[0];e.target.value="";if(f)processar(f)};
 
+
+/* ---------- espelho ---------- */
+function espelho(d,ai){const f=folhaDe(d,ai);if(!f||f.erro)return;
+ const a=alunos[ai],ch=CH[a.tipo][d];let ok=0,er=0,br=0,du=0,h="";
+ for(const z of DISC[d]){let sc=0,c="";
+  for(let q=z[1];q<=z[2];q++){const x=f.resp[q]||["","BRANCO"],m=x[1]==="BRANCO",u=!m&&x[1]!=="",t=!m&&!u&&x[0]===ch[q-1];
+   if(t){ok++;sc++}else if(m)br++;else if(u)du++;else er++;
+   c+=`<div class="eq ${t?"c":m?"b":u?"u":"e"}"><b>Q${q}</b><span>${t?"✓":m?"—":u?"2×":"✗"}</span>${m?"em branco":u?"marcou "+x[0]:t?x[0]:"marcou "+x[0]+"<br>certa "+ch[q-1]}</div>`}
+  h+=`<div class="ed"><div class="dh" style="margin:0 0 6px"><b>${z[0]}</b><span class="mut">${sc}/${z[2]-z[1]+1}</span></div><div class="eqs">${c}</div></div>`}
+ const nota=ok*VALOR/NQ[d];
+ $("espc").innerHTML=`<div class="eh"><div><h3>${a.nome}</h3><div class="mut">Dia ${d} · prova ${a.tipo} · ${NQ[d]} questões</div></div><div class="big2" style="color:hsl(${hue(ok/NQ[d])} 65% 40%)">${ok}<small>/${NQ[d]}</small></div></div>
+ <div class="ek"><span class="tag ok">${ok} certas</span><span class="tag err">${er} erradas</span>${br?`<span class="tag warn">${br} em branco</span>`:""}${du?`<span class="tag warn">${du} dupla(s)</span>`:""}<span class="tag ok" style="background:var(--priS);color:var(--pri)">Nota ${fmt(nota)} de ${VALOR} · ${pc(ok/NQ[d])}</span></div>${h}
+ <div class="row" style="margin-top:16px"><button class="big" onclick="fecharEsp()">Fechar e continuar</button>${f.thumb?`<button class="ghost" onclick="ver(${d},${ai})">🔍 Ver folha</button>`:""}<button class="ghost" onclick="fecharEsp();refazer(${d},${ai})">📷 Refazer</button></div>`;
+ $("esp").style.display="flex";$("espc").scrollTop=0}
+window.fecharEsp=()=>{$("esp").style.display="none"};
+window.espelho=espelho;
+$("esp").onclick=e=>{if(e.target.id==="esp")fecharEsp()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")fecharEsp()});
 /* ---------- panorama ---------- */
-const fmt=x=>x.toFixed(1).replace(".",",");
-const hue=p=>Math.round(Math.max(0,Math.min(1,p))*120);
+const fmt=x=>x.toFixed(1).replace(".",","),hue=p=>Math.round(Math.max(0,Math.min(1,p))*120),pc=p=>Math.round(p*100)+"%";
+const ESC="Escola Municipal Albertina Alves do Nascimento · Avaliação Trimestral · 3ª etapa";
+let panDia=0,panQ="",rSel="",rTipo="boletim",rep=null;
+const lbl=k=>k.replace("º ano ","º"),kpi=(b,s,c)=>`<div class="kpi ${c||""}"><b>${b}</b><span>${s}</span></div>`;
+const keysAll=()=>Object.keys(store).filter(k=>store[k].alunos.length);
+const keysOf=s=>s==="8*"?keysAll().filter(k=>k.startsWith("8")):s==="*"?keysAll():store[s]&&store[s].alunos.length?[s]:[];
+const scopeOpts=all=>{const ks=keysAll();return[...(ks.some(k=>k.startsWith("8"))?[["8*","Todos os 8º anos (comparativo)"]]:[]),...(all&&ks.length>1?[["*","Todas as turmas"]]:[]),...ks.map(k=>[k,k])]};
+const fillSel=(id,o,v)=>{$(id).innerHTML=o.map(x=>`<option value="${x[0]}"${x[0]===v?" selected":""}>${x[1]}</option>`).join("")||'<option value="">—</option>'};
 function calc(keys){
-  const o={};for(const d of [1,2])o[d]={n:0,disc:DISC[d].map(x=>({nome:x[0],ini:x[1],fim:x[2],sum:0,n:0})),q:[...Array(NQ[d]+1)].map(()=>[0,0]),alu:[]};
-  for(const k of keys){const T=store[k];if(!T)continue;
-    T.alunos.forEach((a,i)=>{const row={turma:k,nome:a.nome,d:{}};
-      for(const d of [1,2]){const f=T.folhas[d].find(x=>x.ai===i);if(!f||f.erro)continue;
-        const ch=CH[a.tipo][d];o[d].n++;const dd=o[d].disc.map(()=>0);
-        for(let q=1;q<=NQ[d];q++){const x=f.resp[q],ok=!!x&&x[1]===""&&x[0]===ch[q-1];o[d].q[q][1]++;if(ok){o[d].q[q][0]++;const j=o[d].disc.findIndex(z=>q>=z.ini&&q<=z.fim);dd[j]++}}
-        o[d].disc.forEach((z,j)=>{z.sum+=dd[j];z.n++});row.d[d]={disc:dd,tot:dd.reduce((s,v)=>s+v,0)}}
-      if(Object.keys(row.d).length)o[1].alu.push(row)});}
-  return o}
+ const o={stu:[]};
+ for(const d of [1,2])o[d]={n:0,disc:DISC[d].map(x=>({nome:x[0],ini:x[1],fim:x[2],sum:0,n:0})),q:[...Array(NQ[d]+1)].map(()=>({ok:0,n:0,A:0,B:0,C:0,D:0,br:0,mu:0}))};
+ for(const k of keys){const T=store[k];if(!T)continue;
+  T.alunos.forEach((a,i)=>{const s={turma:k,nome:a.nome,tipo:a.tipo,d:{},br:0};
+   for(const d of [1,2]){const f=T.folhas[d].find(x=>x.ai===i);if(!f||f.erro)continue;
+    const ch=CH[a.tipo][d],dd=o[d].disc.map(()=>0);o[d].n++;
+    for(let q=1;q<=NQ[d];q++){const x=f.resp[q]||["","BRANCO"],c=o[d].q[q];c.n++;
+     if(x[1]==="BRANCO"){c.br++;s.br++}else if(x[1])c.mu++;else c[x[0]]++;
+     if(x[1]===""&&x[0]===ch[q-1]){c.ok++;dd[o[d].disc.findIndex(z=>q>=z.ini&&q<=z.fim)]++}}
+    o[d].disc.forEach((z,j)=>{z.sum+=dd[j];z.n++});
+    const tot=dd.reduce((p,v)=>p+v,0);s.d[d]={disc:dd,tot,nota:tot*VALOR/NQ[d]}}
+   o.stu.push(s)})}
+ return o}
+const sv=(s,ds)=>{let t=0,nq=0,nota=0;for(const d of ds)if(s.d[d]){t+=s.d[d].tot;nq+=NQ[d];nota+=s.d[d].nota}return{t,nq,nota,p:nq?t/nq:null}};
+const ovp=(c,ds)=>{let t=0,n=0;c.stu.forEach(s=>{const v=sv(s,ds);t+=v.t;n+=v.nq});return n?t/n:null};
 function renderPan(){
-  const keys=Object.keys(store).filter(k=>store[k].alunos.length);
-  const opts=[...(keys.some(k=>k.startsWith("8"))?[["8*","Todos os 8º anos (comparativo)"]]:[]),...keys.map(k=>[k,k])];
-  if(!opts.some(o=>o[0]===panSel))panSel=opts.length?opts[0][0]:"";
-  $("pT").innerHTML=opts.map(o=>`<option value="${o[0]}"${o[0]===panSel?" selected":""}>${o[1]}</option>`).join("")||"<option>—</option>";
-  $("pO").value=panOrd;
-  const tk=panSel==="8*"?keys.filter(k=>k.startsWith("8")):[panSel];
-  const C=calc(tk),any=C[1].n+C[2].n;
-  if(!panSel||!any){$("pan").innerHTML='<div class="empty">Leia alguns gabaritos na aba Correção para ver o panorama aqui.</div>';return}
-  const tot=tk.reduce((s,k)=>s+store[k].alunos.length,0);
-  const med=d=>C[d].n?C[d].disc.reduce((s,z)=>s+z.sum,0)/C[d].n:0;
-  let h=`<div class="kpis"><div class="kpi"><b>${C[1].n}<small class="mut">/${tot}</small></b><span>alunos lidos no Dia 1</span></div><div class="kpi"><b>${C[2].n}<small class="mut">/${tot}</small></b><span>alunos lidos no Dia 2</span></div>
-<div class="kpi"><b>${fmt(med(1))}<small class="mut">/30</small></b><span>média de acertos Dia 1</span></div><div class="kpi"><b>${fmt(med(2))}<small class="mut">/24</small></b><span>média de acertos Dia 2</span></div></div>`;
-  for(const d of [1,2]){if(!C[d].n)continue;
-    h+=`<div class="dh"><b>Dia ${d}</b><span class="mut">${C[d].n} alunos · ${NQ[d]} questões</span></div><div class="dcards">`;
-    for(const z of C[d].disc){const m=z.n?z.sum/z.n:0,tq=z.fim-z.ini+1,p=m/tq;
-      h+=`<div class="dc" style="--c:hsl(${hue(p)} 65% 42%)"><span class="nmx">${z.nome}</span><b>${fmt(m)}<small>/${tq}</small></b><div class="bar"><i style="width:${Math.round(p*100)}%"></i></div><span class="mut">${Math.round(p*100)}% de acertos</span></div>`}
-    h+=`</div><div style="margin-top:12px"><span class="mut"><b>Acerto por questão</b> (quanto mais verde, mais alunos acertaram)</span>`;
-    for(const z of C[d].disc){h+=`<div class="qrow"><span>${z.nome}</span><div class="qsq">`;
-      for(let q=z.ini;q<=z.fim;q++){const [ok,n]=C[d].q[q],p=n?ok/n:0;h+=`<i style="--h:${hue(p)}" title="Q${q}: ${Math.round(p*100)}%">${q}</i>`}h+="</div></div>"}
-    const dif=[];for(let q=1;q<=NQ[d];q++){const [ok,n]=C[d].q[q];if(n)dif.push([q,ok/n])}
-    dif.sort((a,b)=>a[1]-b[1]);
-    h+=`<div class="mut" style="margin-top:8px"><b>Questões mais difíceis</b></div><div class="chips">${dif.slice(0,6).map(x=>{const z=C[d].disc.find(z=>x[0]>=z.ini&&x[0]<=z.fim);return`<span class="chp">Q${x[0]} · ${z.nome} · ${Math.round(x[1]*100)}%</span>`}).join("")}</div></div>`}
-  // tabela
-  if(panSel==="8*"&&tk.length>1){
-    h+=`<div class="dh"><b>Comparativo entre turmas</b><span class="mut">% de acertos</span></div><div class="tw"><table class="tbl"><tr><th>Turma</th>`;
-    const cols=[];for(const d of [1,2])DISC[d].forEach((x,j)=>{cols.push([d,x[0],x[1],x[2]]);h+=`<th class="${j===0?"g":""}">${x[0]}<br>D${d}</th>`});h+="</tr>";
-    for(const k of tk){const Ck=calc([k]);h+=`<tr><td>${k}</td>`;let n=0;
-      for(const[d,,ini,fim]of cols){const z=Ck[d].disc.find(z=>z.ini===ini),p=z&&z.n?z.sum/z.n/(fim-ini+1):null;n++;
-        h+=p===null?'<td>—</td>':`<td class="hm" style="--h:${hue(p)}">${Math.round(p*100)}%</td>`}h+="</tr>"}
-    h+="</table></div>"}
-  else{
-    const rows=C[1].alu.map(r=>({...r,t:(r.d[1]?r.d[1].tot:0)+(r.d[2]?r.d[2].tot:0)}));
-    if(panOrd==="nome")rows.sort((a,b)=>a.nome.localeCompare(b.nome,"pt"));else rows.sort((a,b)=>panOrd==="maior"?b.t-a.t:a.t-b.t);
-    h+=`<div class="dh"><b>Alunos</b><span class="mut">acertos por disciplina</span></div><div class="tw"><table class="tbl"><tr><th>Aluno</th>`;
-    for(const d of [1,2]){DISC[d].forEach((x,j)=>h+=`<th class="${j===0?"g":""}">${x[0]}<br>D${d}</th>`);h+=`<th>Total<br>D${d}</th>`}h+="<th class=\"g\">Total<br>geral</th></tr>";
-    for(const r of rows){h+=`<tr><td>${r.nome}</td>`;
-      for(const d of [1,2]){const x=r.d[d];DISC[d].forEach((z,j)=>{const tq=z[2]-z[1]+1;h+=x?`<td class="hm ${j===0?"g":""}" style="--h:${hue(x.disc[j]/tq)}">${x.disc[j]}/${tq}</td>`:`<td class="${j===0?"g":""}">—</td>`});h+=x?`<td>${x.tot}/${NQ[d]}</td>`:"<td>—</td>"}
-      h+=`<td class="g"><b>${r.t}</b>/54</td></tr>`}
-    h+="</table></div>"}
-  $("pan").innerHTML=h}
+ const o=scopeOpts(0);if(!o.some(x=>x[0]===panSel))panSel=o.length?o[0][0]:"";
+ fillSel("pT",o,panSel);$("pO").value=panOrd;$("pD").value=panDia;repOpts();
+ const tk=keysOf(panSel),C=calc(tk),ds=panDia?[panDia]:[1,2];
+ if(!tk.length||!ds.some(d=>C[d].n)){$("pan").innerHTML='<div class="empty">Leia alguns gabaritos na aba Correção para ver o panorama aqui.</div>';return}
+ const tot=tk.reduce((s,k)=>s+store[k].alunos.length,0),dm=(c,d)=>c[d].n?c[d].disc.reduce((s,z)=>s+z.sum,0)/c[d].n:0;
+ let h='<div class="kpis">';
+ for(const d of ds)if(C[d].n)h+=kpi(`${C[d].n}<small>/${tot}</small>`,"alunos lidos · Dia "+d)+kpi(`${fmt(dm(C,d))}<small>/${NQ[d]}</small>`,"média de acertos · Dia "+d);
+ const dl=ds.flatMap(d=>C[d].disc.filter(z=>z.n).map(z=>({nome:z.nome,p:z.sum/z.n/(z.fim-z.ini+1)}))).sort((a,b)=>b.p-a.p);
+ if(dl.length>1){const b=dl[0],w=dl[dl.length-1];h+=kpi(`${b.nome}<small> ${pc(b.p)}</small>`,"melhor disciplina","sm")+kpi(`${w.nome}<small> ${pc(w.p)}</small>`,"disciplina mais frágil","sm")}
+ h+="</div>";
+ const CK={};tk.forEach(k=>CK[k]=calc([k]));
+ if(tk.length>1){const rk=[...tk].sort((a,b)=>(ovp(CK[b],ds)||0)-(ovp(CK[a],ds)||0));
+  h+=`<div class="dh"><b>Ranking das turmas</b><span class="mut">% de acertos${panDia?" · Dia "+panDia:""}</span></div><div class="tcs">`;
+  rk.forEach((k,i)=>{const c=CK[k],p=ovp(c,ds)||0,n=Math.max(...ds.map(d=>c[d].n));
+   h+=`<div class="tc" style="--c:hsl(${hue(p)} 65% 42%)"><div class="tn">${k}<span>${["🥇","🥈","🥉"][i]||""}</span></div><div class="tp">${pc(p)}</div><div class="mut">${n} aluno(s) lidos</div>`;
+   for(const d of ds)if(c[d].n)h+=`<div class="mb"><span>Dia ${d}</span><div class="bar"><i style="width:${Math.round(dm(c,d)/NQ[d]*100)}%"></i></div><b>${fmt(dm(c,d))}/${NQ[d]}</b></div>`;
+   h+="</div>"});h+="</div>"}
+ for(const d of ds){if(!C[d].n)continue;
+  h+=`<div class="dh"><b>Dia ${d} · acertos por disciplina</b><span class="mut">${C[d].n} alunos · ${NQ[d]} questões</span></div>`;
+  C[d].disc.forEach((z,j)=>{const tq=z.fim-z.ini+1,row=(lb,c)=>{const zz=c[d].disc[j];if(!zz.n)return"";const p=zz.sum/zz.n/tq;return`<div class="gb" style="--c:hsl(${hue(p)} 65% 42%)"><em>${lb}</em><div class="bar"><i style="width:${Math.round(p*100)}%"></i></div><b>${pc(p)}</b></div>`};
+   h+=`<div class="drow"><b>${z.nome}<div class="mut">média ${fmt(z.n?z.sum/z.n:0)} de ${tq}</div></b><div class="gbs">${tk.length>1?tk.map(k=>row(lbl(k),CK[k])).join("")+row("Geral",C):row("Média",C)}</div></div>`})}
+ const L=[["A","#5b8def","A"],["B","#8c7bff","B"],["C","#f0b955","C"],["D","#4cc38a","D"],["br","#9aa5b4","Branco"],["mu","#d9534f","Dupla"]];
+ for(const d of ds){if(!C[d].n)continue;
+  h+=`<div class="dh"><b>Dia ${d} · acerto por questão</b><span class="mut">mais verde = mais acertos</span></div>`;
+  for(const z of C[d].disc){h+=`<div class="qrow"><span>${z.nome}</span><div class="qsq">`;
+   for(let q=z.ini;q<=z.fim;q++){const c=C[d].q[q],p=c.n?c.ok/c.n:0;h+=`<i style="--h:${hue(p)}" title="Q${q}: ${pc(p)}">${q}</i>`}h+="</div></div>"}
+  const dif=[];for(let q=1;q<=NQ[d];q++){const c=C[d].q[q];if(c.n)dif.push([q,c.ok/c.n])}dif.sort((a,b)=>a[1]-b[1]);
+  h+=`<div class="mut" style="margin-top:8px"><b>Questões mais difíceis</b></div><div class="chips">${dif.slice(0,6).map(x=>{const z=C[d].disc.find(z=>x[0]>=z.ini&&x[0]<=z.fim);return`<span class="chp">Q${x[0]} · ${z.nome} · ${pc(x[1])}</span>`}).join("")}</div>`;
+  h+=`<details><summary>Alternativas marcadas em cada questão (Dia ${d})</summary><div class="lg">${L.map(x=>`<span style="--k:${x[1]}">${x[2]}</span>`).join("")}</div>`;
+  for(let q=1;q<=NQ[d];q++){const c=C[d].q[q];if(!c.n)continue;const z=C[d].disc.find(z=>q>=z.ini&&q<=z.fim);
+   h+=`<div class="qd"><b>Q${q}</b><span class="mut">${z.nome}</span><div class="dist">${L.map(x=>c[x[0]]?`<i style="width:${c[x[0]]*100/c.n}%;background:${x[1]}" title="${x[2]}: ${c[x[0]]}"></i>`:"").join("")}</div><b>${pc(c.ok/c.n)}</b></div>`}
+  h+="</details>"}
+ const mt=tk.length>1,q=panQ.toLowerCase();
+ const rows=C.stu.map(s=>({...s,v:sv(s,ds)})).filter(r=>!q||r.nome.toLowerCase().includes(q));
+ rows.sort((a,b)=>panOrd==="nome"?a.nome.localeCompare(b.nome,"pt"):panOrd==="maior"?(b.v.p??-1)-(a.v.p??-1):(a.v.p??2)-(b.v.p??2));
+ h+=`<div class="dh"><b>Alunos</b><span class="mut">${rows.length} · acertos por disciplina</span></div><div class="tw"><table class="tbl"><tr><th>Aluno</th>${mt?"<th>Turma</th>":""}`;
+ for(const d of ds){DISC[d].forEach((x,j)=>h+=`<th class="${j===0?"g":""}">${x[0]}<br>D${d}</th>`);h+=`<th>Total<br>D${d}</th>`}
+ h+='<th class="g">Total</th><th>%</th></tr>';
+ for(const r of rows){h+=`<tr><td title="${r.nome}">${r.nome}</td>${mt?`<td>${lbl(r.turma)}</td>`:""}`;
+  for(const d of ds){const x=r.d[d];DISC[d].forEach((z,j)=>{const tq=z[2]-z[1]+1;h+=x?`<td class="hm ${j===0?"g":""}" style="--h:${hue(x.disc[j]/tq)}">${x.disc[j]}/${tq}</td>`:`<td class="${j===0?"g":""}">—</td>`});h+=x?`<td>${x.tot}/${NQ[d]}</td>`:"<td>—</td>"}
+  h+=r.v.nq?`<td class="g"><b>${r.v.t}</b>/${r.v.nq}</td><td class="hm" style="--h:${hue(r.v.p)}">${pc(r.v.p)}</td>`:'<td class="g">—</td><td>—</td>';h+="</tr>"}
+ $("pan").innerHTML=h+"</table></div>"}
+
+/* ---------- relatórios ---------- */
+const sit=(p,c)=>p===null?"Sem gabarito":p>=c?"Adequado":"Abaixo do esperado";
+const byT=(a,b)=>a.turma.localeCompare(b.turma,"pt")||a.nome.localeCompare(b.nome,"pt");
+const RT=[
+{id:"boletim",ico:"🧾",nome:"Boletim da turma",desc:"Acertos, notas e situação de cada aluno",fn:(o,C)=>{
+ const S=C.stu.slice().sort(byT),V=S.map(s=>sv(s,o.ds)),L=V.filter(v=>v.p!==null),ok=L.filter(v=>v.p>=o.corte).length;
+ return{kp:[[S.length,"alunos"],[L.length?fmt(mean(L.map(v=>v.nota))):"—","nota média (de "+o.ds.length*VALOR+")"],[ok,"adequado"],[L.length-ok,"abaixo do esperado"],[S.length-L.length,"sem gabarito"]],
+ head:["Turma","Aluno","Prova",...o.ds.flatMap(d=>[`Acertos D${d}`,`Nota D${d}`]),"Nota total","% acerto","Situação"],
+ rows:S.map((s,i)=>{const v=V[i];return[s.turma,s.nome,s.tipo,...o.ds.flatMap(d=>s.d[d]?[`${s.d[d].tot}/${NQ[d]}`,+s.d[d].nota.toFixed(2)]:["—","—"]),v.nq?+v.nota.toFixed(2):"—",v.p===null?"—":pc(v.p),sit(v.p,o.corte)]})}}},
+{id:"disc",ico:"📚",nome:"Desempenho por disciplina",desc:"Média e % de acerto por turma, dia e disciplina",fn:(o,C)=>{
+ const R=[],it=[...o.keys.map(k=>[k,calc([k])]),...(o.keys.length>1?[["Geral",C]]:[])];
+ for(const[k,c]of it)for(const d of o.ds)c[d].disc.forEach(z=>{if(!z.n)return;const tq=z.fim-z.ini+1;R.push([k,"Dia "+d,z.nome,c[d].n,fmt(z.sum/z.n),tq,pc(z.sum/z.n/tq)])});
+ const dl=o.ds.flatMap(d=>C[d].disc.filter(z=>z.n).map(z=>[z.nome+" (D"+d+")",z.sum/z.n/(z.fim-z.ini+1)])).sort((a,b)=>b[1]-a[1]);
+ return{kp:dl.length?[[dl[0][0]+" · "+pc(dl[0][1]),"melhor disciplina"],[dl[dl.length-1][0]+" · "+pc(dl[dl.length-1][1]),"mais frágil"]]:[],head:["Turma","Dia","Disciplina","Alunos lidos","Média de acertos","Nº questões","% acerto"],rows:R}}},
+{id:"comp",ico:"🏫",nome:"Comparativo entre turmas",desc:"% de acerto de cada turma em cada disciplina",fn:(o,C)=>{
+ const cols=o.ds.flatMap(d=>DISC[d].map((x,j)=>[d,j,x[0]+" D"+d,x[2]-x[1]+1])),it=[...o.keys.map(k=>[k,calc([k])]),...(o.keys.length>1?[["Todas",C]]:[])];
+ const rows=it.map(([k,c])=>{const p=ovp(c,o.ds);return[k,Math.max(...o.ds.map(d=>c[d].n)),...cols.map(([d,j,,tq])=>{const z=c[d].disc[j];return z.n?pc(z.sum/z.n/tq):"—"}),p===null?"—":pc(p)]});
+ const rk=it.filter(i=>i[0]!=="Todas").map(([k,c])=>[k,ovp(c,o.ds)]).filter(x=>x[1]!==null).sort((a,b)=>b[1]-a[1]);
+ return{kp:rk.slice(0,3).map((x,i)=>[x[0]+" · "+pc(x[1]),["🥇 1ª turma","🥈 2ª turma","🥉 3ª turma"][i]]),head:["Turma","Alunos lidos",...cols.map(c=>c[2]),"Geral"],rows}}},
+{id:"quest",ico:"❓",nome:"Análise de questões",desc:"Da mais difícil à mais fácil, com alternativa mais marcada",fn:(o,C)=>{
+ const R=[];for(const d of o.ds)for(let q=1;q<=NQ[d];q++){const c=C[d].q[q];if(!c.n)continue;const z=DISC[d].find(x=>q>=x[1]&&q<=x[2]),p=c.ok/c.n,t=["A","B","C","D"].sort((a,b)=>c[b]-c[a])[0];
+  R.push([p,["Dia "+d,"Q"+q,z[0],c.n,c.ok,pc(p),c.br,c.mu,c[t]?t+" ("+pc(c[t]/c.n)+")":"—",p<.4?"Difícil":p<.7?"Médio":"Fácil"]])}
+ R.sort((a,b)=>a[0]-b[0]);const rows=R.map(r=>r[1]),n=t=>rows.filter(r=>r[9]===t).length;
+ return{kp:[[n("Difícil"),"difíceis (menos de 40%)"],[n("Médio"),"médias"],[n("Fácil"),"fáceis (70% ou mais)"]],head:["Dia","Questão","Disciplina","Respostas","Acertos","% acerto","Em branco","Dupla","Mais marcada","Nível"],rows}}},
+{id:"aten",ico:"⚠️",nome:"Alunos em atenção",desc:"Abaixo do corte, muitos brancos ou sem gabarito",fn:(o,C)=>{
+ const R=[];for(const s of C.stu){const v=sv(s,o.ds),m=[];
+  if(v.p===null)m.push("Sem gabarito lido");else{if(v.p<o.corte)m.push("Abaixo de "+Math.round(o.corte*100)+"%");if(s.br>=.2*v.nq)m.push(s.br+" em branco")}
+  if(!m.length)continue;
+  const dl=o.ds.filter(d=>s.d[d]).flatMap(d=>DISC[d].map((x,j)=>[x[0],s.d[d].disc[j]/(x[2]-x[1]+1)])).sort((a,b)=>a[1]-b[1]);
+  R.push([v.p===null?9:v.p,[s.turma,s.nome,v.p===null?"—":pc(v.p),dl.length?dl[0][0]+" ("+pc(dl[0][1])+")":"—",s.br,m.join(" · ")]])}
+ R.sort((a,b)=>a[0]-b[0]);
+ return{kp:[[R.length,"alunos em atenção"],[R.filter(r=>r[0]===9).length,"sem gabarito"],[C.stu.length-R.length,"sem alerta"]],head:["Turma","Aluno","% acerto","Disciplina mais fraca","Em branco","Motivo"],rows:R.map(r=>r[1])}}},
+{id:"rank",ico:"🏆",nome:"Ranking de notas",desc:"Os alunos com melhor desempenho (Top N)",fn:(o,C)=>{
+ const V=C.stu.map(s=>({s,v:sv(s,o.ds)})).filter(x=>x.v.p!==null).sort((a,b)=>b.v.nota-a.v.nota||b.v.p-a.v.p).slice(0,o.n);
+ return{kp:[[V.length,"no ranking"],[V.length?fmt(V[0].v.nota):"—","maior nota"]],head:["Pos.","Turma","Aluno","Nota","% acerto"],rows:V.map((x,i)=>[(i+1)+"º",x.s.turma,x.s.nome,+x.v.nota.toFixed(2),pc(x.v.p)])}}},
+{id:"pend",ico:"🔎",nome:"Pendências de leitura",desc:"Sem gabarito, erros de leitura, brancos e duplas",fn:o=>{
+ const rows=[];for(const k of o.keys)store[k].alunos.forEach((a,i)=>{for(const d of o.ds){const f=store[k].folhas[d].find(x=>x.ai===i);let m="";
+  if(!f)m="Sem gabarito lido";else if(f.erro)m="Erro de leitura";else{const rs=Object.values(f.resp).slice(0,NQ[d]),br=rs.filter(r=>r[1]==="BRANCO").length,mu=rs.filter(r=>r[1]==="MÚLTIPLA").length;if(br||mu)m=`${br} em branco, ${mu} dupla(s)`}
+  if(m)rows.push([k,"Dia "+d,a.nome,m])}});
+ return{kp:[[rows.filter(r=>r[3]==="Sem gabarito lido").length,"sem gabarito"],[rows.filter(r=>r[3]==="Erro de leitura").length,"erros de leitura"],[rows.filter(r=>/branco/.test(r[3])).length,"com branco/dupla"]],head:["Turma","Dia","Aluno","Ocorrência"],rows}}}
+];
+function repOpts(){const o=scopeOpts(1);if(!o.some(x=>x[0]===rSel))rSel=o.length?o[0][0]:"";fillSel("rS",o,rSel)}
+function drawRT(){$("rT").innerHTML=RT.map(t=>`<button class="rt ${t.id===rTipo?"on":""}" data-t="${t.id}"><b>${t.ico} ${t.nome}</b><span>${t.desc}</span></button>`).join("")}
+$("rT").onclick=e=>{const b=e.target.closest("[data-t]");if(b){rTipo=b.dataset.t;drawRT();gerar()}};
+function gerar(){
+ const dv=+$("rD").value,o={keys:keysOf(rSel),ds:dv?[dv]:[1,2],corte:(+$("rC").value||60)/100,n:+$("rN").value||10},t=RT.find(x=>x.id===rTipo),C=calc(o.keys);rep=null;
+ ["bPr","bXl","bCs","bCp"].forEach(id=>$(id).disabled=true);$("rMsg").textContent="";
+ if(!o.keys.length||(!o.ds.some(d=>C[d].n)&&rTipo!=="pend")){$("rOut").innerHTML='<div class="empty">Leia gabaritos na aba Correção para gerar relatórios.</div>';return}
+ const r=t.fn(o,C),sc=(scopeOpts(1).find(x=>x[0]===rSel)||["",""])[1];
+ Object.assign(r,{titulo:t.nome,escopo:sc+" · "+(o.ds.length>1?"Dias 1 e 2":"Dia "+o.ds[0]),data:new Date().toLocaleDateString("pt-BR")});rep=r;
+ const cell=c=>/^\d+%$/.test(c)?`<td class="hm" style="--h:${hue(parseInt(c)/100)}">${c}</td>`:`<td>${c}</td>`;
+ $("rOut").innerHTML=`<div class="rh"><b>${t.ico} ${r.titulo}</b><div class="mut">${ESC}</div><div class="mut">${r.escopo} · emitido em ${r.data}</div></div><div class="kpis">${r.kp.map(k=>kpi(k[0],k[1],"sm")).join("")}</div>`+
+  (r.rows.length?`<div class="tw"><table class="tbl rp"><tr>${r.head.map(x=>`<th>${x}</th>`).join("")}</tr>${r.rows.map(x=>`<tr>${x.map(cell).join("")}</tr>`).join("")}</table></div>`:'<div class="empty">Nada a listar com esses filtros 🎉</div>');
+ ["bPr","bXl","bCs","bCp"].forEach(id=>$(id).disabled=false)}
+const tabela=()=>[[ESC],[rep.titulo+" — "+rep.escopo+" — "+rep.data],[],rep.head,...rep.rows];
+const slug=()=>"relatorio_"+rTipo+"_"+rSel.replace(/[^\wÀ-ú]+/g,"_");
+async function baixar(data,type,fn){try{const dl=window.claude&&await claude.use("downloads");
+ if(dl)await dl.save({filename:fn,data});
+ else{const u=URL.createObjectURL(new Blob([data],{type})),l=document.createElement("a");l.href=u;l.download=fn;document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}
+ $("rMsg").textContent="Arquivo gerado: "+fn}catch(e){$("rMsg").textContent="Download cancelado ou indisponível."}}
+$("bXl").onclick=()=>{const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(tabela());ws["!cols"]=rep.head.map((_,i)=>({wch:Math.min(34,Math.max(10,...rep.rows.map(r=>String(r[i]).length)))}));XLSX.utils.book_append_sheet(wb,ws,"Relatório");baixar(XLSX.write(wb,{type:"array",bookType:"xlsx"}),"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",slug()+".xlsx")};
+$("bCs").onclick=()=>baixar(new TextEncoder().encode("\ufeff"+tabela().map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(";")).join("\r\n")),"text/csv",slug()+".csv");
+$("bCp").onclick=async()=>{const t=[rep.titulo+" — "+rep.escopo,...rep.kp.map(k=>"• "+k[1]+": "+k[0]),"",...rep.rows.slice(0,40).map(r=>r.join(" | "))].join("\n");
+ try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove()}$("rMsg").textContent="Resumo copiado ✓"};
+$("bPr").onclick=()=>window.print();
+$("rS").onchange=e=>{rSel=e.target.value;gerar()};["rD","rC","rN"].forEach(id=>$(id).oninput=gerar);
 $("pT").onchange=e=>{panSel=e.target.value;renderPan()};$("pO").onchange=e=>{panOrd=e.target.value;renderPan()};
-function aba(p){$("tabC").hidden=p;$("tabP").hidden=!p;$("tbC").classList.toggle("on",!p);$("tbP").classList.toggle("on",p);window.scrollTo(0,0)}
-$("tbC").onclick=()=>aba(false);$("tbP").onclick=()=>aba(true);
+$("pD").onchange=e=>{panDia=+e.target.value;renderPan()};$("pQ").oninput=e=>{panQ=e.target.value;renderPan()};
+function aba(n){["tabC","tabP","tabR"].forEach((id,i)=>$(id).hidden=i!==n);["tbC","tbP","tbR"].forEach((id,i)=>$(id).classList.toggle("on",i===n));if(n===2)gerar();window.scrollTo(0,0)}
+$("tbC").onclick=()=>aba(0);$("tbP").onclick=()=>aba(1);$("tbR").onclick=()=>aba(2);drawRT();
+
 
 $("exp").onclick=async()=>{
   const turma=$("turma").value.trim(),wb=XLSX.utils.book_new(),H=["Turma","Nome"];
