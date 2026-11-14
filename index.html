@@ -213,7 +213,7 @@ function bubbles(gray,w,h){
   const d0=6+bk*2+1,pts=cand.filter(c=>Math.abs(c[2]-d0)<.28*d0);
   return{pts,d:median(pts.map(p=>p[2]))}}
 
-function grade(P,d){
+function grade(P,d,need){
   const n=P.length,lab=new Array(n).fill(-1);let k=0;
   for(let i=0;i<n;i++){if(lab[i]>=0)continue;const s=[i];lab[i]=k;
     while(s.length){const a=s.pop();for(let j=0;j<n;j++)if(lab[j]<0&&Math.abs(P[j][0]-P[a][0])<1.5*d&&Math.abs(P[j][1]-P[a][1])<1.5*d){lab[j]=k;s.push(j)}}k++}
@@ -221,7 +221,7 @@ function grade(P,d){
   for(let c=0;c<k;c++){const Q=P.filter((_,i)=>lab[i]===c);if(Q.length<4)continue;
     const gx=groups(Q.map(p=>p[0]),d),gy=groups(Q.map(p=>p[1]),d);
     const mx=Math.max(...gx.map(g=>g.length)),my=Math.max(...gy.map(g=>g.length));
-    const cx=gx.filter(g=>g.length>=Math.max(2,.5*mx)).map(mean),cy=gy.filter(g=>g.length>=Math.max(2,.5*my)).map(mean);
+    const cx=gx.filter(g=>g.length>=Math.max(mx>2?2:1,.5*mx)).map(mean),cy=gy.filter(g=>g.length>=Math.max(my>2?2:1,.5*my)).map(mean);
     if(cx.length<2||cy.length<1)continue;
     for(let i=1;i<cy.length;i++)if(cy[i]-cy[i-1]<1.6*d)gaps.push(cy[i]-cy[i-1]);
     blocos.push({x0:Math.min(...cx),x1:Math.max(...cx),y0:Math.min(...cy),y1:Math.max(...cy),ncol:cx.length})}
@@ -231,21 +231,33 @@ function grade(P,d){
   if(!regs.length||qs.length<6)throw new Error("estrutura do gabarito não reconhecida");
   const reg=regs.sort((a,b)=>b.nrow-a.nrow)[0];
   qs=qs.filter(b=>b.y0>reg.y0-6*d);   // ignora os círculos de exemplo do cabeçalho
+  {// recupera blocos em que uma coluna inteira não foi reconhecida (ex.: bolinha muito preenchida)
+    const refs=qs.slice(),tol=.45*d,gx=r=>[0,1,2,3].map(i=>r.x0+i*(r.x1-r.x0)/3);
+    const snap=(r,x)=>gx(r).reduce((m,v)=>Math.abs(v-x)<Math.abs(m-x)?v:m);
+    for(const b of blocos){
+      if(b.ncol>=4||b===reg||b.y0<=reg.y0-6*d||Math.abs(b.x0-reg.x0)<3*d)continue;
+      const c=refs.filter(r=>Math.abs(snap(r,b.x0)-b.x0)<tol&&Math.abs(snap(r,b.x1)-b.x1)<tol).sort((p,q)=>Math.abs(p.y0-b.y0)-Math.abs(q.y0-b.y0))[0];
+      if(!c)throw new Error("bloco de questões incompleto (foto cortada ou marcação não reconhecida)");
+      const nx=c.x0+(b.x0-snap(c,b.x0));b.x0=nx;b.x1=nx+(c.x1-c.x0);b.ncol=4;b.nrow=[2,5,8].find(a=>a>=b.nrow)||b.nrow;qs.push(b)}}
   const pos=(b,nc,nr)=>{nr=nr||b.nrow;const xs=[...Array(nc)].map((_,i)=>b.x0+i*(b.x1-b.x0)/(nc-1));
     const step=b.y1>b.y0?(b.y1-b.y0)/Math.max(1,Math.round((b.y1-b.y0)/PY)):PY;
     return[...Array(nr)].map((_,i)=>xs.map(x=>[x,b.y0+i*step]))};
   qs.sort((a,b)=>a.x0-b.x0);const cols=[];let cur=[qs[0]];
   for(const b of qs.slice(1)){if(Math.abs(b.x0-cur[0].x0)<2.5*d)cur.push(b);else{cols.push(cur);cur=[b]}}cols.push(cur);
   let q=[];for(const c of cols)for(const b of c.sort((a,b)=>a.y0-b.y0))q=q.concat(pos(b,4));
-  return{regpos:pos(reg,2,10),qpos:q}}
+  if(q.length<(need||30))throw new Error("só "+q.length+" linhas de questões reconhecidas");
+  let rb=reg;// o bloco de registro tem 10 linhas; se a 1ª ou a última não foi reconhecida, ancora pela posição das questões
+  if(reg.nrow<10){const top=Math.min(...cols[0].map(b=>b.y0)),stp=(reg.y1-reg.y0)/Math.max(1,reg.nrow-1),want=top-12.9*PY;
+    const y=[reg.y0,reg.y0-stp].sort((a,b)=>Math.abs(a-want)-Math.abs(b-want))[0];rb={...reg,y0:y,y1:y+9*stp}}
+  return{regpos:pos(rb,2,10),qpos:q}}
 
-function readSheet(gray,w,h){
+function readSheet(gray,w,h,need){
   const{pts,d}=bubbles(gray,w,h);
   const ang=[];
   for(const p of pts)for(const q of pts){const dx=q[0]-p[0],dy=q[1]-p[1];if(dx>.9*d&&dx<2.2*d&&Math.abs(dy)<.5*d)ang.push(Math.atan2(dy,dx))}
   const a=ang.length?median(ang):0,c=Math.cos(-a),s=Math.sin(-a);
   const P=pts.map(p=>[c*p[0]-s*p[1],s*p[0]+c*p[1]]);
-  const{regpos,qpos}=grade(P,d);
+  const{regpos,qpos}=grade(P,d,need);
   const back=p=>[c*p[0]+s*p[1],-s*p[0]+c*p[1]];
   const sub=[];for(let i=0;i<w*h;i+=7)sub.push(gray[i]);const paper=median(sub);
   const rin=Math.max(2,Math.floor(d*.28));
@@ -314,7 +326,7 @@ async function processar(f){
   await new Promise(r=>setTimeout(r,30));
   const item={arq:f.name,dia:d,ai};
   try{const bmp=await createImageBitmap(f);let res,gi;
-    for(const rot of [false,true]){try{gi=grayFrom(bmp,rot);res=readSheet(gi.gr,gi.W,gi.H);break}catch(e){if(rot)throw e}}
+    for(const rot of [false,true]){try{gi=grayFrom(bmp,rot);res=readSheet(gi.gr,gi.W,gi.H,NQ[d]);break}catch(e){if(rot)throw e}}
     Object.assign(item,res);item.thumb=miniatura(gi.cv,res)}
   catch(e){item.erro=e.message||String(e);item.resp={}}
   folhas[d]=folhas[d].filter(x=>x.ai!==ai);folhas[d].push(item);
