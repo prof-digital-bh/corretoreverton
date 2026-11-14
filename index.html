@@ -130,6 +130,22 @@ details{margin-top:14px;border-top:1px solid var(--bd);padding-top:10px}summary{
 @keyframes fflash{0%{transform:scale(.97);box-shadow:0 0 0 0 rgba(255,214,10,.9)}40%{transform:scale(1.02);box-shadow:0 0 0 10px rgba(255,214,10,.45)}100%{transform:scale(1)}}
 @media(prefers-reduced-motion:reduce){.foco,.foco *{animation:none!important}}
 #mcap{font-size:17px;font-weight:700}
+/* conferência manual da folha */
+#cf{position:fixed;inset:0;background:rgba(8,12,20,.78);display:none;align-items:flex-end;justify-content:center;z-index:10}
+#cf .pn{background:var(--card);color:var(--tx);width:100%;max-width:720px;max-height:94vh;overflow:auto;border-radius:20px 20px 0 0;padding:16px 14px 0}
+@media(min-width:700px){#cf{align-items:center}#cf .pn{border-radius:20px}}
+#modal{z-index:11}
+.cfimg{position:relative;border:1px solid var(--bd);border-radius:12px;overflow:auto;max-height:38vh;background:#fff;margin:10px 0}.cfimg img{display:block;width:100%}
+.cfimg span{position:sticky;left:8px;bottom:6px;display:inline-block;margin:0 0 6px 8px;font-size:11.5px;font-weight:700;background:rgba(0,0,0,.65);color:#fff;border-radius:8px;padding:3px 8px}
+.cqs{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:6px}
+.cq{border:1.5px solid var(--bd);border-radius:11px;padding:5px 2px 6px;text-align:center;cursor:pointer;background:var(--bg);user-select:none;-webkit-tap-highlight-color:transparent}
+.cq small{display:block;font-size:10.5px;color:var(--mut);font-weight:700}.cq b{display:block;font-size:19px;line-height:1.15}
+.cq.b{background:var(--warnS);border-color:var(--warn);color:var(--warn)}.cq.u{background:var(--badS);border-color:var(--bad);color:var(--bad)}
+.cq.m{border-style:dashed;border-color:var(--pri);background:var(--priS)}.cq.m small:after{content:" ✎"}
+.cq.sel{outline:3px solid var(--pri);outline-offset:1px}
+.cfbar{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--bd);padding:10px 0 calc(env(safe-area-inset-bottom,0px) + 10px);margin-top:14px}
+.alts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.alts button{padding:11px 0;font-size:18px;justify-content:center}.alts button.br{font-size:12px}
+.chpb{font-size:12px;font-weight:700;padding:4px 10px;border-radius:99px;background:var(--warnS);color:var(--warn);cursor:pointer}
 </style>
 </head>
 <body>
@@ -176,6 +192,7 @@ details{margin-top:14px;border-top:1px solid var(--bd);padding-top:10px}summary{
 <div class="row noprint"><button id="bPr" disabled>🖨️ Imprimir / PDF</button><button id="bXl" class="ghost" disabled>📗 Excel</button><button id="bCs" class="ghost" disabled>📄 CSV</button><button id="bCp" class="ghost" disabled>📋 Copiar resumo</button></div>
 <div id="rMsg" class="mut noprint" style="margin:8px 0 12px"></div><div id="rOut"></div></section></main>
 <div id="esp"><div class="pn" id="espc"></div></div>
+<div id="cf"><div class="pn" id="cfc"></div></div>
 <div id="modal"><div id="mcap"></div><img id="mimg" alt="conferência"><span class="mut" style="color:#cbd5e1">Toque para fechar</span></div>
 
 <script>/*! xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
@@ -302,7 +319,9 @@ function readSheet(gray,w,h,need){
     if(!m.length)st="BRANCO";
     else if(m.length>1){const o=[0,1,2,3].sort((x,y)=>v[y]-v[x]);if(v[o[0]]-v[o[1]]>.18)L="ABCD"[o[0]];else{L=m.map(j=>"ABCD"[j]).join("");st="MÚLTIPLA"}}
     else L="ABCD"[m[0]];
-    if(i>=nn){if(m.length)extra++}else if(qpos[i].some(out))fora.push(i+1);
+    // linhas além da última questão do dia (Dia 1: 31-40, Dia 2: 25-40) não existem: não são lidas nem contadas como branco
+    if(i>=nn){if(m.length){extra++;qpos[i].forEach((p,j)=>m.includes(j)&&cells.push([...back(p),true,0,false,true]))}return}
+    if(qpos[i].some(out))fora.push(i+1);
     resp[i+1]=[L,st];
     qpos[i].forEach((p,j)=>cells.push([...back(p),m.includes(j),0,st==="BRANCO"]));
     cells.push([...back(qpos[i][0]).map((x,k)=>k?x:x-2.4*d),null,i+1])});
@@ -345,7 +364,7 @@ function miniatura(cv,res){
   const r=res.d*s/2;
   for(const c of res.cells){const[x,y,m,q]=c;
     if(q){g.fillStyle="#d22";g.font=`${Math.max(9,res.d*s*.7)}px sans-serif`;g.fillText(q,x*s,y*s+r*.6);continue}
-    const bl=c[4];g.lineWidth=bl?3:2;g.strokeStyle=m?"#0a0":bl?"#e08a00":"rgba(150,150,150,.5)";g.beginPath();g.arc(x*s,y*s,r+(m?2:0),0,7);g.stroke()}
+    const bl=c[4],ex=c[5];g.lineWidth=bl||ex?3:2;g.strokeStyle=ex?"#d22":m?"#0a0":bl?"#e08a00":"rgba(150,150,150,.5)";g.beginPath();g.arc(x*s,y*s,r+(m?2:0),0,7);g.stroke()}
   return o.toDataURL("image/jpeg",.55)}
 
 
@@ -360,7 +379,7 @@ async function processar(f){
     Object.assign(item,res);item.thumb=miniatura(gi.cv,res)}
   catch(e){item.erro=e.message||String(e);item.resp={}}
   lendoAi=-1;folhas[d]=folhas[d].filter(x=>x.ai!==ai);folhas[d].push(item);
-  if(item.erro)$("busy").innerHTML=`<span style="color:var(--bad)">Não consegui ler a folha de ${alunos[ai].nome}. Tente outra foto.</span>`;
+  if(item.erro)$("busy").innerHTML=`<span style="color:var(--bad)">Não consegui ler a folha de ${alunos[ai].nome}. Tente outra foto ou use “✎ Preencher à mão”.</span>`;
   else{const rs=Object.values(item.resp).slice(0,NQ[d]),br=rs.filter(r=>r[1]==="BRANCO").length,mu=rs.filter(r=>r[1]==="MÚLTIPLA").length;
     $("busy").innerHTML=`<span class="ok">✓ ${alunos[ai].nome}: ${acertos(item,d)}/${NQ[d]} acertos</span>${br||mu?` <span style="color:var(--warn)">(${br} em branco, ${mu} dupla)</span>`:""}${(item.fora||[]).length?` <span style="color:var(--bad)">· ${item.fora.length} questão(ões) FORA da foto, refaça com a folha inteira</span>`:finais(item,d)>=3?` <span style="color:var(--warn)">· as últimas ${finais(item,d)} vieram em branco, confira a foto</span>`:""}`;
     for(let k=1;k<=alunos.length;k++){const j=(ai+k)%alunos.length;if(!folhaDe(d,j)){sel=j;break}}}
@@ -399,11 +418,14 @@ function render(){
         const fo=(f.fora||[]).length,tr=finais(f,d);
         if(fo)t.push(["err","Foto cortada: Q"+f.fora[0]+" a Q"+f.fora[fo-1]+" fora da imagem"]);else if(tr>=3)t.push(["warn","Últimas "+tr+" em branco · confira a foto"]);
         if(f.extra)t.push(["warn","Marcas além da Q"+NQ[d]+" · possível deslocamento"])}
-      if(t.length)alerts++;if(!t.length)t.push(["ok","Leitura ok"]);
+      const nm=Object.keys(f.man||{}).length;
+      if(f.conf&&!f.erro&&!dup){t.length=0;t.push(["ok","✓ Conferida"+(nm?" · "+nm+" ajustada"+(nm>1?"s":"")+" à mão":"")])}
+      else if(nm&&!f.erro)t.push(["ok","✎ "+nm+" ajustada"+(nm>1?"s":"")+" à mão"]);
+      if(t.some(x=>x[0]!=="ok"))alerts++;if(!t.length)t.push(["ok","Leitura ok"]);
       const ac=f.erro?null:acertos(f,d);
       h+=`<div class="sheet ${f.erro||dup||(f.fora&&f.fora.length)?"err":""}"><div class="who"><div class="nm"><b>${alunos[f.ai].nome}</b><div class="tags">${t.map(x=>`<span class="tag ${x[0]}">${x[1]}</span>`).join("")}</div></div></div>
 <div class="score">${ac===null?"—":ac}<small>${ac===null?"":"/"+NQ[d]}</small>${ac===null?"":`<div class="bar"><i style="width:${Math.round(ac*100/NQ[d])}%"></i></div>`}</div>
-<div class="act">${f.thumb?`<button class="ghost sm" onclick="ver(${d},${f.ai})">🔍 Ver folha</button>`:""}${f.erro?"":`<button class="ghost sm" onclick="espelho(${d},${f.ai})">🪞 Espelho</button>`}<button class="ghost sm" onclick="refazer(${d},${f.ai})">📷 Refazer</button><button class="ghost sm" onclick="del(${d},${f.ai})">Remover</button></div></div>`}}
+<div class="act"><button class="ghost sm" onclick="ver(${d},${f.ai})">${f.erro?"✎ Preencher à mão":"🔍 Conferir folha"}</button>${f.erro?"":`<button class="ghost sm" onclick="espelho(${d},${f.ai})">🪞 Espelho</button>`}<button class="ghost sm" onclick="refazer(${d},${f.ai})">📷 Refazer</button><button class="ghost sm" onclick="del(${d},${f.ai})">Remover</button></div></div>`}}
   $("res").innerHTML=(n1+n2)?h:'<div class="empty">As folhas lidas aparecerão aqui.</div>';
   $("stats").innerHTML=(n1+n2)?`<div class="tile"><b>${n1}/${nA}</b><span>Dia 1</span></div><div class="tile"><b>${n2}/${nA}</b><span>Dia 2</span></div><div class="tile"><b style="color:var(${alerts?"--warn":"--ok"})">${alerts}</b><span>com avisos</span></div>`:"";
   $("c1").textContent=nA?$("turma").value+" · "+nA+" alunos":"pendente";$("st1").classList.toggle("done",!!nA&&!!$("turma").value);
@@ -412,7 +434,52 @@ function render(){
   $("exp").disabled=!(nA&&(n1+n2));if(cur)store[cur]={alunos,folhas};renderPan();salvar()}
 window.del=(d,i)=>{folhas[d]=folhas[d].filter(f=>f.ai!==i);render()};
 window.refazer=(d,i)=>{dia=d;sel=i;render();$("st2").scrollIntoView({behavior:"smooth"})};
-window.ver=(d,i)=>{$("mcap").textContent=alunos[i].nome+" · Dia "+d;$("mimg").src=folhaDe(d,i).thumb;$("modal").style.display="flex"};
+/* ---------- conferência manual ---------- */
+let cfD=0,cfI=-1,cfQ=1,cfSeq=false;
+const ST=(f,q)=>f.resp[q]||["","BRANCO"];
+window.ver=(d,i)=>{const f=folhaDe(d,i);if(!f)return;fecharEsp();cfD=d;cfI=i;cfSeq=!!f.erro;
+  const p=f.erro?0:[...Array(NQ[d])].map((_,k)=>k+1).find(q=>ST(f,q)[1]!=="");
+  cfQ=p||1;$("cf").style.display="flex";cfRender();$("cfc").scrollTop=0};
+window.ampliar=()=>{const f=folhaDe(cfD,cfI);if(!f||!f.thumb)return;$("mcap").textContent=alunos[cfI].nome+" · Dia "+cfD;$("mimg").src=f.thumb;$("modal").style.display="flex"};
+window.fecharCf=()=>{$("cf").style.display="none";cfI=-1;render()};
+window.cfSel=q=>{cfQ=q;cfRender()};
+function cfRender(){
+  const f=folhaDe(cfD,cfI);if(!f){$("cf").style.display="none";return}
+  const a=alunos[cfI],d=cfD,n=NQ[d],el=$("cfc"),sc=el.scrollTop;
+  const pend=new Set(f.erro?[]:(f.fora||[]));let nm=0;
+  for(let q=1;q<=n;q++){if(!f.erro&&ST(f,q)[1]!=="")pend.add(q);if(f.man&&f.man[q])nm++}
+  const P=[...pend].sort((x,y)=>x-y),ok=f.erro?0:acertos(f,d);
+  let h=`<div class="eh"><div><h3>${a.nome}</h3><div class="mut">Dia ${d} · prova ${a.tipo} · conferência da folha</div></div><div class="big2">${f.erro?"—":ok}<small>/${n}</small></div></div>`;
+  h+=f.erro?`<div class="help">Esta folha não foi lida automaticamente. Toque numa questão e escolha a alternativa: a seleção avança sozinha para a próxima.</div>`
+    :`<div class="help">Toque numa questão para <b>marcar ou corrigir à mão</b>. Em amarelo estão as <b>em branco</b>, em vermelho as <b>duplas</b>; as ajustadas por você têm borda tracejada ✎.</div>`;
+  if(f.thumb)h+=`<div class="cfimg" onclick="ampliar()"><img src="${f.thumb}" alt="folha lida"><span>🔍 toque para ampliar · a imagem mostra a leitura automática</span></div>`;
+  if(P.length)h+=`<div class="mut" style="margin-top:6px"><b>Para conferir (${P.length}):</b></div><div class="chips">${P.map(q=>`<span class="chpb" onclick="cfSel(${q})">Q${q}</span>`).join("")}</div>`;
+  else if(!f.erro)h+=`<div class="tag ok" style="display:inline-block;margin-top:8px">Nenhuma pendência na leitura</div>`;
+  for(const z of DISC[d]){let c="";
+    for(let q=z[1];q<=z[2];q++){const x=ST(f,q),m=f.erro||x[1]==="BRANCO",u=!m&&x[1]!=="",man=f.man&&f.man[q];
+      c+=`<div class="cq ${m?"b":u?"u":""} ${man?"m":""} ${q===cfQ?"sel":""}" onclick="cfSel(${q})"><small>Q${q}</small><b>${f.erro?"·":m?"—":u?"2×":x[0]}</b></div>`}
+    h+=`<div class="ed"><div class="dh" style="margin:0 0 6px"><b>${z[0]}</b><span class="mut">Q${z[1]}–Q${z[2]}</span></div><div class="cqs">${c}</div></div>`}
+  const x=ST(f,cfQ),m=f.erro||x[1]==="BRANCO",u=!m&&x[1]!=="",cur=m?"-":u?"":x[0];
+  const lido=f.erro?"não lida":m?"em branco":u?"marcou "+x[0]+" (dupla)":"marcou "+x[0];
+  h+=`<div class="cfbar"><div class="mut" style="margin-bottom:6px"><b style="color:var(--tx)">Questão ${cfQ}</b> · ${lido}${f.man&&f.man[cfQ]?" · ✎ ajustada":""}</div>
+<div class="alts">${["A","B","C","D"].map(L=>`<button class="${cur===L?"":"ghost"}" onclick="cfSet('${L}')">${L}</button>`).join("")}<button class="br ${cur==="-"?"":"ghost"}" onclick="cfSet('')">Em branco</button></div>
+<div class="row" style="margin-top:8px;flex-wrap:nowrap">${f.orig&&f.orig[cfQ]?`<button class="ghost sm" onclick="cfUndo()">↺ Desfazer</button>`:""}<button style="flex:1;background:var(--ok)" onclick="cfConf()">✓ Confirmar leitura</button><button class="ghost" onclick="fecharCf()">Fechar</button></div></div>`;
+  el.innerHTML=h;el.scrollTop=sc;
+  if(cfSeq){const s=el.querySelector(".cq.sel");if(s)s.scrollIntoView({block:"nearest"})}}
+window.cfSet=L=>{const f=folhaDe(cfD,cfI);if(!f)return;const q=cfQ,n=NQ[cfD];
+  if(f.erro){delete f.erro;f.resp={};for(let k=1;k<=n;k++)f.resp[k]=["","BRANCO"];f.man={};f.orig={};f.fora=[];f.extra=0}
+  f.man=f.man||{};f.orig=f.orig||{};
+  if(!f.orig[q])f.orig[q]=ST(f,q).slice();
+  f.resp[q]=L?[L,""]:["","BRANCO"];
+  if(JSON.stringify(f.resp[q])===JSON.stringify(f.orig[q])){delete f.orig[q];delete f.man[q]}else f.man[q]=true;
+  if(f.fora)f.fora=f.fora.filter(x=>x!==q);
+  f.conf=false;
+  if(cfSeq&&q<n)cfQ=q+1;
+  render();cfRender()};
+window.cfUndo=()=>{const f=folhaDe(cfD,cfI);if(!f||!f.orig||!f.orig[cfQ])return;
+  f.resp[cfQ]=f.orig[cfQ];delete f.orig[cfQ];delete f.man[cfQ];f.conf=false;render();cfRender()};
+window.cfConf=()=>{const f=folhaDe(cfD,cfI);if(!f)return;if(!f.erro)f.conf=true;fecharCf()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("cf").style.display==="flex"&&$("modal").style.display!=="flex")fecharCf()});
 $("modal").onclick=()=>$("modal").style.display="none";
 $("turma").onchange=()=>{const v=$("turma").value;if(cur)store[cur]={alunos,folhas};
   $("flb").style.opacity=v?1:.45;$("flb").style.pointerEvents=v?"auto":"none";
@@ -438,7 +505,7 @@ function espelho(d,ai){const f=folhaDe(d,ai);if(!f||f.erro)return;
  const nota=ok*VALOR/NQ[d];
  $("espc").innerHTML=`<div class="eh"><div><h3>${a.nome}</h3><div class="mut">Dia ${d} · prova ${a.tipo} · ${NQ[d]} questões</div></div><div class="big2" style="color:hsl(${hue(ok/NQ[d])} 65% 40%)">${ok}<small>/${NQ[d]}</small></div></div>
  <div class="ek"><span class="tag ok">${ok} certas</span><span class="tag err">${er} erradas</span>${br?`<span class="tag warn">${br} em branco</span>`:""}${du?`<span class="tag warn">${du} dupla(s)</span>`:""}${(f.fora||[]).length?`<span class="tag err">${f.fora.length} fora da foto</span>`:""}<span class="tag ok" style="background:var(--priS);color:var(--pri)">Nota ${fmt(nota)} de ${VALOR} · ${pc(ok/NQ[d])}</span></div>${h}
- <div class="row" style="margin-top:16px"><button class="big" onclick="fecharEsp()">Fechar e continuar</button>${f.thumb?`<button class="ghost" onclick="ver(${d},${ai})">🔍 Ver folha</button>`:""}<button class="ghost" onclick="fecharEsp();refazer(${d},${ai})">📷 Refazer</button></div>`;
+ <div class="row" style="margin-top:16px"><button class="big" onclick="fecharEsp()">Fechar e continuar</button><button class="ghost" onclick="ver(${d},${ai})">🔍 Conferir folha</button><button class="ghost" onclick="fecharEsp();refazer(${d},${ai})">📷 Refazer</button></div>`;
  $("esp").style.display="flex";$("espc").scrollTop=0}
 window.fecharEsp=()=>{$("esp").style.display="none"};
 window.espelho=espelho;
