@@ -276,6 +276,14 @@ button:active,.btn:active{transform:scale(.98)}
 #res .sheet.err:not(.op) .nm b:after{color:var(--bad)}
 #res .sheet.op{box-shadow:0 0 0 2px var(--pri)}
 #res .sheet .act button{cursor:pointer}
+
+/* abas sem quebra de linha */
+.tabs button{display:flex;align-items:center;justify-content:center;gap:2px;white-space:nowrap;padding:10px 2px;font-size:13px}
+.tabs button:first-child{flex:1.35}
+.tb-b{margin-left:4px;font-size:10.5px;padding:1px 6px}
+@media(max-width:380px){.tabs button{font-size:12px}}
+.tailw{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;padding:9px 12px;border-radius:12px;background:var(--warnS);color:var(--warn);font-weight:600;font-size:13px}
+.tailw button{min-height:34px;padding:5px 12px;font-size:13px;background:var(--warn);color:#fff}
 </style>
 </head>
 <body class="wide">
@@ -414,7 +422,7 @@ function grade(P,d,need){
     const refs=qs.slice(),tol=.45*d,gx=r=>[0,1,2,3].map(i=>r.x0+i*(r.x1-r.x0)/3);
     const snap=(r,x)=>gx(r).reduce((m,v)=>Math.abs(v-x)<Math.abs(m-x)?v:m);
     for(const b of blocos){
-      if(b.ncol>=4||b===reg||b.y0<=reg.y0-6*d||Math.abs(b.x0-reg.x0)<3*d)continue;
+      if(b.ncol>=4||b===reg||b.y0<=reg.y0-6*d||(Math.abs(b.x0-reg.x0)<3*d&&Math.abs(b.x1-reg.x1)<.6*d))continue;
       const c=refs.filter(r=>Math.abs(snap(r,b.x0)-b.x0)<tol&&Math.abs(snap(r,b.x1)-b.x1)<tol).sort((p,q)=>Math.abs(p.y0-b.y0)-Math.abs(q.y0-b.y0))[0];
       if(!c)throw new Error("bloco de questões incompleto (foto cortada ou marcação não reconhecida)");
       const nx=c.x0+(b.x0-snap(c,b.x0));b.x0=nx;b.x1=nx+(c.x1-c.x0);b.ncol=4;b.nrow=[2,5,8].find(a=>a>=b.nrow)||b.nrow;qs.push(b)}}
@@ -1083,6 +1091,17 @@ render();
   if(g("resAll").textContent==="Recolher tudo")open.clear();else sh.forEach(x=>x.dataset.k&&open.add(x.dataset.k));
   gone.clear();deco()};
  deco();
+})();
+
+/* ---------- v2: alerta quando o fim da folha sai todo em branco ---------- */
+(function(){
+ const _p=processar;
+ processar=async function(f){
+  const d=dia,ai=sel;await _p.apply(this,arguments);
+  const x=folhaDe(d,ai);if(!x||x.erro)return;const n=finais(x,d);if(n<3)return;
+  const b=document.getElementById("busy");
+  b.insertAdjacentHTML("beforeend",`<div class="tailw">⚠️ As últimas ${n} questões (Q${NQ[d]-n+1} a Q${NQ[d]}) saíram em branco. Provavelmente a parte de baixo da folha não foi lida: confira a foto.<button type="button" onclick="ver(${d},${ai})">✎ Completar à mão</button></div>`)};
+ for(const id of ["fc","fg"]){const el=document.getElementById(id);el.onchange=e=>{const f=e.target.files[0];e.target.value="";if(f)processar(f)}}
 })();
 </script>
 </body>
