@@ -225,10 +225,41 @@ button.aq.on{background:var(--badS);color:var(--bad);border-color:var(--bad);tex
  #tabC #st3{grid-column:2;grid-row:1/span 3;position:sticky;top:10px;max-height:calc(100vh - 20px);overflow:auto}
 }
 @media print{#capBar{position:static}}
+
+/* ===== v2: layout mais claro e intuitivo (nenhuma função movida ou removida) ===== */
+:root{--r:18px}
+.hero{position:sticky;top:calc(-1*(env(safe-area-inset-top,0px) + 58px));z-index:20;padding-bottom:12px;box-shadow:0 4px 18px rgba(20,32,47,.22)}
+.hero .brand{min-height:46px}
+.hero .tabs{margin-top:calc(12px + env(safe-area-inset-top,0px))}
+main{margin-top:14px!important}
+#thm{margin-left:auto;background:rgba(255,255,255,.18);min-height:40px;width:40px;padding:0;font-size:18px;border-radius:12px}
+.tabs button{position:relative}
+.tb-b{display:inline-block;margin-left:6px;font-size:11px;font-weight:700;padding:1px 7px;border-radius:99px;background:rgba(255,255,255,.22);color:inherit}
+.tabs button.on .tb-b{background:var(--priS);color:var(--pri)}
+.step{border-radius:var(--r);border-left:4px solid var(--bd);transition:border-color .2s}
+.step.done{border-left-color:var(--ok)}
+.sh h2{font-size:17px;letter-spacing:-.2px}
+.help{border-left:4px solid var(--pri);border-radius:10px}
+button:active,.btn:active{transform:scale(.98)}
+.seg button.on{color:var(--pri);font-weight:700}
+.sheet{transition:border-color .15s}.sheet:hover{border-color:var(--pri)}
+.sheet:has(.tag.warn,.tag.err){border-left:4px solid var(--warn)}
+.sheet.err{border-left-color:var(--bad)}
+.score{font-variant-numeric:tabular-nums}
+.rf{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+.rf input{flex:1;min-width:150px}
+.rf .seg2{display:flex;background:var(--bg);border-radius:12px;padding:3px;gap:3px}
+.rf .seg2 button{background:transparent;color:var(--mut);min-height:36px;padding:6px 11px;font-size:13px;border-radius:9px}
+.rf .seg2 button.on{background:var(--card);color:var(--pri);box-shadow:0 1px 4px rgba(20,32,47,.18)}
+.kbd{display:inline-block;font:600 11px/1 system-ui;padding:3px 6px;border:1px solid var(--bd);border-bottom-width:2px;border-radius:6px;background:var(--card);color:var(--tx)}
+.nores{display:none;text-align:center;color:var(--mut);padding:14px}
+@media(min-width:1000px){#tabC:not([hidden]) #st3{top:76px!important;max-height:calc(100vh - 90px)!important}}
+@media(max-width:480px){.hero h1{font-size:19px}.hero p{font-size:11.5px}}
+@media print{.hero{position:static;box-shadow:none}}
 </style>
 </head>
 <body class="wide">
-<header class="hero"><div class="brand"><div class="logo">✓</div><div><h1>Corretor de Gabaritos</h1><p>Escola Municipal Albertina Alves do Nascimento · Avaliação Trimestral · 3ª etapa</p></div></div><nav class="tabs"><button id="tbC" class="on">📝 Correção</button><button id="tbP">📊 Panorama</button><button id="tbR">📑 Relatórios</button></nav></header>
+<header class="hero"><div class="brand"><div class="logo">✓</div><div><h1>Corretor de Gabaritos</h1><p>Escola Municipal Albertina Alves do Nascimento · Avaliação Trimestral · 3ª etapa</p></div><button id="thm" type="button" aria-label="Alternar tema claro/escuro" title="Tema claro/escuro">🌓</button></div><nav class="tabs"><button id="tbC" class="on">📝 Correção<span class="tb-b" id="tbB" hidden></span></button><button id="tbP">📊 Panorama</button><button id="tbR">📑 Relatórios</button></nav></header>
 <main id="tabC">
 
 <section class="step" id="st1"><div class="sh" id="h1" role="button" tabindex="0" aria-expanded="true"><span class="num">1</span><div><h2>Turma e lista de alunos</h2><p class="sub">Escolha a turma e envie os nomes</p></div><span class="chip" id="c1">pendente</span></div>
@@ -250,12 +281,12 @@ button.aq.on{background:var(--badS);color:var(--bad);border-color:var(--bad);tex
 <div class="row" id="capBar"><label class="btn" for="fc" style="flex:1">📷 Tirar foto</label><input id="fc" type="file" accept="image/*" capture="environment">
 <label class="btn ghost" for="fg" style="flex:1">🖼️ Galeria</label><input id="fg" type="file" accept="image/*"></div>
 <label class="mut" style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="auto" checked> Abrir o espelho (certas e erradas) depois de cada correção</label>
-<div class="help"><b>Dica:</b> fotografe de cima, com a folha inteira, boa luz, sem sombra e com os quadrados pretos visíveis. Depois da leitura, o próximo aluno é selecionado automaticamente.</div>
+<div class="help"><b>Dica:</b> fotografe de cima, com a folha inteira, boa luz, sem sombra e com os quadrados pretos visíveis. Depois da leitura, o próximo aluno é selecionado automaticamente.<br><span class="mut">No computador: <span class="kbd">←</span> <span class="kbd">→</span> trocam de aluno e <span class="kbd">1</span> <span class="kbd">2</span> trocam o dia.</span></div>
 <details id="anuBox" class="anub"><summary>🚫 Anular questão <span id="anuSum" class="mut"></span></summary><div class="mut" style="margin:8px 0 6px">Se o professor encontrar erro em uma questão, toque no número dela. A questão deixa de valer para todos os alunos (prova regular e adaptada) e a nota do dia (de 24) passa a ser calculada só sobre as questões válidas. Toque de novo para desfazer.</div><div id="anuQ"></div></details>
 <details id="trBox" class="anub"><summary>⇄ Alunos transferidos <span id="trSum" class="mut"></span></summary><div class="mut" style="margin:8px 0 6px">Marque os alunos que foram transferidos. Eles saem da correção, das notas, das listas e dos relatórios, e não precisam de folha. Desmarque para reativar.</div><div id="trL" style="max-height:240px;overflow:auto"></div></details></section>
 
 <section class="step" id="st3"><div class="sh"><span class="num">3</span><div><h2>Conferir leituras</h2><p class="sub">Revise avisos e corrija o registro, se preciso</p></div><span class="chip" id="c3">aguardando</span></div>
-<div id="stats" class="stats"></div><div id="res"><div class="empty">As folhas lidas aparecerão aqui.</div></div></section>
+<div id="stats" class="stats"></div><div class="rf" id="rf" hidden><input type="text" id="resQ" placeholder="🔎 Buscar aluno nas folhas lidas…" aria-label="Buscar aluno"><div class="seg2" id="resF"><button type="button" data-f="" class="on">Todas</button><button type="button" data-f="w">Com avisos</button><button type="button" data-f="ok">Sem avisos</button></div></div><div id="res"><div class="empty">As folhas lidas aparecerão aqui.</div></div><div class="nores" id="nores">Nenhuma folha encontrada com esse filtro.</div></section>
 
 <section class="step" id="st4"><div class="sh"><span class="num">4</span><div><h2>Baixar resultado</h2><p class="sub">Planilha Excel com turma, nomes, notas e respostas</p></div></div>
 <button id="exp" class="big">⬇️ Baixar Excel</button><div id="msg" class="mut" style="margin-top:8px;text-align:center"></div>
@@ -957,6 +988,42 @@ try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}ca
 $("auto").onchange=salvar;
 carregar();carregado=true;
 render();
+
+/* ---------- v2: acréscimos (tema, filtro, atalhos, selo) ---------- */
+(function(){
+ const g=id=>document.getElementById(id);let fil="";
+ const root=document.documentElement;
+ try{const t=localStorage.getItem("cg_tema");if(t)root.dataset.theme=t}catch(e){}
+ g("thm").onclick=()=>{const dark=root.dataset.theme?root.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;
+  const n=dark?"light":"dark";root.dataset.theme=n;try{localStorage.setItem("cg_tema",n)}catch(e){}};
+ if(!document.getElementById("dkFix")){const st=document.createElement("style");st.id="dkFix";
+  st.textContent=':root[data-theme="dark"]{--bg:#0e131b;--card:#171e29;--tx:#e9eef6;--mut:#93a1b5;--pri:#6f9bff;--pri2:#8c7bff;--priS:#1e2a44;--ok:#4cc38a;--okS:#12332a;--bad:#ff8a82;--badS:#3a1c1b;--warn:#f0b955;--warnS:#3a2d12;--bd:#2a3546;--sh:none;color-scheme:dark}';
+  document.head.appendChild(st)}
+ function pos(){
+  const q=g("resQ").value.trim().toLowerCase();let vis=0,tot=0;
+  g("res").querySelectorAll(".sheet").forEach(el=>{tot++;
+   const nm=(el.querySelector(".nm b")||{textContent:""}).textContent.toLowerCase(),
+    w=!!el.querySelector(".tag.warn,.tag.err");
+   const ok=(!q||nm.includes(q))&&(fil===""||(fil==="w"?w:!w));
+   el.style.display=ok?"":"none";if(ok)vis++});
+  g("rf").hidden=!tot;g("nores").style.display=tot&&!vis?"block":"none";
+  const B=g("tbB");let n1=0,n2=0;
+  try{n1=folhas[1].filter(f=>ativo(f.ai)).length;n2=folhas[2].filter(f=>ativo(f.ai)).length}catch(e){}
+  const nA=nAtivos();B.hidden=!nA;B.textContent=nA?Math.min(n1,n2)+"/"+nA:""}
+ const _r=render;render=function(){_r.apply(this,arguments);pos()};
+ g("resQ").oninput=pos;
+ g("resF").onclick=e=>{const b=e.target.closest("button");if(!b)return;fil=b.dataset.f;
+  g("resF").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));pos()};
+ for(const id of ["tbC","tbP","tbR"])g(id).addEventListener("click",()=>window.scrollTo({top:0}));
+ document.addEventListener("keydown",e=>{
+  if(e.ctrlKey||e.metaKey||e.altKey)return;const t=e.target.tagName;
+  if(/INPUT|SELECT|TEXTAREA/.test(t)||e.target.isContentEditable)return;
+  if(["esp","cf","modal"].some(i=>g(i).style.display==="flex")||g("tabC").hidden)return;
+  if(e.key==="ArrowRight"){irAluno(1);e.preventDefault()}
+  else if(e.key==="ArrowLeft"){irAluno(-1);e.preventDefault()}
+  else if(e.key==="1")g("sg1").click();else if(e.key==="2")g("sg2").click()});
+ pos();
+})();
 </script>
 </body>
 </html>
