@@ -262,12 +262,12 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 </script>
 <script>
 //CORE_START
-const CH={regular:{1:"DACDCD"+"BAAACC"+"BBAACA"+"BDABAC"+"BCABCB",2:"CABBDA"+"CBCABC"+"CADBAD"+"DACCDB"},
+const CH={regular:{1:"DACDCD"+"BAAACC"+"BBAACA"+"BDABAC"+"BCABCB",2:"CABBDA"+"CBCABC"+"BACBAB"+"DACCDB"},
 adaptada:{1:"BCACAA"+"AACDBA"+"BBAACA"+"CABCBC"+"BACBCA",2:"CBAADD"+"BABAAB"+"AAAAAA"+"BAAAAB"}};
 const DISC={1:[["L. Portuguesa",1,6],["Arte",7,12],["Ed. Física",13,18],["Ens. Religioso",19,24],["L. Inglesa",25,30]],
 2:[["Matemática",1,6],["Ciências",7,12],["Geografia",13,18],["História",19,24]]};
 const NQ={1:30,2:24},VALOR=24,LIM_MARCA=0.72;
-let anul={1:[],2:[]};
+let anul={1:[],2:[16,17]};
 const sanAnul=a=>{const r={1:[],2:[]};for(const d of [1,2])if(a&&Array.isArray(a[d]))r[d]=[...new Set(a[d].map(Number).filter(q=>q>=1&&q<=NQ[d]))].sort((x,y)=>x-y);return r};
 const isAn=(d,q)=>anul[d].includes(q),NV=d=>Math.max(1,NQ[d]-anul[d].length),
  dqv=(d,j)=>{const z=DISC[d][j];let n=0;for(let q=z[1];q<=z[2];q++)if(!isAn(d,q))n++;return n},
@@ -830,7 +830,7 @@ $("exp").onclick=async()=>{
 /* ---------- armazenamento local (localStorage) ---------- */
 const LS_KEY="corretor_gabaritos_v1";
 let carregado=false,saveT=0;
-const dumpState=(semThumb)=>JSON.stringify({v:1,cur,dia,sel,anul,auto:$("auto").checked,store:(cur&&(store[cur]={alunos,folhas}),store)},
+const dumpState=(semThumb)=>JSON.stringify({v:2,cur,dia,sel,anul,auto:$("auto").checked,store:(cur&&(store[cur]={alunos,folhas}),store)},
   (k,v)=>k==="cells"||(semThumb&&k==="thumb")?undefined:v);
 function status(t,bad){const e=$("sav");e.textContent=t;e.style.color=bad?"var(--bad)":""}
 function salvar(){if(!carregado)return;clearTimeout(saveT);saveT=setTimeout(salvarAgora,350)}
@@ -841,7 +841,7 @@ function salvarAgora(){if(!carregado)return;clearTimeout(saveT);
     catch(e){localStorage.setItem(LS_KEY,dumpState(true));status("💾 Salvo às "+hora+" (sem as miniaturas das folhas: o navegador ficou sem espaço). Baixe um backup.",true)}
   }catch(e){status("⚠️ Não foi possível salvar neste navegador (modo privado ou sem espaço). Use “Baixar backup”.",true)}}
 function aplicar(D){
-  store=D.store||{};anul=sanAnul(D.anul);alunos=[];folhas={1:[],2:[]};cur="";sel=0;dia=1;
+  store=D.store||{};anul=sanAnul(D.anul);if((D.v||1)<2){anul[2]=[...new Set([...anul[2],16,17])].sort((a,b)=>a-b)}alunos=[];folhas={1:[],2:[]};cur="";sel=0;dia=1;
   if(typeof D.auto==="boolean")$("auto").checked=D.auto;
   const v=D.cur||"";
   if(v&&[...$("turma").options].some(o=>o.value===v)){
