@@ -201,33 +201,58 @@ button.aq.on{background:var(--badS);color:var(--bad);border-color:var(--bad);tex
 .lqp table.lq.rp td:nth-child(2),.lqp table.lq.rp th:nth-child(2){text-align:left!important;max-width:60mm;overflow:hidden;text-overflow:ellipsis}
 .lqp .fleg{font-size:8.5px;margin-top:3px}
 }
+
+/* ===== Layout: mais funcional e leve ===== */
+#st1 .sh{cursor:pointer}
+#st1 .sh:after{content:"▾";color:var(--mut);font-size:16px;transition:transform .2s;flex:none}
+#st1.fold .sh{margin-bottom:0}#st1.fold #b1{display:none}#st1.fold .sh:after{transform:rotate(-90deg)}
+#st1.fold{padding:10px 14px}#st1.fold .sub{display:none}
+.sh{flex-wrap:wrap}.sh>div{min-width:130px}.sh .chip{margin-left:auto}
+.foco .fm span{color:#fff}
+.act{flex-wrap:wrap}.act button{flex:1 1 auto}
+#capBar{position:sticky;bottom:0;z-index:5;background:var(--card);padding:10px 0 calc(env(safe-area-inset-bottom,0px) + 8px);margin:0;flex-wrap:nowrap;box-shadow:0 -10px 14px -12px rgba(20,32,47,.35)}
+#capBar .btn{flex:1;padding:14px 10px}
+.btn,button{min-height:42px}.tabs button,.seg button{min-height:40px}
+:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+@media(max-width:480px){
+ main{padding:0 8px}.step{padding:14px 12px}
+ .act button{flex:1 1 calc(50% - 8px)}
+}
+@media(min-width:1000px){
+ body.wide .tabs,body.wide .brand{max-width:1160px;margin-left:auto;margin-right:auto}
+ #tabC:not([hidden]){display:grid;grid-template-columns:minmax(380px,450px) minmax(0,1fr);column-gap:14px;max-width:1160px;align-items:start}
+ #tabC #st1{grid-column:1;grid-row:1}#tabC #st2{grid-column:1;grid-row:2}#tabC #st4{grid-column:1;grid-row:3}
+ #tabC #st3{grid-column:2;grid-row:1/span 3;position:sticky;top:10px;max-height:calc(100vh - 20px);overflow:auto}
+}
+@media print{#capBar{position:static}}
 </style>
 </head>
-<body>
+<body class="wide">
 <header class="hero"><div class="brand"><div class="logo">✓</div><div><h1>Corretor de Gabaritos</h1><p>Escola Municipal Albertina Alves do Nascimento · Avaliação Trimestral · 3ª etapa</p></div></div><nav class="tabs"><button id="tbC" class="on">📝 Correção</button><button id="tbP">📊 Panorama</button><button id="tbR">📑 Relatórios</button></nav></header>
 <main id="tabC">
 
-<section class="step" id="st1"><div class="sh"><span class="num">1</span><div><h2>Turma e lista de alunos</h2><p class="sub">Escolha a turma e envie os nomes</p></div><span class="chip" id="c1">pendente</span></div>
-<div class="row">
+<section class="step" id="st1"><div class="sh" id="h1" role="button" tabindex="0" aria-expanded="true"><span class="num">1</span><div><h2>Turma e lista de alunos</h2><p class="sub">Escolha a turma e envie os nomes</p></div><span class="chip" id="c1">pendente</span></div>
+<div id="b1"><div class="row">
 <label class="field">Turma<select id="turma" style="min-width:160px"><option value="">Selecione a turma…</option><option value="6º ano A">6º ano A</option><option value="6º ano B">6º ano B</option><option value="6º ano C">6º ano C</option><option value="7º ano A">7º ano A</option><option value="7º ano B">7º ano B</option><option value="7º ano C">7º ano C</option><option value="8º ano A">8º ano A</option><option value="8º ano B">8º ano B</option><option value="8º ano C">8º ano C</option><option value="9º ano A">9º ano A</option><option value="9º ano B">9º ano B</option><option value="9º ano C">9º ano C</option></select></label>
 <div class="field" style="flex:1;min-width:200px">Lista de alunos (CSV ou Excel)<label class="btn ghost" id="flb" for="fl" style="opacity:.45;pointer-events:none">📋 Escolher arquivo</label><input id="fl" type="file" accept=".csv,.txt,.xlsx,.xls"></div>
 </div>
 <div id="lst" class="mut" style="margin-top:8px">Escolha a turma primeiro para liberar o envio da lista.</div><div id="avs" style="display:none;margin-top:8px;padding:10px 12px;border-radius:12px;background:var(--warnS);color:var(--warn);font-size:13px;font-weight:600">Atenção: os gabaritos de respostas carregados aqui são do 8º ano. Para outras séries, envie os gabaritos oficiais para eu incluir.</div>
-<div class="help">A lista precisa ter uma coluna <b>Nome</b>. Colunas opcionais: Turma e Tipo (“adaptada” para quem fez a prova adaptada).</div></section>
+<div class="help">A lista precisa ter uma coluna <b>Nome</b>. Colunas opcionais: Turma e Tipo (“adaptada” para quem fez a prova adaptada).</div></div></section>
 
 <section class="step" id="st2"><div class="sh"><span class="num">2</span><div><h2>Ler os gabaritos</h2><p class="sub">Escolha o dia e o aluno, depois fotografe a folha</p></div><span class="chip" id="c2">nenhuma folha</span></div>
 <div class="seg"><button id="sg1" class="on">Dia 1 · 30 questões</button><button id="sg2">Dia 2 · 24 questões</button></div>
-<details id="anuBox" class="anub"><summary>🚫 Anular questão <span id="anuSum" class="mut"></span></summary><div class="mut" style="margin:8px 0 6px">Se o professor encontrar erro em uma questão, toque no número dela. A questão deixa de valer para todos os alunos (prova regular e adaptada) e a nota do dia (de 24) passa a ser calculada só sobre as questões válidas. Toque de novo para desfazer.</div><div id="anuQ"></div></details>
 <div id="foco" class="foco vazio" aria-live="polite"></div>
 <div class="row" style="margin-top:12px">
 <label class="field" style="flex:1;min-width:210px">Trocar aluno<select id="selA" style="width:100%"></select></label>
-<label class="field">Prova<select id="selT"><option value="regular">regular</option><option value="adaptada">adaptada</option></select></label></div>
-<div id="prog" class="mut" style="margin:10px 0 2px"></div><div class="bar" style="width:100%;margin:0 0 12px"><i id="progb" style="width:0"></i></div>
-<div class="row"><label class="btn" for="fc" style="flex:1">📷 Tirar foto</label><input id="fc" type="file" accept="image/*" capture="environment">
+<label class="field">Prova<select id="selT"><option value="regular">regular</option><option value="adaptada">adaptada</option></select></label><button type="button" class="ghost" style="align-self:flex-end" onclick="transfSel()">⇄ Transferido</button></div>
+<div id="prog" class="mut" style="margin:10px 0 2px"></div><div class="bar" style="width:100%;margin:0 0 8px"><i id="progb" style="width:0"></i></div>
+<div id="busy" class="mut" style="margin:0 0 6px;font-weight:600"></div>
+<div class="row" id="capBar"><label class="btn" for="fc" style="flex:1">📷 Tirar foto</label><input id="fc" type="file" accept="image/*" capture="environment">
 <label class="btn ghost" for="fg" style="flex:1">🖼️ Galeria</label><input id="fg" type="file" accept="image/*"></div>
-<div id="busy" class="mut" style="margin-top:10px;font-weight:600"></div>
 <label class="mut" style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="auto" checked> Abrir o espelho (certas e erradas) depois de cada correção</label>
-<div class="help"><b>Dica:</b> fotografe de cima, com a folha inteira, boa luz, sem sombra e com os quadrados pretos visíveis. Depois da leitura, o próximo aluno é selecionado automaticamente.</div></section>
+<div class="help"><b>Dica:</b> fotografe de cima, com a folha inteira, boa luz, sem sombra e com os quadrados pretos visíveis. Depois da leitura, o próximo aluno é selecionado automaticamente.</div>
+<details id="anuBox" class="anub"><summary>🚫 Anular questão <span id="anuSum" class="mut"></span></summary><div class="mut" style="margin:8px 0 6px">Se o professor encontrar erro em uma questão, toque no número dela. A questão deixa de valer para todos os alunos (prova regular e adaptada) e a nota do dia (de 24) passa a ser calculada só sobre as questões válidas. Toque de novo para desfazer.</div><div id="anuQ"></div></details>
+<details id="trBox" class="anub"><summary>⇄ Alunos transferidos <span id="trSum" class="mut"></span></summary><div class="mut" style="margin:8px 0 6px">Marque os alunos que foram transferidos. Eles saem da correção, das notas, das listas e dos relatórios, e não precisam de folha. Desmarque para reativar.</div><div id="trL" style="max-height:240px;overflow:auto"></div></details></section>
 
 <section class="step" id="st3"><div class="sh"><span class="num">3</span><div><h2>Conferir leituras</h2><p class="sub">Revise avisos e corrija o registro, se preciso</p></div><span class="chip" id="c3">aguardando</span></div>
 <div id="stats" class="stats"></div><div id="res"><div class="empty">As folhas lidas aparecerão aqui.</div></div></section>
@@ -249,7 +274,7 @@ button.aq.on{background:var(--badS);color:var(--bad);border-color:var(--bad);tex
 <div id="rMsg" class="mut noprint" style="margin:8px 0 12px"></div><div id="rOut"></div></section></main>
 <div id="esp"><div class="pn" id="espc"></div></div>
 <div id="cf"><div class="pn" id="cfc"></div></div>
-<div id="mgAv" style="position:fixed;inset:0;background:rgba(8,12,20,.75);display:none;align-items:center;justify-content:center;z-index:12;padding:14px"><div style="background:var(--card);color:var(--tx);border-radius:16px;max-width:460px;width:100%;max-height:90vh;overflow:auto;padding:18px 18px 14px;box-shadow:0 10px 40px rgba(0,0,0,.4)"><h3 style="margin:0 0 8px">✅ Backup mesclado</h3><div id="mgRes" class="mut" style="margin-bottom:10px"></div><div style="background:var(--priS);border-left:4px solid var(--warn);border-radius:10px;padding:10px 12px;font-size:14px"><b style="color:var(--warn)">⚠️ Não esqueça:</b><ul style="margin:6px 0 0;padding-left:18px"><li><b>Questões anuladas</b> são somadas entre os dois lados. Se você <u>desfez</u> uma anulação em um aparelho, ela não some ao mesclar: desfaça também no outro.</li><li><b>Tipo de prova</b> (regular ou adaptada): se o aluno já tinha folha neste aparelho, o tipo atual é mantido. Confira se está certo.</li><li>Quando o aluno tem folha nos dois lados, fica a <b>mais completa</b>. Confira as folhas que você corrigiu por último.</li></ul></div><div style="margin-top:12px;text-align:right"><button onclick="document.getElementById('mgAv').style.display='none'">Entendi</button></div></div></div>
+<div id="mgAv" style="position:fixed;inset:0;background:rgba(8,12,20,.75);display:none;align-items:center;justify-content:center;z-index:12;padding:14px"><div style="background:var(--card);color:var(--tx);border-radius:16px;max-width:460px;width:100%;max-height:90vh;overflow:auto;padding:18px 18px 14px;box-shadow:0 10px 40px rgba(0,0,0,.4)"><h3 style="margin:0 0 8px">✅ Backup mesclado</h3><div id="mgRes" class="mut" style="margin-bottom:10px"></div><div style="background:var(--priS);border-left:4px solid var(--warn);border-radius:10px;padding:10px 12px;font-size:14px"><b style="color:var(--warn)">⚠️ Não esqueça:</b><ul style="margin:6px 0 0;padding-left:18px"><li><b>Questões anuladas</b> são somadas entre os dois lados. Se você <u>desfez</u> uma anulação em um aparelho, ela não some ao mesclar: desfaça também no outro.</li><li><b>Tipo de prova</b> (regular ou adaptada): se o aluno já tinha folha neste aparelho, o tipo atual é mantido. Confira se está certo.</li><li><b>Alunos transferidos</b> também são somados: se marcou alguém como transferido em um aparelho, ele passa a ser transferido no outro. Reativar precisa ser feito nos dois.</li><li>Quando o aluno tem folha nos dois lados, fica a <b>mais completa</b>. Confira as folhas que você corrigiu por último.</li></ul></div><div style="margin-top:12px;text-align:right"><button onclick="document.getElementById('mgAv').style.display='none'">Entendi</button></div></div></div>
 <div id="modal"><div id="mcap"></div><img id="mimg" alt="conferência"><span class="mut" style="color:#cbd5e1">Toque para fechar</span></div>
 
 <script>/*! xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
@@ -394,6 +419,7 @@ function readSheet(gray,w,h,need){
 const $=id=>document.getElementById(id);
 let alunos=[],folhas={1:[],2:[]},dia=1,sel=0,store={},cur="",panSel="8*",panOrd="nome";
 const tipoDe=i=>alunos[i]?alunos[i].tipo:"regular";
+const ativo=i=>!!alunos[i]&&!alunos[i].transf,nAtivos=()=>alunos.filter(a=>!a.transf).length;
 const folhaDe=(d,i)=>folhas[d].find(f=>f.ai===i);
 function acertos(f,d){const ch=CH[tipoDe(f.ai)][d];let ok=0;for(let q=1;q<=NQ[d];q++){const r=f.resp[q];if(!isAn(d,q)&&r&&r[1]===""&&r[0]===ch[q-1])ok++}return ok}
 
@@ -410,7 +436,7 @@ async function lerLista(file){
   folhas={1:[],2:[]};sel=0;
   if(cU&&rows[0][cU]){const v=String(rows[0][cU]).trim();if([...$("turma").options].some(o=>o.value===v))$("turma").value=v}
   cur=$("turma").value;
-  $("lst").innerHTML=`<span class="ok">✓ ${alunos.length} alunos carregados</span>`;render()}
+  $("lst").innerHTML=`<span class="ok">✓ ${nAtivos()} alunos carregados</span>`;render()}
 
 function grayFrom(bmp,rot){
   const sc=Math.min(1,1800/Math.max(bmp.width,bmp.height));let w=Math.round(bmp.width*sc),h=Math.round(bmp.height*sc);
@@ -444,12 +470,13 @@ async function processar(f){
   if(item.erro)$("busy").innerHTML=`<span style="color:var(--bad)">Não consegui ler a folha de ${alunos[ai].nome}. Tente outra foto ou use “✎ Preencher à mão”.</span>`;
   else{const rs=Object.values(item.resp).slice(0,NQ[d]),br=rs.filter(r=>r[1]==="BRANCO").length,mu=rs.filter(r=>r[1]==="MÚLTIPLA").length;
     $("busy").innerHTML=`<span class="ok">✓ ${alunos[ai].nome}: ${acertos(item,d)}/${NV(d)} acertos</span>${br||mu?` <span style="color:var(--warn)">(${br} em branco, ${mu} dupla)</span>`:""}${(item.fora||[]).length?` <span style="color:var(--bad)">· ${item.fora.length} questão(ões) FORA da foto, refaça com a folha inteira</span>`:finais(item,d)>=3?` <span style="color:var(--warn)">· as últimas ${finais(item,d)} vieram em branco, confira a foto</span>`:""}`;
-    for(let k=1;k<=alunos.length;k++){const j=(ai+k)%alunos.length;if(!folhaDe(d,j)){sel=j;break}}}
+    for(let k=1;k<=alunos.length;k++){const j=(ai+k)%alunos.length;if(!folhaDe(d,j)&&!alunos[j].transf){sel=j;break}}}
   render();if(!item.erro&&$("auto").checked)espelho(d,ai)}
 let lendoAi=-1,focoKey="";
 const iniciais=n=>{const p=n.trim().split(/\s+/).filter(w=>!/^(d[aeo]s?|e)$/i.test(w));return((p[0]||"?")[0]+(p.length>1?p[p.length-1][0]:"")).toUpperCase()};
 function renderFoco(){
-  const el=$("foco");if(!el)return;const nA=alunos.length;
+  const el=$("foco");if(!el)return;const nA=nAtivos();
+  if(alunos.length&&!nA){el.className="foco vazio";el.innerHTML='<div class="fv">⇄ Todos os alunos desta turma estão marcados como transferidos.</div>';focoKey="";return}
   if(!nA){el.className="foco vazio";el.innerHTML='<div class="fv">👆 Carregue a lista de alunos (etapa 1) para começar a leitura.</div>';focoKey="";return}
   const a=alunos[sel];if(!a)return;
   const f=folhaDe(dia,sel),lendo=lendoAi===sel,key=dia+"-"+sel,flash=key!==focoKey;focoKey=key;
@@ -459,24 +486,35 @@ function renderFoco(){
   else if(f)st=`<div class="fst jl">⚠️ Folha já lida (${acertos(f,dia)}/${NV(dia)}). Uma nova foto substitui a leitura.</div>`;
   else st='<div class="fst">📷 Aguardando a foto da folha deste aluno</div>';
   el.className="foco";void el.offsetWidth;el.className="foco"+(lendo?" lendo":"")+(flash?" flash":"");
-  el.innerHTML=`<div class="fl">${lendo?"Lendo agora":"Aluno da vez"}</div><div class="av">${iniciais(a.nome)}</div><div class="fn"><b>${a.nome}</b><div class="fm"><span>Dia ${dia}</span><span>Prova ${a.tipo}</span><span>${sel+1} de ${nA}</span></div></div><div class="nv"><button onclick="irAluno(-1)" aria-label="Aluno anterior">‹</button><button onclick="irAluno(1)" aria-label="Próximo aluno">›</button></div>${st}`}
+  el.innerHTML=`<div class="fl">${lendo?"Lendo agora":"Aluno da vez"}</div><div class="av">${iniciais(a.nome)}</div><div class="fn"><b>${a.nome}</b><div class="fm"><span>Dia ${dia}</span><span>Prova ${a.tipo}</span><span>${alunos.slice(0,sel).filter(x=>!x.transf).length+1} de ${nA}</span></div></div><div class="nv"><button onclick="irAluno(-1)" aria-label="Aluno anterior">‹</button><button onclick="irAluno(1)" aria-label="Próximo aluno">›</button></div>${st}`}
 function renderAnul(){const el=$("anuQ");if(!el)return;const d=dia,n=anul[d].length;
   $("anuSum").textContent=anTxt()?"· "+anTxt():"";
   el.innerHTML=`<div class="mut" style="margin-bottom:6px"><b>Dia ${d}</b> · ${NV(d)} questões válidas${n?" · "+n+" anulada"+(n>1?"s":""):""}</div>`+DISC[d].map(z=>`<div class="anr"><span>${z[0]}</span>${Array.from({length:z[2]-z[1]+1},(_,k)=>z[1]+k).map(q=>`<button type="button" class="aq${isAn(d,q)?" on":""}" onclick="anular(${d},${q})">${q}</button>`).join("")}</div>`).join("")}
 window.anular=(d,q)=>{const i=anul[d].indexOf(q);
   if(i<0){if(!confirm("Anular a questão "+q+" do Dia "+d+"? Ela deixa de valer para todos os alunos e as notas do dia serão recalculadas."))return;anul[d].push(q);anul[d].sort((a,b)=>a-b)}else anul[d].splice(i,1);
   salvar();render();$("anuBox").open=true};
-window.irAluno=k=>{if(!alunos.length)return;sel=(sel+k+alunos.length)%alunos.length;$("busy").textContent="";render()};
+window.irAluno=k=>{if(!alunos.length)return;let j=sel;for(let n=0;n<alunos.length;n++){j=(j+k+alunos.length)%alunos.length;if(!alunos[j].transf){sel=j;break}}$("busy").textContent="";render()};
+window.transf=(i,v)=>{const a=alunos[i];if(!a)return;
+  if(v){const n=[1,2].filter(d=>folhaDe(d,i)).length;if(!confirm("Marcar "+a.nome+" como transferido? Ele deixa de entrar em notas, listas e relatórios."+(n?" A folha já lida fica guardada.":"")+" Dá para reativar depois.")){render();return}a.transf=true}else delete a.transf;
+  if(a.transf&&sel===i){const j=alunos.findIndex((x,k)=>k>i&&!x.transf),j2=j>=0?j:alunos.findIndex(x=>!x.transf);if(j2>=0)sel=j2}
+  $("busy").textContent="";render()};
+window.transfSel=()=>transf(sel,true);
+function renderTransf(){const el=$("trL");if(!el)return;const nT=alunos.filter(a=>a.transf).length,sc=el.scrollTop;
+  $("trSum").textContent=nT?"· "+nT:"";
+  el.innerHTML=alunos.length?alunos.map((a,i)=>`<label style="display:flex;gap:8px;align-items:center;padding:5px 2px"><input type="checkbox" ${a.transf?"checked":""} onchange="transf(${i},this.checked)"><span${a.transf?' style="text-decoration:line-through;color:var(--mut)"':""}>${a.nome}</span>${a.transf?'<span class="tag warn">transferido</span>':""}</label>`).join(""):'<div class="mut">Carregue a lista de alunos primeiro.</div>';
+  el.scrollTop=sc}
 function render(){
-  const nA=alunos.length;let alerts=0,h="";
-  const n1=folhas[1].length,n2=folhas[2].length;
+  if(alunos[sel]&&alunos[sel].transf){const j=alunos.findIndex(x=>!x.transf);if(j>=0)sel=j}
+  const nA=nAtivos();let alerts=0,h="";
+  const fa=d=>folhas[d].filter(f=>ativo(f.ai));
+  const n1=fa(1).length,n2=fa(2).length;
   // seleção de aluno
-  $("selA").innerHTML=nA?alunos.map((a,i)=>`<option value="${i}"${i===sel?" selected":""}>${folhaDe(dia,i)?"✓ ":""}${a.nome}</option>`).join(""):'<option>Carregue a lista primeiro</option>';
+  $("selA").innerHTML=nA?alunos.map((a,i)=>a.transf?"":`<option value="${i}"${i===sel?" selected":""}>${folhaDe(dia,i)?"✓ ":""}${a.nome}</option>`).join(""):'<option>Carregue a lista primeiro</option>';
   if(nA)$("selT").value=tipoDe(sel);
   $("sg1").classList.toggle("on",dia===1);$("sg2").classList.toggle("on",dia===2);
-  const lidos=folhas[dia].length;
-  $("prog").textContent=nA?`Dia ${dia}: ${lidos} de ${nA} alunos lidos`:"";$("progb").style.width=nA?Math.round(lidos*100/nA)+"%":"0";renderFoco();renderAnul();
-  for(const d of [1,2]){const L=[...folhas[d]].sort((a,b)=>a.ai-b.ai);if(!L.length)continue;
+  const lidos=fa(dia).length;
+  $("prog").textContent=nA?`Dia ${dia}: ${lidos} de ${nA} alunos lidos`:"";$("progb").style.width=nA?Math.round(lidos*100/nA)+"%":"0";renderFoco();renderAnul();renderTransf();
+  for(const d of [1,2]){const L=[...fa(d)].sort((a,b)=>a.ai-b.ai);if(!L.length)continue;
     h+=`<div class="dh"><b>Dia ${d}</b><span class="mut">${L.length} de ${nA} alunos</span></div>`;
     for(const f of L){
       const dup=folhas[d].filter(x=>x.ai===f.ai).length>1;
@@ -496,10 +534,11 @@ function render(){
 <div class="act"><button class="ghost sm" onclick="ver(${d},${f.ai})">${f.erro?"✎ Preencher à mão":"🔍 Conferir folha"}</button>${f.erro?"":`<button class="ghost sm" onclick="espelho(${d},${f.ai})">🪞 Espelho</button>`}<button class="ghost sm" onclick="refazer(${d},${f.ai})">📷 Refazer</button><button class="ghost sm" onclick="del(${d},${f.ai})">Remover</button></div></div>`}}
   $("res").innerHTML=(n1+n2)?h:'<div class="empty">As folhas lidas aparecerão aqui.</div>';
   $("stats").innerHTML=(n1+n2)?`<div class="tile"><b>${n1}/${nA}</b><span>Dia 1</span></div><div class="tile"><b>${n2}/${nA}</b><span>Dia 2</span></div><div class="tile"><b style="color:var(${alerts?"--warn":"--ok"})">${alerts}</b><span>com avisos</span></div>`:"";
-  $("c1").textContent=nA?$("turma").value+" · "+nA+" alunos":"pendente";$("st1").classList.toggle("done",!!nA&&!!$("turma").value);
+  const feito1=!!nA&&!!$("turma").value;$("st1").classList.toggle("fold",feito1&&!$("st1").classList.contains("aberta"));$("h1").setAttribute("aria-expanded",String(!$("st1").classList.contains("fold")));
+  const nT=alunos.length-nA;$("c1").textContent=nA?$("turma").value+" · "+nA+" alunos"+(nT?" ("+nT+" transf.)":""):"pendente";$("st1").classList.toggle("done",!!nA&&!!$("turma").value);
   $("c2").textContent=(n1+n2)?`D1 ${n1} · D2 ${n2}`:"nenhuma folha";$("st2").classList.toggle("done",!!nA&&n1===nA&&n2===nA);
   $("c3").textContent=(n1+n2)?(alerts?alerts+" para revisar":"tudo certo"):"aguardando";$("st3").classList.toggle("done",!!(n1+n2)&&!alerts);
-  $("exp").disabled=!(nA&&(n1+n2));if(cur)store[cur]={alunos,folhas};renderPan();salvar()}
+  $("exp").disabled=!(nA&&(n1+n2));if(cur)store[cur]={alunos,folhas};if(!$("tabP").hidden||!$("tabR").hidden)renderPan();else panSujo=true;salvar()}
 window.del=(d,i)=>{folhas[d]=folhas[d].filter(f=>f.ai!==i);render()};
 window.refazer=(d,i)=>{dia=d;sel=i;render();$("st2").scrollIntoView({behavior:"smooth"})};
 /* ---------- conferência manual ---------- */
@@ -553,7 +592,7 @@ $("turma").onchange=()=>{const v=$("turma").value;if(cur)store[cur]={alunos,folh
   $("flb").style.opacity=v?1:.45;$("flb").style.pointerEvents=v?"auto":"none";
   $("avs").style.display=v&&!v.startsWith("8")?"block":"none";
   const T=store[v];alunos=T?T.alunos:[];folhas=T?T.folhas:{1:[],2:[]};sel=0;cur=v;
-  $("lst").innerHTML=alunos.length?`<span class="ok">✓ ${alunos.length} alunos carregados</span>`:(v?"Agora envie a lista de alunos de "+v+".":"Escolha a turma primeiro para liberar o envio da lista.");
+  $("lst").innerHTML=alunos.length?`<span class="ok">✓ ${nAtivos()} alunos carregados${alunos.length>nAtivos()?" · "+(alunos.length-nAtivos())+" transferido(s)":""}</span>`:(v?"Agora envie a lista de alunos de "+v+".":"Escolha a turma primeiro para liberar o envio da lista.");
   $("busy").textContent="";render()};
 $("fl").onchange=e=>e.target.files[0]&&lerLista(e.target.files[0]);
 $("selA").onchange=e=>{sel=+e.target.value;$("busy").textContent="";render()};
@@ -592,7 +631,7 @@ function calc(keys){
  const o={stu:[]};
  for(const d of [1,2])o[d]={n:0,disc:DISC[d].map((x,j)=>({nome:x[0],ini:x[1],fim:x[2],sum:0,n:0,tq:dqv(d,j)})),q:[...Array(NQ[d]+1)].map(()=>({ok:0,n:0,A:0,B:0,C:0,D:0,br:0,mu:0}))};
  for(const k of keys){const T=store[k];if(!T)continue;
-  T.alunos.forEach((a,i)=>{const s={turma:k,i,nome:a.nome,tipo:a.tipo,d:{},br:0,brd:{1:0,2:0}};
+  T.alunos.forEach((a,i)=>{if(a.transf)return;const s={turma:k,i,nome:a.nome,tipo:a.tipo,d:{},br:0,brd:{1:0,2:0}};
    for(const d of [1,2]){const f=T.folhas[d].find(x=>x.ai===i);if(!f||f.erro)continue;
     const ch=CH[a.tipo][d],dd=o[d].disc.map(()=>0);o[d].n++;
     for(let q=1;q<=NQ[d];q++){if(isAn(d,q))continue;const x=f.resp[q]||["","BRANCO"],c=o[d].q[q];c.n++;
@@ -609,7 +648,7 @@ function renderPan(){
  fillSel("pT",o,panSel);$("pO").value=panOrd;$("pD").value=panDia;repOpts();
  const tk=keysOf(panSel),C=calc(tk),ds=panDia?[panDia]:[1,2];
  if(!tk.length||!ds.some(d=>C[d].n)){$("pan").innerHTML='<div class="empty">Leia alguns gabaritos na aba Correção para ver o panorama aqui.</div>';return}
- const tot=tk.reduce((s,k)=>s+store[k].alunos.length,0),dm=(c,d)=>c[d].n?c[d].disc.reduce((s,z)=>s+z.sum,0)/c[d].n:0;
+ const tot=tk.reduce((s,k)=>s+store[k].alunos.filter(a=>!a.transf).length,0),dm=(c,d)=>c[d].n?c[d].disc.reduce((s,z)=>s+z.sum,0)/c[d].n:0;
  let h='<div class="kpis">';
  for(const d of ds)if(C[d].n)h+=kpi(`${C[d].n}<small>/${tot}</small>`,"alunos lidos · Dia "+d)+kpi(`${fmt(dm(C,d))}<small>/${NV(d)}</small>`,"média de acertos · Dia "+d);
  const dl=ds.flatMap(d=>C[d].disc.filter(z=>z.n).map(z=>({nome:z.nome,p:z.sum/z.n/(z.tq||1)}))).sort((a,b)=>b.p-a.p);
@@ -775,7 +814,7 @@ const RT=[
  kp[0][0]=n;
  return{kp,head:["Pos.","Dia","Turma","Aluno","Nota do dia","Acertos","% acerto"],rows:R}}},
 {id:"pend",ico:"🔎",nome:"Pendências de leitura",desc:"Sem gabarito, erros de leitura, brancos e duplas",fn:o=>{
- const rows=[];for(const k of o.keys)store[k].alunos.forEach((a,i)=>{for(const d of o.ds){const f=store[k].folhas[d].find(x=>x.ai===i);let m="";
+ const rows=[];for(const k of o.keys)store[k].alunos.forEach((a,i)=>{if(a.transf)return;for(const d of o.ds){const f=store[k].folhas[d].find(x=>x.ai===i);let m="";
   if(!f)m="Sem gabarito lido";else if(f.erro)m="Erro de leitura";else{const rs=Object.values(f.resp).slice(0,NQ[d]),br=rs.filter(r=>r[1]==="BRANCO").length,mu=rs.filter(r=>r[1]==="MÚLTIPLA").length;if(br||mu)m=`${br} em branco, ${mu} dupla(s)`}
   if(m)rows.push([k,"Dia "+d,a.nome,m])}});
  return{kp:[[rows.filter(r=>r[3]==="Sem gabarito lido").length,"sem gabarito"],[rows.filter(r=>r[3]==="Erro de leitura").length,"erros de leitura"],[rows.filter(r=>/branco/.test(r[3])).length,"com branco/dupla"]],head:["Turma","Dia","Aluno","Ocorrência"],rows}}}
@@ -809,7 +848,9 @@ $("bPr").onclick=()=>window.print();
 $("rS").onchange=e=>{rSel=e.target.value;gerar()};["rD","rC","rN"].forEach(id=>$(id).oninput=gerar);
 $("pT").onchange=e=>{panSel=e.target.value;renderPan()};$("pO").onchange=e=>{panOrd=e.target.value;renderPan()};
 $("pD").onchange=e=>{panDia=+e.target.value;renderPan()};$("pQ").oninput=e=>{panQ=e.target.value;renderPan()};
-function aba(n){["tabC","tabP","tabR"].forEach((id,i)=>$(id).hidden=i!==n);["tbC","tbP","tbR"].forEach((id,i)=>$(id).classList.toggle("on",i===n));if(n===2)gerar();window.scrollTo(0,0)}
+let panSujo=true;
+function aba(n){if(n>0&&panSujo){panSujo=false;renderPan()}document.body.classList.toggle("wide",n===0);["tabC","tabP","tabR"].forEach((id,i)=>$(id).hidden=i!==n);["tbC","tbP","tbR"].forEach((id,i)=>$(id).classList.toggle("on",i===n));if(n===2)gerar();window.scrollTo(0,0)}
+const tg1=()=>{$("st1").classList.toggle("aberta");render()};$("h1").onclick=tg1;$("h1").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();tg1()}};
 $("tbC").onclick=()=>aba(0);$("tbP").onclick=()=>aba(1);$("tbR").onclick=()=>aba(2);drawRT();
 
 
@@ -817,7 +858,7 @@ $("exp").onclick=async()=>{
   const turma=$("turma").value.trim(),wb=XLSX.utils.book_new(),H=["Turma","Nome"];
   for(const d of [1,2]){DISC[d].forEach(x=>H.push(`${x[0]} (Dia ${d})`));H.push(`Acertos Dia ${d}`,`Nota Dia ${d}`)}
   const rows=[H],alert=[["Dia","Aluno","Problema"]];
-  alunos.forEach((a,i)=>{const r=[turma,a.nome];
+  alunos.forEach((a,i)=>{if(a.transf)return;const r=[turma,a.nome];
     for(const d of [1,2]){const f=folhaDe(d,i);
       if(!f||f.erro){DISC[d].forEach(()=>r.push(""));r.push("","");alert.push([`Dia ${d}`,a.nome,f?"Não foi possível ler a folha":"Aluno sem gabarito lido neste dia"]);continue}
       const ch=CH[a.tipo][d];let t=0;
@@ -826,7 +867,7 @@ $("exp").onclick=async()=>{
     rows.push(r)});
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rows),"Resumo");
   for(const d of [1,2]){const R=[["Turma","Nome",...[...Array(NQ[d])].map((_,i)=>"Q"+(i+1)+(isAn(d,i+1)?" (ANULADA)":""))],["","GABARITO REGULAR",...CH.regular[d].split("")],["","GABARITO ADAPTADA",...CH.adaptada[d].split("")]];
-    alunos.forEach((a,i)=>{const f=folhaDe(d,i),ch=CH[a.tipo][d];
+    alunos.forEach((a,i)=>{if(a.transf)return;const f=folhaDe(d,i),ch=CH[a.tipo][d];
       if(!f||f.erro){R.push([turma,a.nome,"SEM FOLHA"]);return}
       R.push([turma,a.nome,...[...Array(NQ[d])].map((_,q)=>{const x=f.resp[q+1]||["","BRANCO"];return x[1]==="BRANCO"?"-":x[0]+(x[1]?" (dupla)":"")+(x[1]===""&&x[0]!==ch[q]&&!isAn(d,q+1)?" ✗":"")})])});
     XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(R),`Respostas Dia ${d}`)}
@@ -887,7 +928,7 @@ function mesclar(D){
     const tem=new Set([...E.folhas[1],...E.folhas[2]].map(f=>f.ai));
     B.alunos.forEach((a,bi)=>{const key=nn(a.nome);let i=idx.get(key);
       if(i===undefined){i=E.alunos.push({...a})-1;idx.set(key,i);r.alunos++}
-      else if(!tem.has(i)&&a.tipo)E.alunos[i].tipo=a.tipo;
+      else{if(!tem.has(i)&&a.tipo)E.alunos[i].tipo=a.tipo;if(a.transf)E.alunos[i].transf=true}
       map[bi]=i});
     for(const d of[1,2])for(const f of B.folhas[d]){
       const i=map[f.ai];if(i===undefined)continue;
