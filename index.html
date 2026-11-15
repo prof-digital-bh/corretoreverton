@@ -181,6 +181,12 @@ details{margin-top:14px;border-top:1px solid var(--bd);padding-top:10px}summary{
 .fbig{padding:8px 14px}.fbig b{font-size:36px}.fm{gap:6px}.fm div{padding:6px 9px}.fm b{font-size:16px}.fdias{margin-top:7px;font-size:12px}
 .fch h3{margin:10px 0 4px}.ft td{padding:2px 6px}.ft .fdh td{padding:1px 8px}.ft td small{display:inline;margin-left:6px}.fq i{height:19px}.fb{margin-top:2px}
 .fa{font-size:12px}.fa li{margin:1px 0}.fo{min-height:0;padding:6px 10px;font-size:12px;line-height:1.4}.fs{margin-top:14px}.fleg{margin-top:4px}}
+.anub{margin:10px 0 0;border:1px solid var(--bd);border-radius:12px;padding:8px 12px}.anub summary{cursor:pointer;font-weight:700;font-size:14px}
+.anr{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin:5px 0}.anr span{font-size:12px;color:var(--mut);min-width:104px}
+button.aq{padding:0;width:34px;height:34px;border-radius:9px;background:var(--bg);color:var(--tx);border:1.5px solid var(--bd);font-size:13px;font-weight:700}
+button.aq.on{background:var(--badS);color:var(--bad);border-color:var(--bad);text-decoration:line-through}
+.eq.a{background:var(--bg);color:var(--mut);opacity:.75}.qsq i.an{background:var(--bg);color:var(--mut);text-decoration:line-through}.fq .n{background:#eceff4;color:#7a8696}
+.lq th,.lq td{padding:4px 5px;text-align:center;white-space:nowrap}.lq th:nth-child(2),.lq td:nth-child(2){text-align:left}.lq td.v{background:var(--okS);color:var(--ok);font-weight:800}.lq td.x{background:var(--badS);color:var(--bad);font-weight:800}.lq td.a{background:var(--bg);color:var(--mut)}
 </style>
 </head>
 <body>
@@ -197,6 +203,7 @@ details{margin-top:14px;border-top:1px solid var(--bd);padding-top:10px}summary{
 
 <section class="step" id="st2"><div class="sh"><span class="num">2</span><div><h2>Ler os gabaritos</h2><p class="sub">Escolha o dia e o aluno, depois fotografe a folha</p></div><span class="chip" id="c2">nenhuma folha</span></div>
 <div class="seg"><button id="sg1" class="on">Dia 1 · 30 questões</button><button id="sg2">Dia 2 · 24 questões</button></div>
+<details id="anuBox" class="anub"><summary>🚫 Anular questão <span id="anuSum" class="mut"></span></summary><div class="mut" style="margin:8px 0 6px">Se o professor encontrar erro em uma questão, toque no número dela. A questão deixa de valer para todos os alunos (prova regular e adaptada) e a nota do dia (de 24) passa a ser calculada só sobre as questões válidas. Toque de novo para desfazer.</div><div id="anuQ"></div></details>
 <div id="foco" class="foco vazio" aria-live="polite"></div>
 <div class="row" style="margin-top:12px">
 <label class="field" style="flex:1;min-width:210px">Trocar aluno<select id="selA" style="width:100%"></select></label>
@@ -218,12 +225,12 @@ details{margin-top:14px;border-top:1px solid var(--bd);padding-top:10px}summary{
 </main>
 <main id="tabP" hidden>
 <section class="step"><div class="sh"><span class="num">📊</span><div><h2>Panorama das respostas</h2><p class="sub">Acertos por turma, dia e disciplina</p></div></div>
-<div class="ctl"><label class="field">Turma<select id="pT"></select></label><label class="field">Dia<select id="pD"><option value="0">Dia 1 + Dia 2</option><option value="1">Só Dia 1</option><option value="2">Só Dia 2</option></select></label><label class="field">Ordenar alunos<select id="pO"><option value="nome">Nome</option><option value="maior">Maior acerto</option><option value="menor">Menor acerto</option></select></label><label class="field" style="flex:1;min-width:140px">Buscar aluno<input type="text" id="pQ" placeholder="Digite o nome…"></label></div>
+<div class="ctl"><label class="field">Turma<select id="pT"></select></label><label class="field">Dia<select id="pD"><option value="0">Dia 1 e Dia 2 (separados)</option><option value="1">Só Dia 1</option><option value="2">Só Dia 2</option></select></label><label class="field">Ordenar alunos<select id="pO"><option value="nome">Nome</option><option value="maior">Maior acerto</option><option value="menor">Menor acerto</option></select></label><label class="field" style="flex:1;min-width:140px">Buscar aluno<input type="text" id="pQ" placeholder="Digite o nome…"></label></div>
 <div id="pan"></div></section></main>
 <main id="tabR" hidden>
 <section class="step"><div class="sh noprint"><span class="num">📑</span><div><h2>Relatórios</h2><p class="sub">Escolha o modelo, o recorte e como quer receber</p></div></div>
 <div class="rts noprint" id="rT"></div>
-<div class="ctl noprint"><label class="field">Recorte<select id="rS"></select></label><label class="field">Dia<select id="rD"><option value="0">Dias 1 e 2</option><option value="1">Só Dia 1</option><option value="2">Só Dia 2</option></select></label><label class="field">Nota de corte (%)<input id="rC" type="number" value="60" min="0" max="100" style="width:90px"></label><label class="field">Top N (ranking)<input id="rN" type="number" value="10" min="1" max="200" style="width:90px"></label><label class="field" id="rAw" hidden>Aluno<select id="rA" style="min-width:220px"></select></label><label class="field" id="rMw" hidden>Comparação<span style="display:flex;gap:7px;align-items:center;font-weight:500;color:var(--tx);padding:9px 0"><input type="checkbox" id="rM" checked> com a média da turma</span></label></div>
+<div class="ctl noprint"><label class="field">Recorte<select id="rS"></select></label><label class="field">Dia<select id="rD"><option value="0">Dias 1 e 2 (separados)</option><option value="1">Só Dia 1</option><option value="2">Só Dia 2</option></select></label><label class="field">Nota de corte (%)<input id="rC" type="number" value="60" min="0" max="100" style="width:90px"></label><label class="field">Top N (ranking)<input id="rN" type="number" value="10" min="1" max="200" style="width:90px"></label><label class="field" id="rAw" hidden>Aluno<select id="rA" style="min-width:220px"></select></label><label class="field" id="rMw" hidden>Comparação<span style="display:flex;gap:7px;align-items:center;font-weight:500;color:var(--tx);padding:9px 0"><input type="checkbox" id="rM" checked> com a média da turma</span></label></div>
 <div class="row noprint"><button id="bPr" disabled>🖨️ Imprimir / PDF</button><button id="bXl" class="ghost" disabled>📗 Excel</button><button id="bCs" class="ghost" disabled>📄 CSV</button><button id="bCp" class="ghost" disabled>📋 Copiar resumo</button></div>
 <div id="rMsg" class="mut noprint" style="margin:8px 0 12px"></div><div id="rOut"></div></section></main>
 <div id="esp"><div class="pn" id="espc"></div></div>
@@ -260,6 +267,11 @@ adaptada:{1:"BCACAA"+"AACDBA"+"BBAACA"+"CABCBC"+"BACBCA",2:"CBAADD"+"BABAAB"+"AA
 const DISC={1:[["L. Portuguesa",1,6],["Arte",7,12],["Ed. Física",13,18],["Ens. Religioso",19,24],["L. Inglesa",25,30]],
 2:[["Matemática",1,6],["Ciências",7,12],["Geografia",13,18],["História",19,24]]};
 const NQ={1:30,2:24},VALOR=24,LIM_MARCA=0.72;
+let anul={1:[],2:[]};
+const sanAnul=a=>{const r={1:[],2:[]};for(const d of [1,2])if(a&&Array.isArray(a[d]))r[d]=[...new Set(a[d].map(Number).filter(q=>q>=1&&q<=NQ[d]))].sort((x,y)=>x-y);return r};
+const isAn=(d,q)=>anul[d].includes(q),NV=d=>Math.max(1,NQ[d]-anul[d].length),
+ dqv=(d,j)=>{const z=DISC[d][j];let n=0;for(let q=z[1];q<=z[2];q++)if(!isAn(d,q))n++;return n},
+ anTxt=(ds)=>(ds||[1,2]).filter(d=>anul[d].length).map(d=>"Dia "+d+": "+anul[d].map(q=>"Q"+q).join(", ")).join(" · ");
 const mean=a=>a.reduce((s,x)=>s+x,0)/a.length;
 const median=a=>{const s=[...a].sort((x,y)=>x-y),n=s.length;return n?(n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2):0};
 function groups(v,d){v=[...v].sort((a,b)=>a-b);const g=[[v[0]]];for(const t of v.slice(1)){const L=g[g.length-1];if(t-L[L.length-1]>.5*d)g.push([t]);else L.push(t)}return g}
@@ -368,7 +380,7 @@ const $=id=>document.getElementById(id);
 let alunos=[],folhas={1:[],2:[]},dia=1,sel=0,store={},cur="",panSel="8*",panOrd="nome";
 const tipoDe=i=>alunos[i]?alunos[i].tipo:"regular";
 const folhaDe=(d,i)=>folhas[d].find(f=>f.ai===i);
-function acertos(f,d){const ch=CH[tipoDe(f.ai)][d];let ok=0;for(let q=1;q<=NQ[d];q++){const r=f.resp[q];if(r&&r[1]===""&&r[0]===ch[q-1])ok++}return ok}
+function acertos(f,d){const ch=CH[tipoDe(f.ai)][d];let ok=0;for(let q=1;q<=NQ[d];q++){const r=f.resp[q];if(!isAn(d,q)&&r&&r[1]===""&&r[0]===ch[q-1])ok++}return ok}
 
 async function lerLista(file){
   if(!$("turma").value){$("lst").textContent="Escolha a turma antes de carregar a lista.";return}
@@ -416,7 +428,7 @@ async function processar(f){
   lendoAi=-1;folhas[d]=folhas[d].filter(x=>x.ai!==ai);folhas[d].push(item);
   if(item.erro)$("busy").innerHTML=`<span style="color:var(--bad)">Não consegui ler a folha de ${alunos[ai].nome}. Tente outra foto ou use “✎ Preencher à mão”.</span>`;
   else{const rs=Object.values(item.resp).slice(0,NQ[d]),br=rs.filter(r=>r[1]==="BRANCO").length,mu=rs.filter(r=>r[1]==="MÚLTIPLA").length;
-    $("busy").innerHTML=`<span class="ok">✓ ${alunos[ai].nome}: ${acertos(item,d)}/${NQ[d]} acertos</span>${br||mu?` <span style="color:var(--warn)">(${br} em branco, ${mu} dupla)</span>`:""}${(item.fora||[]).length?` <span style="color:var(--bad)">· ${item.fora.length} questão(ões) FORA da foto, refaça com a folha inteira</span>`:finais(item,d)>=3?` <span style="color:var(--warn)">· as últimas ${finais(item,d)} vieram em branco, confira a foto</span>`:""}`;
+    $("busy").innerHTML=`<span class="ok">✓ ${alunos[ai].nome}: ${acertos(item,d)}/${NV(d)} acertos</span>${br||mu?` <span style="color:var(--warn)">(${br} em branco, ${mu} dupla)</span>`:""}${(item.fora||[]).length?` <span style="color:var(--bad)">· ${item.fora.length} questão(ões) FORA da foto, refaça com a folha inteira</span>`:finais(item,d)>=3?` <span style="color:var(--warn)">· as últimas ${finais(item,d)} vieram em branco, confira a foto</span>`:""}`;
     for(let k=1;k<=alunos.length;k++){const j=(ai+k)%alunos.length;if(!folhaDe(d,j)){sel=j;break}}}
   render();if(!item.erro&&$("auto").checked)espelho(d,ai)}
 let lendoAi=-1,focoKey="";
@@ -429,10 +441,16 @@ function renderFoco(){
   let st;
   if(lendo)st='<div class="fst"><span class="spin"></span>Lendo a folha…</div>';
   else if(f&&f.erro)st='<div class="fst er">❌ A última leitura falhou. Tire outra foto desta folha.</div>';
-  else if(f)st=`<div class="fst jl">⚠️ Folha já lida (${acertos(f,dia)}/${NQ[dia]}). Uma nova foto substitui a leitura.</div>`;
+  else if(f)st=`<div class="fst jl">⚠️ Folha já lida (${acertos(f,dia)}/${NV(dia)}). Uma nova foto substitui a leitura.</div>`;
   else st='<div class="fst">📷 Aguardando a foto da folha deste aluno</div>';
   el.className="foco";void el.offsetWidth;el.className="foco"+(lendo?" lendo":"")+(flash?" flash":"");
   el.innerHTML=`<div class="fl">${lendo?"Lendo agora":"Aluno da vez"}</div><div class="av">${iniciais(a.nome)}</div><div class="fn"><b>${a.nome}</b><div class="fm"><span>Dia ${dia}</span><span>Prova ${a.tipo}</span><span>${sel+1} de ${nA}</span></div></div><div class="nv"><button onclick="irAluno(-1)" aria-label="Aluno anterior">‹</button><button onclick="irAluno(1)" aria-label="Próximo aluno">›</button></div>${st}`}
+function renderAnul(){const el=$("anuQ");if(!el)return;const d=dia,n=anul[d].length;
+  $("anuSum").textContent=anTxt()?"· "+anTxt():"";
+  el.innerHTML=`<div class="mut" style="margin-bottom:6px"><b>Dia ${d}</b> · ${NV(d)} questões válidas${n?" · "+n+" anulada"+(n>1?"s":""):""}</div>`+DISC[d].map(z=>`<div class="anr"><span>${z[0]}</span>${Array.from({length:z[2]-z[1]+1},(_,k)=>z[1]+k).map(q=>`<button type="button" class="aq${isAn(d,q)?" on":""}" onclick="anular(${d},${q})">${q}</button>`).join("")}</div>`).join("")}
+window.anular=(d,q)=>{const i=anul[d].indexOf(q);
+  if(i<0){if(!confirm("Anular a questão "+q+" do Dia "+d+"? Ela deixa de valer para todos os alunos e as notas do dia serão recalculadas."))return;anul[d].push(q);anul[d].sort((a,b)=>a-b)}else anul[d].splice(i,1);
+  salvar();render();$("anuBox").open=true};
 window.irAluno=k=>{if(!alunos.length)return;sel=(sel+k+alunos.length)%alunos.length;$("busy").textContent="";render()};
 function render(){
   const nA=alunos.length;let alerts=0,h="";
@@ -442,7 +460,7 @@ function render(){
   if(nA)$("selT").value=tipoDe(sel);
   $("sg1").classList.toggle("on",dia===1);$("sg2").classList.toggle("on",dia===2);
   const lidos=folhas[dia].length;
-  $("prog").textContent=nA?`Dia ${dia}: ${lidos} de ${nA} alunos lidos`:"";$("progb").style.width=nA?Math.round(lidos*100/nA)+"%":"0";renderFoco();
+  $("prog").textContent=nA?`Dia ${dia}: ${lidos} de ${nA} alunos lidos`:"";$("progb").style.width=nA?Math.round(lidos*100/nA)+"%":"0";renderFoco();renderAnul();
   for(const d of [1,2]){const L=[...folhas[d]].sort((a,b)=>a.ai-b.ai);if(!L.length)continue;
     h+=`<div class="dh"><b>Dia ${d}</b><span class="mut">${L.length} de ${nA} alunos</span></div>`;
     for(const f of L){
@@ -459,7 +477,7 @@ function render(){
       if(t.some(x=>x[0]!=="ok"))alerts++;if(!t.length)t.push(["ok","Leitura ok"]);
       const ac=f.erro?null:acertos(f,d);
       h+=`<div class="sheet ${f.erro||dup||(f.fora&&f.fora.length)?"err":""}"><div class="who"><div class="nm"><b>${alunos[f.ai].nome}</b><div class="tags">${t.map(x=>`<span class="tag ${x[0]}">${x[1]}</span>`).join("")}</div></div></div>
-<div class="score">${ac===null?"—":ac}<small>${ac===null?"":"/"+NQ[d]}</small>${ac===null?"":`<div class="bar"><i style="width:${Math.round(ac*100/NQ[d])}%"></i></div>`}</div>
+<div class="score">${ac===null?"—":ac}<small>${ac===null?"":"/"+NV(d)}</small>${ac===null?"":`<div class="bar"><i style="width:${Math.round(ac*100/NV(d))}%"></i></div>`}</div>
 <div class="act"><button class="ghost sm" onclick="ver(${d},${f.ai})">${f.erro?"✎ Preencher à mão":"🔍 Conferir folha"}</button>${f.erro?"":`<button class="ghost sm" onclick="espelho(${d},${f.ai})">🪞 Espelho</button>`}<button class="ghost sm" onclick="refazer(${d},${f.ai})">📷 Refazer</button><button class="ghost sm" onclick="del(${d},${f.ai})">Remover</button></div></div>`}}
   $("res").innerHTML=(n1+n2)?h:'<div class="empty">As folhas lidas aparecerão aqui.</div>';
   $("stats").innerHTML=(n1+n2)?`<div class="tile"><b>${n1}/${nA}</b><span>Dia 1</span></div><div class="tile"><b>${n2}/${nA}</b><span>Dia 2</span></div><div class="tile"><b style="color:var(${alerts?"--warn":"--ok"})">${alerts}</b><span>com avisos</span></div>`:"";
@@ -533,13 +551,13 @@ for(const id of ["fc","fg"])$(id).onchange=e=>{const f=e.target.files[0];e.targe
 function espelho(d,ai){const f=folhaDe(d,ai);if(!f||f.erro)return;
  const a=alunos[ai],ch=CH[a.tipo][d];let ok=0,er=0,br=0,du=0,h="";
  for(const z of DISC[d]){let sc=0,c="";
-  for(let q=z[1];q<=z[2];q++){const x=f.resp[q]||["","BRANCO"],m=x[1]==="BRANCO",u=!m&&x[1]!=="",t=!m&&!u&&x[0]===ch[q-1];
+  for(let q=z[1];q<=z[2];q++){if(isAn(d,q)){c+=`<div class="eq a"><b>Q${q}</b><span>⊘</span>anulada</div>`;continue}const x=f.resp[q]||["","BRANCO"],m=x[1]==="BRANCO",u=!m&&x[1]!=="",t=!m&&!u&&x[0]===ch[q-1];
    if(t){ok++;sc++}else if(m)br++;else if(u)du++;else er++;
    c+=`<div class="eq ${t?"c":m?"b":u?"u":"e"}"><b>Q${q}</b><span>${t?"✓":m?"—":u?"2×":"✗"}</span>${m?"em branco":u?"marcou "+x[0]:t?x[0]:"marcou "+x[0]+"<br>certa "+ch[q-1]}</div>`}
-  h+=`<div class="ed"><div class="dh" style="margin:0 0 6px"><b>${z[0]}</b><span class="mut">${sc}/${z[2]-z[1]+1}</span></div><div class="eqs">${c}</div></div>`}
- const nota=ok*VALOR/NQ[d];
- $("espc").innerHTML=`<div class="eh"><div><h3>${a.nome}</h3><div class="mut">Dia ${d} · prova ${a.tipo} · ${NQ[d]} questões</div></div><div class="big2" style="color:hsl(${hue(ok/NQ[d])} 65% 40%)">${ok}<small>/${NQ[d]}</small></div></div>
- <div class="ek"><span class="tag ok">${ok} certas</span><span class="tag err">${er} erradas</span>${br?`<span class="tag warn">${br} em branco</span>`:""}${du?`<span class="tag warn">${du} dupla(s)</span>`:""}${(f.fora||[]).length?`<span class="tag err">${f.fora.length} fora da foto</span>`:""}<span class="tag ok" style="background:var(--priS);color:var(--pri)">Nota ${fmt(nota)} de ${VALOR} · ${pc(ok/NQ[d])}</span></div>${h}
+  h+=`<div class="ed"><div class="dh" style="margin:0 0 6px"><b>${z[0]}</b><span class="mut">${sc}/${dqv(d,DISC[d].indexOf(z))}</span></div><div class="eqs">${c}</div></div>`}
+ const nota=ok*VALOR/NV(d);
+ $("espc").innerHTML=`<div class="eh"><div><h3>${a.nome}</h3><div class="mut">Dia ${d} · prova ${a.tipo} · ${NV(d)} questões válidas${anul[d].length?" ("+anul[d].length+" anulada"+(anul[d].length>1?"s":"")+")":""}</div></div><div class="big2" style="color:hsl(${hue(ok/NV(d))} 65% 40%)">${ok}<small>/${NV(d)}</small></div></div>
+ <div class="ek"><span class="tag ok">${ok} certas</span><span class="tag err">${er} erradas</span>${br?`<span class="tag warn">${br} em branco</span>`:""}${du?`<span class="tag warn">${du} dupla(s)</span>`:""}${(f.fora||[]).length?`<span class="tag err">${f.fora.length} fora da foto</span>`:""}<span class="tag ok" style="background:var(--priS);color:var(--pri)">Nota ${fmt(nota)} de ${VALOR} · ${pc(ok/NV(d))}</span></div>${h}
  <div class="row" style="margin-top:16px"><button class="big" onclick="fecharEsp()">Fechar e continuar</button><button class="ghost" onclick="ver(${d},${ai})">🔍 Conferir folha</button><button class="ghost" onclick="abrirFicha(${ai})">🪪 Ficha do aluno</button><button class="ghost" onclick="fecharEsp();refazer(${d},${ai})">📷 Refazer</button></div>`;
  $("esp").style.display="flex";$("espc").scrollTop=0}
 window.fecharEsp=()=>{$("esp").style.display="none"};
@@ -557,19 +575,19 @@ const scopeOpts=all=>{const ks=keysAll();return[...(ks.some(k=>k.startsWith("8")
 const fillSel=(id,o,v)=>{$(id).innerHTML=o.map(x=>`<option value="${x[0]}"${x[0]===v?" selected":""}>${x[1]}</option>`).join("")||'<option value="">—</option>'};
 function calc(keys){
  const o={stu:[]};
- for(const d of [1,2])o[d]={n:0,disc:DISC[d].map(x=>({nome:x[0],ini:x[1],fim:x[2],sum:0,n:0})),q:[...Array(NQ[d]+1)].map(()=>({ok:0,n:0,A:0,B:0,C:0,D:0,br:0,mu:0}))};
+ for(const d of [1,2])o[d]={n:0,disc:DISC[d].map((x,j)=>({nome:x[0],ini:x[1],fim:x[2],sum:0,n:0,tq:dqv(d,j)})),q:[...Array(NQ[d]+1)].map(()=>({ok:0,n:0,A:0,B:0,C:0,D:0,br:0,mu:0}))};
  for(const k of keys){const T=store[k];if(!T)continue;
-  T.alunos.forEach((a,i)=>{const s={turma:k,i,nome:a.nome,tipo:a.tipo,d:{},br:0};
+  T.alunos.forEach((a,i)=>{const s={turma:k,i,nome:a.nome,tipo:a.tipo,d:{},br:0,brd:{1:0,2:0}};
    for(const d of [1,2]){const f=T.folhas[d].find(x=>x.ai===i);if(!f||f.erro)continue;
     const ch=CH[a.tipo][d],dd=o[d].disc.map(()=>0);o[d].n++;
-    for(let q=1;q<=NQ[d];q++){const x=f.resp[q]||["","BRANCO"],c=o[d].q[q];c.n++;
-     if(x[1]==="BRANCO"){c.br++;s.br++}else if(x[1])c.mu++;else c[x[0]]++;
+    for(let q=1;q<=NQ[d];q++){if(isAn(d,q))continue;const x=f.resp[q]||["","BRANCO"],c=o[d].q[q];c.n++;
+     if(x[1]==="BRANCO"){c.br++;s.br++;s.brd[d]++}else if(x[1])c.mu++;else c[x[0]]++;
      if(x[1]===""&&x[0]===ch[q-1]){c.ok++;dd[o[d].disc.findIndex(z=>q>=z.ini&&q<=z.fim)]++}}
     o[d].disc.forEach((z,j)=>{z.sum+=dd[j];z.n++});
-    const tot=dd.reduce((p,v)=>p+v,0);s.d[d]={disc:dd,tot,nota:tot*VALOR/NQ[d]}}
+    const tot=dd.reduce((p,v)=>p+v,0);s.d[d]={disc:dd,tot,nota:tot*VALOR/NV(d)}}
    o.stu.push(s)})}
  return o}
-const sv=(s,ds)=>{let t=0,nq=0,nota=0;for(const d of ds)if(s.d[d]){t+=s.d[d].tot;nq+=NQ[d];nota+=s.d[d].nota}return{t,nq,nota,p:nq?t/nq:null}};
+const sv=(s,ds)=>{let t=0,nq=0,nota=0;for(const d of ds)if(s.d[d]){t+=s.d[d].tot;nq+=NV(d);nota+=s.d[d].nota}return{t,nq,nota,p:nq?t/nq:null}};
 const ovp=(c,ds)=>{let t=0,n=0;c.stu.forEach(s=>{const v=sv(s,ds);t+=v.t;n+=v.nq});return n?t/n:null};
 function renderPan(){
  const o=scopeOpts(0);if(!o.some(x=>x[0]===panSel))panSel=o.length?o[0][0]:"";
@@ -578,26 +596,26 @@ function renderPan(){
  if(!tk.length||!ds.some(d=>C[d].n)){$("pan").innerHTML='<div class="empty">Leia alguns gabaritos na aba Correção para ver o panorama aqui.</div>';return}
  const tot=tk.reduce((s,k)=>s+store[k].alunos.length,0),dm=(c,d)=>c[d].n?c[d].disc.reduce((s,z)=>s+z.sum,0)/c[d].n:0;
  let h='<div class="kpis">';
- for(const d of ds)if(C[d].n)h+=kpi(`${C[d].n}<small>/${tot}</small>`,"alunos lidos · Dia "+d)+kpi(`${fmt(dm(C,d))}<small>/${NQ[d]}</small>`,"média de acertos · Dia "+d);
- const dl=ds.flatMap(d=>C[d].disc.filter(z=>z.n).map(z=>({nome:z.nome,p:z.sum/z.n/(z.fim-z.ini+1)}))).sort((a,b)=>b.p-a.p);
+ for(const d of ds)if(C[d].n)h+=kpi(`${C[d].n}<small>/${tot}</small>`,"alunos lidos · Dia "+d)+kpi(`${fmt(dm(C,d))}<small>/${NV(d)}</small>`,"média de acertos · Dia "+d);
+ const dl=ds.flatMap(d=>C[d].disc.filter(z=>z.n).map(z=>({nome:z.nome,p:z.sum/z.n/(z.tq||1)}))).sort((a,b)=>b.p-a.p);
  if(dl.length>1){const b=dl[0],w=dl[dl.length-1];h+=kpi(`${b.nome}<small> ${pc(b.p)}</small>`,"melhor disciplina","sm")+kpi(`${w.nome}<small> ${pc(w.p)}</small>`,"disciplina mais frágil","sm")}
  h+="</div>";
  const CK={};tk.forEach(k=>CK[k]=calc([k]));
- if(tk.length>1){const rk=[...tk].sort((a,b)=>(ovp(CK[b],ds)||0)-(ovp(CK[a],ds)||0));
-  h+=`<div class="dh"><b>Ranking das turmas</b><span class="mut">% de acertos${panDia?" · Dia "+panDia:""}</span></div><div class="tcs">`;
-  rk.forEach((k,i)=>{const c=CK[k],p=ovp(c,ds)||0,n=Math.max(...ds.map(d=>c[d].n));
-   h+=`<div class="tc" style="--c:hsl(${hue(p)} 65% 42%)"><div class="tn">${k}<span>${["🥇","🥈","🥉"][i]||""}</span></div><div class="tp">${pc(p)}</div><div class="mut">${n} aluno(s) lidos</div>`;
-   for(const d of ds)if(c[d].n)h+=`<div class="mb"><span>Dia ${d}</span><div class="bar"><i style="width:${Math.round(dm(c,d)/NQ[d]*100)}%"></i></div><b>${fmt(dm(c,d))}/${NQ[d]}</b></div>`;
-   h+="</div>"});h+="</div>"}
+ if(tk.length>1){for(const d of ds){const rk=tk.filter(k=>CK[k][d].n).sort((a,b)=>(ovp(CK[b],[d])||0)-(ovp(CK[a],[d])||0));if(!rk.length)continue;
+  h+=`<div class="dh"><b>Ranking das turmas · Dia ${d}</b><span class="mut">% de acertos</span></div><div class="tcs">`;
+  rk.forEach((k,i)=>{const c=CK[k],p=ovp(c,[d])||0;
+   h+=`<div class="tc" style="--c:hsl(${hue(p)} 65% 42%)"><div class="tn">${k}<span>${["🥇","🥈","🥉"][i]||""}</span></div><div class="tp">${pc(p)}</div><div class="mut">${c[d].n} aluno(s) lidos</div>`;
+   h+=`<div class="mb"><span>Dia ${d}</span><div class="bar"><i style="width:${Math.round(dm(c,d)/NV(d)*100)}%"></i></div><b>${fmt(dm(c,d))}/${NV(d)}</b></div>`;
+   h+="</div>"});h+="</div>"}}
  for(const d of ds){if(!C[d].n)continue;
-  h+=`<div class="dh"><b>Dia ${d} · acertos por disciplina</b><span class="mut">${C[d].n} alunos · ${NQ[d]} questões</span></div>`;
-  C[d].disc.forEach((z,j)=>{const tq=z.fim-z.ini+1,row=(lb,c)=>{const zz=c[d].disc[j];if(!zz.n)return"";const p=zz.sum/zz.n/tq;return`<div class="gb" style="--c:hsl(${hue(p)} 65% 42%)"><em>${lb}</em><div class="bar"><i style="width:${Math.round(p*100)}%"></i></div><b>${pc(p)}</b></div>`};
+  h+=`<div class="dh"><b>Dia ${d} · acertos por disciplina</b><span class="mut">${C[d].n} alunos · ${NV(d)} questões</span></div>`;
+  C[d].disc.forEach((z,j)=>{const tq=z.tq||1,row=(lb,c)=>{const zz=c[d].disc[j];if(!zz.n)return"";const p=zz.sum/zz.n/tq;return`<div class="gb" style="--c:hsl(${hue(p)} 65% 42%)"><em>${lb}</em><div class="bar"><i style="width:${Math.round(p*100)}%"></i></div><b>${pc(p)}</b></div>`};
    h+=`<div class="drow"><b>${z.nome}<div class="mut">média ${fmt(z.n?z.sum/z.n:0)} de ${tq}</div></b><div class="gbs">${tk.length>1?tk.map(k=>row(lbl(k),CK[k])).join("")+row("Geral",C):row("Média",C)}</div></div>`})}
  const L=[["A","#5b8def","A"],["B","#8c7bff","B"],["C","#f0b955","C"],["D","#4cc38a","D"],["br","#9aa5b4","Branco"],["mu","#d9534f","Dupla"]];
  for(const d of ds){if(!C[d].n)continue;
   h+=`<div class="dh"><b>Dia ${d} · acerto por questão</b><span class="mut">mais verde = mais acertos</span></div>`;
   for(const z of C[d].disc){h+=`<div class="qrow"><span>${z.nome}</span><div class="qsq">`;
-   for(let q=z.ini;q<=z.fim;q++){const c=C[d].q[q],p=c.n?c.ok/c.n:0;h+=`<i style="--h:${hue(p)}" title="Q${q}: ${pc(p)}">${q}</i>`}h+="</div></div>"}
+   for(let q=z.ini;q<=z.fim;q++){if(isAn(d,q)){h+=`<i class="an" title="Q${q}: anulada">${q}</i>`;continue}const c=C[d].q[q],p=c.n?c.ok/c.n:0;h+=`<i style="--h:${hue(p)}" title="Q${q}: ${pc(p)}">${q}</i>`}h+="</div></div>"}
   const dif=[];for(let q=1;q<=NQ[d];q++){const c=C[d].q[q];if(c.n)dif.push([q,c.ok/c.n])}dif.sort((a,b)=>a[1]-b[1]);
   h+=`<div class="mut" style="margin-top:8px"><b>Questões mais difíceis</b></div><div class="chips">${dif.slice(0,6).map(x=>{const z=C[d].disc.find(z=>x[0]>=z.ini&&x[0]<=z.fim);return`<span class="chp">Q${x[0]} · ${z.nome} · ${pc(x[1])}</span>`}).join("")}</div>`;
   h+=`<details><summary>Alternativas marcadas em cada questão (Dia ${d})</summary><div class="lg">${L.map(x=>`<span style="--k:${x[1]}">${x[2]}</span>`).join("")}</div>`;
@@ -605,14 +623,14 @@ function renderPan(){
    h+=`<div class="qd"><b>Q${q}</b><span class="mut">${z.nome}</span><div class="dist">${L.map(x=>c[x[0]]?`<i style="width:${c[x[0]]*100/c.n}%;background:${x[1]}" title="${x[2]}: ${c[x[0]]}"></i>`:"").join("")}</div><b>${pc(c.ok/c.n)}</b></div>`}
   h+="</details>"}
  const mt=tk.length>1,q=panQ.toLowerCase();
- const rows=C.stu.map(s=>({...s,v:sv(s,ds)})).filter(r=>!q||r.nome.toLowerCase().includes(q));
+ const kd=s=>{const d=ds.find(d=>s.d[d]);return d?s.d[d].tot/NV(d):null},rows=C.stu.map(s=>({...s,v:{p:kd(s)}})).filter(r=>!q||r.nome.toLowerCase().includes(q));
  rows.sort((a,b)=>panOrd==="nome"?a.nome.localeCompare(b.nome,"pt"):panOrd==="maior"?(b.v.p??-1)-(a.v.p??-1):(a.v.p??2)-(b.v.p??2));
  h+=`<div class="dh"><b>Alunos</b><span class="mut">${rows.length} · acertos por disciplina</span></div><div class="tw"><table class="tbl"><tr><th>Aluno</th>${mt?"<th>Turma</th>":""}`;
- for(const d of ds){DISC[d].forEach((x,j)=>h+=`<th class="${j===0?"g":""}">${x[0]}<br>D${d}</th>`);h+=`<th>Total<br>D${d}</th>`}
- h+='<th class="g">Total</th><th>%</th></tr>';
+ for(const d of ds){DISC[d].forEach((x,j)=>h+=`<th class="${j===0?"g":""}">${x[0]}<br>D${d}</th>`);h+=`<th>Total<br>D${d}</th><th>%<br>D${d}</th>`}
+ h+='</tr>';
  for(const r of rows){h+=`<tr><td title="${r.nome}">${r.nome}</td>${mt?`<td>${lbl(r.turma)}</td>`:""}`;
-  for(const d of ds){const x=r.d[d];DISC[d].forEach((z,j)=>{const tq=z[2]-z[1]+1;h+=x?`<td class="hm ${j===0?"g":""}" style="--h:${hue(x.disc[j]/tq)}">${x.disc[j]}/${tq}</td>`:`<td class="${j===0?"g":""}">—</td>`});h+=x?`<td>${x.tot}/${NQ[d]}</td>`:"<td>—</td>"}
-  h+=r.v.nq?`<td class="g"><b>${r.v.t}</b>/${r.v.nq}</td><td class="hm" style="--h:${hue(r.v.p)}">${pc(r.v.p)}</td>`:'<td class="g">—</td><td>—</td>';h+="</tr>"}
+  for(const d of ds){const x=r.d[d];DISC[d].forEach((z,j)=>{const tq=dqv(d,j);h+=x?`<td class="hm ${j===0?"g":""}" style="--h:${hue(x.disc[j]/tq)}">${x.disc[j]}/${tq}</td>`:`<td class="${j===0?"g":""}">—</td>`});h+=x?`<td>${x.tot}/${NV(d)}</td><td class="hm" style="--h:${hue(x.tot/NV(d))}">${pc(x.tot/NV(d))}</td>`:"<td>—</td><td>—</td>"}
+  h+="</tr>"}
  $("pan").innerHTML=h+"</table></div>"}
 
 /* ---------- relatórios ---------- */
@@ -623,23 +641,22 @@ const eH=t=>String(t).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c
 const lst=a=>a.length<2?a.join(""):a.slice(0,-1).join(", ")+" e "+a[a.length-1];
 const porDia=a=>[1,2].filter(d=>a.some(x=>x[0]===d)).map(d=>"Dia "+d+": "+a.filter(x=>x[0]===d).map(x=>"Q"+x[1]).join(", ")).join(" · ");
 function fichaF(s,o,CT){
-  const ds=o.ds.filter(d=>s.d[d]),falt=o.ds.filter(d=>!s.d[d]),v=sv(s,o.ds),T=CT(s.turma);
-  const F={s,ds,falt,v,max:ds.length*VALOR,disc:[],dias:[],br:[],mu:[],fac:[],cmp:null};
+  const ds=o.ds.filter(d=>s.d[d]),falt=o.ds.filter(d=>!s.d[d]),T=CT(s.turma);
+  const F={s,ds,falt,disc:[],dias:[],br:[],mu:[],fac:[],cmp:{}};
   for(const d of ds){const f=store[s.turma].folhas[d].find(x=>x.ai===s.i),ch=CH[s.tipo][d];
-    F.dias.push({d,tot:s.d[d].tot,nq:NQ[d],nota:s.d[d].nota,p:s.d[d].tot/NQ[d]});
+    F.dias.push({d,tot:s.d[d].tot,nq:NV(d),nota:s.d[d].nota,p:s.d[d].tot/NV(d)});
     DISC[d].forEach((x,j)=>{const cells=[];
-      for(let q=x[1];q<=x[2];q++){const r=f.resp[q]||["","BRANCO"],c=T[d].q[q];let k,t="";
+      for(let q=x[1];q<=x[2];q++){if(isAn(d,q)){cells.push({q,k:"n",t:"",g:ch[q-1]});continue}const r=f.resp[q]||["","BRANCO"],c=T[d].q[q];let k,t="";
         if(r[1]==="BRANCO"){k="b";F.br.push([d,q])}else if(r[1]){k="u";t=r[0];F.mu.push([d,q])}else if(r[0]===ch[q-1])k="c";else{k="e";t=r[0]}
         if(k!=="c"&&c.n>=3&&c.ok/c.n>=.7)F.fac.push([d,q,x[0]]);
         cells.push({q,k,t,g:ch[q-1]})}
-      const ac=s.d[d].disc[j],tq=x[2]-x[1]+1;F.disc.push({d,nome:x[0],ini:x[1],fim:x[2],ac,tq,p:ac/tq,cells})})}
-  const mm=T.stu.map(t=>({v:sv(t,o.ds),k:o.ds.filter(d=>t.d[d]).join()})).filter(x=>x.v.p!==null&&x.k===ds.join());
-  if(mm.length>=3)F.cmp={n:mm.length,media:mean(mm.map(x=>x.v.nota))};
+      const ac=s.d[d].disc[j],tq=dqv(d,j);F.disc.push({d,nome:x[0],ini:x[1],fim:x[2],ac,tq,p:tq?ac/tq:0,cells})})}
+  for(const d of ds){const mm=T.stu.filter(t=>t.d[d]).map(t=>t.d[d].nota);if(mm.length>=3)F.cmp[d]={n:mm.length,media:mean(mm)}}
   return F}
 function fichaObs(F,corte,cmp){
-  const s=F.s,v=F.v,P=[],c=Math.round(corte*100),ok=v.p>=corte,brs=new Set(F.br.map(x=>x[0]+"-"+x[1]));
-  P.push(`${s.nome} obteve nota ${fmt(v.nota)} de ${F.max}, com ${pc(v.p)} de aproveitamento (${v.t} de ${v.nq} questões): desempenho ${ok?"adequado":"abaixo do esperado"} para o corte de ${c}%.`);
-  if(F.falt.length)P.push(`O gabarito do Dia ${F.falt.join(" e ")} não foi lido; a nota considera apenas o Dia ${F.ds.join(" e ")}.`);
+  const s=F.s,P=[],c=Math.round(corte*100),brs=new Set(F.br.map(x=>x[0]+"-"+x[1])),nqT=F.dias.reduce((a,x)=>a+x.nq,0);
+  F.dias.forEach((x,i)=>P.push(`No Dia ${x.d}, ${i?"":s.nome+" "}acertou ${x.tot} de ${x.nq} questões (nota ${fmt(x.nota)} de ${VALOR}, ${pc(x.p)} de aproveitamento): desempenho ${x.p>=corte?"adequado":"abaixo do esperado"} para o corte de ${c}%.`));
+  if(F.falt.length)P.push(`O gabarito do Dia ${F.falt.join(" e ")} não foi lido.`);
   if(F.dias.length===2){const[a,b]=F.dias,df=b.p-a.p;P.push(Math.abs(df)>=.1?`O aproveitamento foi maior no Dia ${df>0?2:1} (${pc(a.p)} no Dia 1 e ${pc(b.p)} no Dia 2).`:`O aproveitamento foi estável entre os dias (${pc(a.p)} e ${pc(b.p)}).`)}
   const ps=F.disc.map(z=>z.p),mx=Math.max(...ps),mn=Math.min(...ps),nm=p=>{const a=F.disc.filter(z=>Math.abs(z.p-p)<1e-9).map(z=>z.nome);return(a.length>3?a.length+" disciplinas":lst(a))+" ("+pc(p)+")"};
   P.push(mx===mn?`O desempenho foi homogêneo entre as disciplinas (${pc(mx)}).`:`Melhor desempenho em ${nm(mx)} e menor em ${nm(mn)}.`);
@@ -649,23 +666,24 @@ function fichaObs(F,corte,cmp){
   if(nb||mu){const t=[];if(nb)t.push(`${nb} ${nb>1?"questões":"questão"} em branco`);if(mu)t.push(`${mu} ${mu>1?"questões":"questão"} com dupla marcação`);
     let x=`Houve ${lst(t)}.`,fim="";
     for(const d of F.ds){let r=0;for(let q=NQ[d];q>=1&&brs.has(d+"-"+q);q--)r++;if(r>=3)fim+=` As últimas ${r} questões do Dia ${d} ficaram em branco.`}
-    if(fim)x+=fim;else if(nb/v.nq>=.2)x+=` A quantidade de questões em branco é elevada; vale verificar o tempo de prova e a dificuldade de leitura.`;
+    if(fim)x+=fim;else if(nb/nqT>=.2)x+=` A quantidade de questões em branco é elevada; vale verificar o tempo de prova e a dificuldade de leitura.`;
     P.push(x)}
   if(cmp&&F.fac.length>=3)P.push(`Há ${F.fac.length} questões que a maioria da turma acertou e que o(a) estudante errou ou deixou em branco; vale revisá-las.`);
   return P.join(" ")}
+function fichaDia(F,x,o){const ok=x.p>=o.corte,c=Math.round(o.corte*100),cm=o.cmp&&F.cmp[x.d],dif=cm?x.nota-cm.media:0;
+ return `<div class="fnt" style="margin-top:8px"><div class="fbig"><b>${fmt(x.nota)}</b><span>de ${VALOR}</span><em>Nota · Dia ${x.d}</em></div>
+<div class="fm"><div><b>${x.tot}/${x.nq}</b><span>questões certas</span></div><div><b>${pc(x.p)}</b><span>aproveitamento</span></div><div><b class="pill ${ok?"ok":"no"}">${ok?"Adequado":"Abaixo do esperado"}</b><span>corte de ${c}%</span></div>${cm?`<div><b>${fmt(cm.media)}</b><span>média da turma (${cm.n} alunos) · ${Math.abs(dif)<.05?"aluno na média":"aluno "+fmt(Math.abs(dif))+" pts "+(dif>0?"acima":"abaixo")}</span></div>`:""}</div></div>
+<div class="fleg">A nota do Dia ${x.d} vale para: ${lst(DISC[x.d].map(z=>z[0]))}.${anul[x.d].length?` Anulada${anul[x.d].length>1?"s":""}: ${anul[x.d].map(q=>"Q"+q).join(", ")} · a nota é calculada sobre ${x.nq} questões válidas.`:""}</div>`}
 function fichaHTML(F,o){
-  const s=F.s,v=F.v,ok=v.p>=o.corte,c=Math.round(o.corte*100),sav=store[s.turma].alunos[s.i].obs,obs=sav||fichaObs(F,o.corte,o.cmp);
+  const s=F.s,c=Math.round(o.corte*100),sav=store[s.turma].alunos[s.i].obs,obs=sav||fichaObs(F,o.corte,o.cmp);
   const at=[];if(F.br.length)at.push(`<b>Em branco:</b> ${porDia(F.br)}`);if(F.mu.length)at.push(`<b>Dupla marcação:</b> ${porDia(F.mu)}`);
   if(o.cmp&&F.fac.length)at.push(`<b>Questões que 70% ou mais da turma acertou e não foram acertadas:</b> ${F.fac.slice(0,12).map(x=>`Q${x[1]}${F.ds.length>1?` (D${x[0]})`:""}`).join(", ")}${F.fac.length>12?` e mais ${F.fac.length-12}`:""}`);
-  const dif=F.cmp&&o.cmp?v.nota-F.cmp.media:0;
   let h=`<article class="fch"><div class="fh"><div><div class="fe">${ESC}</div><h2>Ficha individual de desempenho</h2></div><div class="fd">Emitida em ${new Date().toLocaleDateString("pt-BR")}</div></div>
 <div class="fid"><div><span>Aluno(a)</span><b>${eH(s.nome)}</b></div><div><span>Turma</span><b>${eH(s.turma)}</b></div><div><span>Prova</span><b>${s.tipo==="adaptada"?"Adaptada":"Regular"}</b></div><div><span>Avaliação</span><b>${o.ds.length>1?"Dias 1 e 2":"Dia "+o.ds[0]}</b></div></div>
-<div class="fnt"><div class="fbig"><b>${fmt(v.nota)}</b><span>de ${F.max}${F.falt.length?" (parcial)":""}</span><em>Nota geral</em></div>
-<div class="fm"><div><b>${pc(v.p)}</b><span>aproveitamento</span></div><div><b>${v.t}/${v.nq}</b><span>questões certas</span></div><div><b class="pill ${ok?"ok":"no"}">${ok?"Adequado":"Abaixo do esperado"}</b><span>corte de ${c}%</span></div>${F.cmp&&o.cmp?`<div><b>${fmt(F.cmp.media)}</b><span>média da turma (${F.cmp.n} alunos) · ${Math.abs(dif)<.05?"aluno na média":"aluno "+fmt(Math.abs(dif))+" pts "+(dif>0?"acima":"abaixo")}</span></div>`:""}</div></div>
-<div class="fdias">${F.dias.map(d=>`<div><b>Dia ${d.d}</b> · ${d.tot}/${d.nq} certas · nota ${fmt(d.nota)} de ${VALOR} · ${pc(d.p)}</div>`).join("")}${F.falt.map(d=>`<div style="color:var(--bad)">Dia ${d} sem gabarito lido</div>`).join("")}</div>
+${F.dias.map(x=>fichaDia(F,x,o)).join("")}${F.falt.length?`<div class="fdias">${F.falt.map(d=>`<div style="color:var(--bad)">Dia ${d} sem gabarito lido</div>`).join("")}</div>`:""}
 <h3>Desempenho por disciplina e por questão</h3><table class="ft"><tr><th>Disciplina</th><th>Questões</th><th>Acertos</th><th style="width:30%">Aproveitamento</th></tr>`;
-  for(const d of F.ds){h+=`<tr class="fdh"><td colspan="4">Dia ${d}</td></tr>`;
-    for(const z of F.disc.filter(z=>z.d===d))h+=`<tr><td>${z.nome}<small>Q${z.ini}–Q${z.fim}</small></td><td><div class="fq">${z.cells.map(x=>`<i class="${x.k}" title="Q${x.q} · ${x.k==="c"?"acertou":x.k==="b"?"em branco":x.k==="u"?"dupla marcação ("+x.t+")":"marcou "+x.t+", gabarito "+x.g}">${x.k==="c"?"✓":x.k==="b"?"–":x.k==="u"?"2×":x.t}</i>`).join("")}</div></td><td><b>${z.ac}/${z.tq}</b></td><td><b>${pc(z.p)}</b><div class="fb"><i style="width:${Math.round(z.p*100)}%;background:hsl(${hue(z.p)} 62% 42%)"></i><u style="left:${c}%"></u></div></td></tr>`}
+  for(const d of F.ds){h+=`<tr class="fdh"><td colspan="4">Dia ${d} · nota ${fmt(s.d[d].nota)} de ${VALOR}</td></tr>`;
+    for(const z of F.disc.filter(z=>z.d===d))h+=`<tr><td>${z.nome}<small>Q${z.ini}–Q${z.fim}</small></td><td><div class="fq">${z.cells.map(x=>`<i class="${x.k}" title="Q${x.q} · ${x.k==="n"?"anulada":x.k==="c"?"acertou":x.k==="b"?"em branco":x.k==="u"?"dupla marcação ("+x.t+")":"marcou "+x.t+", gabarito "+x.g}">${x.k==="n"?"⊘":x.k==="c"?"✓":x.k==="b"?"–":x.k==="u"?"2×":x.t}</i>`).join("")}</div></td><td><b>${z.ac}/${z.tq}</b></td><td><b>${pc(z.p)}</b><div class="fb"><i style="width:${Math.round(z.p*100)}%;background:hsl(${hue(z.p)} 62% 42%)"></i><u style="left:${c}%"></u></div></td></tr>`}
   h+=`</table><div class="fleg">✓ acertou · letra em vermelho = alternativa marcada incorretamente · – em branco · 2× dupla marcação · a linha preta nas barras indica o corte de ${c}%</div>
 <h3>Pontos de atenção</h3>${at.length?`<ul class="fa">${at.map(x=>`<li>${x}</li>`).join("")}</ul>`:`<div class="fleg" style="font-size:12.5px">Nenhum ponto de atenção na leitura.</div>`}
 <h3>Observação geral</h3><div class="fo" contenteditable="true" spellcheck="false" data-k="${eH(s.turma)}" data-i="${s.i}">${eH(obs).replace(/\n/g,"<br>")}</div>
@@ -679,49 +697,67 @@ function fichaOpts(){const ks=keysOf(rSel),C=calc(ks),L=C.stu.slice().sort(byT),
 $("rOut").addEventListener("input",e=>{const el=e.target.closest&&e.target.closest(".fo");if(!el||!store[el.dataset.k])return;store[el.dataset.k].alunos[+el.dataset.i].obs=(el.innerText!==undefined?el.innerText:el.textContent).replace(/\u00a0/g," ").trim();salvar()});
 $("rA").onchange=e=>{rAl=e.target.value;gerar()};$("rM").onchange=()=>gerar();
 window.abrirFicha=ai=>{fecharEsp();rTipo="ficha";rSel=cur;rAl=cur+"|"+ai;$("rD").value="0";repOpts();drawRT();aba(2)};
+const markQ=(s,d,q)=>{if(isAn(d,q))return"⊘";const f=store[s.turma].folhas[d].find(x=>x.ai===s.i);if(!f||f.erro)return"—";const r=f.resp[q];return r&&r[1]===""&&r[0]===CH[s.tipo][d][q-1]?"✓":"✗"};
 const RT=[
-{id:"ficha",ico:"🪪",nome:"Ficha do aluno",desc:"Análise individual da nota geral, por disciplina e por questão",fn:(o,C)=>{
+{id:"ficha",ico:"🪪",nome:"Ficha do aluno",desc:"Análise individual: nota de cada dia, por disciplina e por questão",fn:(o,C)=>{
  const cc={},CT=k=>cc[k]||(cc[k]=calc([k]));let L;
  if(o.aluno&&o.aluno!=="all"){const[k,i]=o.aluno.split("|");L=C.stu.filter(s=>s.turma===k&&s.i===+i)}else L=C.stu.slice().sort(byT);
  const sem=L.filter(s=>!o.ds.some(d=>s.d[d])).length;L=L.filter(s=>o.ds.some(d=>s.d[d]));
  const Fs=L.map(s=>fichaF(s,o,CT)),sit=p=>p>=o.corte?"Adequado":"Abaixo do esperado";
- const kp=Fs.length===1?[[fmt(Fs[0].v.nota)+" de "+Fs[0].max,"nota geral"],[pc(Fs[0].v.p),"aproveitamento"],[sit(Fs[0].v.p),"situação"],[store[Fs[0].s.turma].alunos[Fs[0].s.i].obs||fichaObs(Fs[0],o.corte,o.cmp),"observação geral"]]
-  :[[Fs.length,"fichas geradas"],[sem,"sem gabarito (sem ficha)"],[Fs.length?fmt(mean(Fs.map(F=>F.v.nota))):"—","nota geral média"]];
- return{kp,Fs,head:["Turma","Aluno","Prova","Dia","Disciplina","Acertos","Questões","% acerto","Situação","Nota geral"],
-  rows:Fs.flatMap(F=>F.disc.map(z=>[F.s.turma,F.s.nome,F.s.tipo,"Dia "+z.d,z.nome,z.ac,z.tq,pc(z.p),sit(z.p),+F.v.nota.toFixed(2)]))}},
+ const kp=Fs.length===1?[...Fs[0].dias.flatMap(x=>[[fmt(x.nota)+" de "+VALOR,"nota Dia "+x.d],[x.tot+"/"+x.nq+" · "+pc(x.p),"acertos Dia "+x.d],[sit(x.p),"situação Dia "+x.d]]),[store[Fs[0].s.turma].alunos[Fs[0].s.i].obs||fichaObs(Fs[0],o.corte,o.cmp),"observação geral"]]
+  :[[Fs.length,"fichas geradas"],[sem,"sem gabarito (sem ficha)"],...o.ds.map(d=>{const L2=Fs.filter(F=>F.s.d[d]);return[L2.length?fmt(mean(L2.map(F=>F.s.d[d].nota))):"—","nota média Dia "+d]})];
+ return{kp,Fs,head:["Turma","Aluno","Prova","Dia","Disciplina","Acertos","Questões","% acerto","Situação","Nota do dia"],
+  rows:Fs.flatMap(F=>F.disc.map(z=>[F.s.turma,F.s.nome,F.s.tipo,"Dia "+z.d,z.nome,z.ac,z.tq,pc(z.p),sit(z.p),+F.s.d[z.d].nota.toFixed(2)]))}},
  html:(o,C,r)=>!r.Fs.length?'<div class="empty">Nenhum aluno com gabarito lido neste recorte e dia. Escolha outro aluno ou dia.</div>'
   :(r.Fs.length>1?`<div class="mut noprint" style="margin-bottom:10px">${r.Fs.length} fichas · cada uma sai em uma página ao imprimir.</div>`:"")+r.Fs.map(F=>fichaHTML(F,o)).join("")},
-{id:"boletim",ico:"🧾",nome:"Boletim da turma",desc:"Acertos, notas e situação de cada aluno",fn:(o,C)=>{
- const S=C.stu.slice().sort(byT),V=S.map(s=>sv(s,o.ds)),L=V.filter(v=>v.p!==null),ok=L.filter(v=>v.p>=o.corte).length;
- return{kp:[[S.length,"alunos"],[L.length?fmt(mean(L.map(v=>v.nota))):"—","nota média (de "+o.ds.length*VALOR+")"],[ok,"adequado"],[L.length-ok,"abaixo do esperado"],[S.length-L.length,"sem gabarito"]],
- head:["Turma","Aluno","Prova",...o.ds.flatMap(d=>[`Acertos D${d}`,`Nota D${d}`]),"Nota total","% acerto","Situação"],
- rows:S.map((s,i)=>{const v=V[i];return[s.turma,s.nome,s.tipo,...o.ds.flatMap(d=>s.d[d]?[`${s.d[d].tot}/${NQ[d]}`,+s.d[d].nota.toFixed(2)]:["—","—"]),v.nq?+v.nota.toFixed(2):"—",v.p===null?"—":pc(v.p),sit(v.p,o.corte)]})}}},
+{id:"boletim",ico:"🧾",nome:"Boletim da turma",desc:"Acertos, nota e situação de cada aluno, dia a dia",fn:(o,C)=>{
+ const S=C.stu.slice().sort(byT),kp=[[S.length,"alunos"]];
+ for(const d of o.ds){const L=S.filter(s=>s.d[d]),ok=L.filter(s=>s.d[d].tot/NV(d)>=o.corte).length;
+  kp.push([L.length?fmt(mean(L.map(s=>s.d[d].nota))):"—","nota média Dia "+d+" (de "+VALOR+")"],[ok,"adequado Dia "+d],[L.length-ok,"abaixo do esperado Dia "+d],[S.length-L.length,"sem gabarito Dia "+d])}
+ return{kp,head:["Turma","Aluno","Prova",...o.ds.flatMap(d=>[`Acertos D${d}`,`Nota D${d}`,`% D${d}`,`Situação D${d}`])],
+ rows:S.map(s=>[s.turma,s.nome,s.tipo,...o.ds.flatMap(d=>{const x=s.d[d];return x?[`${x.tot}/${NV(d)}`,+x.nota.toFixed(2),pc(x.tot/NV(d)),sit(x.tot/NV(d),o.corte)]:["—","—","—","Sem gabarito"]})])}}},
+{id:"lista",ico:"📋",nome:"Listagem por turma",desc:"Nome, acertos, nota do dia e ✓/✗ de cada questão, uma tabela por turma e dia",fn:(o,C)=>{
+ const S=C.stu.slice().sort(byT),n={},qs=d=>[...Array(NQ[d])].map((_,i)=>i+1);
+ const head=["Turma","Nº","Aluno",...o.ds.flatMap(d=>[`Acertos D${d} (de ${NV(d)})`,`Nota D${d} (de ${VALOR})`,...qs(d).map(q=>`D${d} Q${q}`)])];
+ const rows=S.map(s=>{n[s.turma]=(n[s.turma]||0)+1;return[s.turma,n[s.turma],s.nome,...o.ds.flatMap(d=>{const x=s.d[d];return x?[x.tot,+x.nota.toFixed(2),...qs(d).map(q=>markQ(s,d,q))]:["—","—",...qs(d).map(()=>"—")]})]});
+ return{kp:[[Object.keys(n).length,"turmas"],[S.length,"alunos"],...o.ds.map(d=>[S.filter(s=>!s.d[d]).length,"sem gabarito Dia "+d])],head,rows}},
+ html:(o,C,r)=>{const g={},nt=v=>String(+v.toFixed(2)).replace(".",","),qs=d=>[...Array(NQ[d])].map((_,i)=>i+1);let first=true;
+  C.stu.slice().sort(byT).forEach(s=>(g[s.turma]=g[s.turma]||[]).push(s));
+  return Object.keys(g).map(k=>o.ds.map(d=>{const pb=first?"":"break-before:page;margin-top:22px";first=false;
+   let h=`<div style="${pb}"><div class="rh"><b>📋 ${r.titulo} · ${eH(k)} · Dia ${d}</b><div class="mut">${ESC}</div><div class="mut">${r.escopo} · emitido em ${r.data}</div></div><div class="tw"><table class="tbl rp lq"><tr><th>Nº</th><th>Aluno</th><th>Acertos<br>(de ${NV(d)})</th><th>Nota<br>(de ${VALOR})</th>${qs(d).map(q=>`<th${isAn(d,q)?' title="anulada"':""}>${q}</th>`).join("")}</tr>`;
+   g[k].forEach((s,i)=>{const x=s.d[d];h+=`<tr><td>${i+1}</td><td>${eH(s.nome)}</td>`+(x?`<td><b>${x.tot}</b></td><td><b>${nt(x.nota)}</b></td>`:"<td>—</td><td>—</td>")+qs(d).map(q=>{const m=x?markQ(s,d,q):"—";return`<td class="${m==="✓"?"v":m==="✗"?"x":m==="⊘"?"a":""}">${m}</td>`}).join("")+"</tr>"});
+   return h+`</table></div><div class="fleg">✓ acertou · ✗ errou ou deixou em branco${anul[d].length?` · ⊘ anulada (${anul[d].map(q=>"Q"+q).join(", ")}); a nota é calculada sobre ${NV(d)} questões válidas`:""}</div></div>`}).join("")).join("")}},
 {id:"disc",ico:"📚",nome:"Desempenho por disciplina",desc:"Média e % de acerto por turma, dia e disciplina",fn:(o,C)=>{
  const R=[],it=[...o.keys.map(k=>[k,calc([k])]),...(o.keys.length>1?[["Geral",C]]:[])];
- for(const[k,c]of it)for(const d of o.ds)c[d].disc.forEach(z=>{if(!z.n)return;const tq=z.fim-z.ini+1;R.push([k,"Dia "+d,z.nome,c[d].n,fmt(z.sum/z.n),tq,pc(z.sum/z.n/tq)])});
- const dl=o.ds.flatMap(d=>C[d].disc.filter(z=>z.n).map(z=>[z.nome+" (D"+d+")",z.sum/z.n/(z.fim-z.ini+1)])).sort((a,b)=>b[1]-a[1]);
+ for(const[k,c]of it)for(const d of o.ds)c[d].disc.forEach(z=>{if(!z.n)return;const tq=z.tq;R.push([k,"Dia "+d,z.nome,c[d].n,fmt(z.sum/z.n),tq,pc(z.sum/z.n/(tq||1))])});
+ const dl=o.ds.flatMap(d=>C[d].disc.filter(z=>z.n).map(z=>[z.nome+" (D"+d+")",z.sum/z.n/(z.tq||1)])).sort((a,b)=>b[1]-a[1]);
  return{kp:dl.length?[[dl[0][0]+" · "+pc(dl[0][1]),"melhor disciplina"],[dl[dl.length-1][0]+" · "+pc(dl[dl.length-1][1]),"mais frágil"]]:[],head:["Turma","Dia","Disciplina","Alunos lidos","Média de acertos","Nº questões","% acerto"],rows:R}}},
-{id:"comp",ico:"🏫",nome:"Comparativo entre turmas",desc:"% de acerto de cada turma em cada disciplina",fn:(o,C)=>{
- const cols=o.ds.flatMap(d=>DISC[d].map((x,j)=>[d,j,x[0]+" D"+d,x[2]-x[1]+1])),it=[...o.keys.map(k=>[k,calc([k])]),...(o.keys.length>1?[["Todas",C]]:[])];
- const rows=it.map(([k,c])=>{const p=ovp(c,o.ds);return[k,Math.max(...o.ds.map(d=>c[d].n)),...cols.map(([d,j,,tq])=>{const z=c[d].disc[j];return z.n?pc(z.sum/z.n/tq):"—"}),p===null?"—":pc(p)]});
- const rk=it.filter(i=>i[0]!=="Todas").map(([k,c])=>[k,ovp(c,o.ds)]).filter(x=>x[1]!==null).sort((a,b)=>b[1]-a[1]);
- return{kp:rk.slice(0,3).map((x,i)=>[x[0]+" · "+pc(x[1]),["🥇 1ª turma","🥈 2ª turma","🥉 3ª turma"][i]]),head:["Turma","Alunos lidos",...cols.map(c=>c[2]),"Geral"],rows}}},
+{id:"comp",ico:"🏫",nome:"Comparativo entre turmas",desc:"% de acerto de cada turma em cada disciplina, por dia",fn:(o,C)=>{
+ const cols=o.ds.flatMap(d=>DISC[d].map((x,j)=>[d,j,x[0]+" D"+d,dqv(d,j)||1])),it=[...o.keys.map(k=>[k,calc([k])]),...(o.keys.length>1?[["Todas",C]]:[])];
+ const rows=it.map(([k,c])=>[k,Math.max(...o.ds.map(d=>c[d].n)),...o.ds.flatMap(d=>{const cs=cols.filter(x=>x[0]===d).map(([,j,,tq])=>{const z=c[d].disc[j];return z.n?pc(z.sum/z.n/tq):"—"}),p=ovp(c,[d]);return[...cs,p===null?"—":pc(p)]})]);
+ const head=["Turma","Alunos lidos",...o.ds.flatMap(d=>[...cols.filter(x=>x[0]===d).map(c=>c[2]),"Dia "+d+" (geral)"])];
+ const kp=o.ds.flatMap(d=>it.filter(i=>i[0]!=="Todas").map(([k,c])=>[k,ovp(c,[d])]).filter(x=>x[1]!==null).sort((a,b)=>b[1]-a[1]).slice(0,3).map((x,i)=>[x[0]+" · "+pc(x[1]),["🥇 1ª turma","🥈 2ª turma","🥉 3ª turma"][i]+" · Dia "+d]));
+ return{kp,head,rows}}},
 {id:"quest",ico:"❓",nome:"Análise de questões",desc:"Da mais difícil à mais fácil, com alternativa mais marcada",fn:(o,C)=>{
  const R=[];for(const d of o.ds)for(let q=1;q<=NQ[d];q++){const c=C[d].q[q];if(!c.n)continue;const z=DISC[d].find(x=>q>=x[1]&&q<=x[2]),p=c.ok/c.n,t=["A","B","C","D"].sort((a,b)=>c[b]-c[a])[0];
   R.push([p,["Dia "+d,"Q"+q,z[0],c.n,c.ok,pc(p),c.br,c.mu,c[t]?t+" ("+pc(c[t]/c.n)+")":"—",p<.4?"Difícil":p<.7?"Médio":"Fácil"]])}
  R.sort((a,b)=>a[0]-b[0]);const rows=R.map(r=>r[1]),n=t=>rows.filter(r=>r[9]===t).length;
  return{kp:[[n("Difícil"),"difíceis (menos de 40%)"],[n("Médio"),"médias"],[n("Fácil"),"fáceis (70% ou mais)"]],head:["Dia","Questão","Disciplina","Respostas","Acertos","% acerto","Em branco","Dupla","Mais marcada","Nível"],rows}}},
-{id:"aten",ico:"⚠️",nome:"Alunos em atenção",desc:"Abaixo do corte, muitos brancos ou sem gabarito",fn:(o,C)=>{
- const R=[];for(const s of C.stu){const v=sv(s,o.ds),m=[];
-  if(v.p===null)m.push("Sem gabarito lido");else{if(v.p<o.corte)m.push("Abaixo de "+Math.round(o.corte*100)+"%");if(s.br>=.2*v.nq)m.push(s.br+" em branco")}
+{id:"aten",ico:"⚠️",nome:"Alunos em atenção",desc:"Por dia: abaixo do corte, muitos brancos ou sem gabarito",fn:(o,C)=>{
+ const R=[];for(const s of C.stu)for(const d of o.ds){const x=s.d[d],m=[];
+  if(!x)m.push("Sem gabarito lido");else{if(x.tot/NV(d)<o.corte)m.push("Abaixo de "+Math.round(o.corte*100)+"%");if(s.brd[d]>=.2*NV(d))m.push(s.brd[d]+" em branco")}
   if(!m.length)continue;
-  const dl=o.ds.filter(d=>s.d[d]).flatMap(d=>DISC[d].map((x,j)=>[x[0],s.d[d].disc[j]/(x[2]-x[1]+1)])).sort((a,b)=>a[1]-b[1]);
-  R.push([v.p===null?9:v.p,[s.turma,s.nome,v.p===null?"—":pc(v.p),dl.length?dl[0][0]+" ("+pc(dl[0][1])+")":"—",s.br,m.join(" · ")]])}
+  const dl=x?DISC[d].map((z,j)=>[z[0],x.disc[j]/(dqv(d,j)||1)]).sort((a,b)=>a[1]-b[1]):[];
+  R.push([x?x.tot/NV(d):9,[s.turma,s.nome,"Dia "+d,x?pc(x.tot/NV(d)):"—",dl.length?dl[0][0]+" ("+pc(dl[0][1])+")":"—",x?s.brd[d]:"—",m.join(" · ")]])}
  R.sort((a,b)=>a[0]-b[0]);
- return{kp:[[R.length,"alunos em atenção"],[R.filter(r=>r[0]===9).length,"sem gabarito"],[C.stu.length-R.length,"sem alerta"]],head:["Turma","Aluno","% acerto","Disciplina mais fraca","Em branco","Motivo"],rows:R.map(r=>r[1])}}},
-{id:"rank",ico:"🏆",nome:"Ranking de notas",desc:"Os alunos com melhor desempenho (Top N)",fn:(o,C)=>{
- const V=C.stu.map(s=>({s,v:sv(s,o.ds)})).filter(x=>x.v.p!==null).sort((a,b)=>b.v.nota-a.v.nota||b.v.p-a.v.p).slice(0,o.n);
- return{kp:[[V.length,"no ranking"],[V.length?fmt(V[0].v.nota):"—","maior nota"]],head:["Pos.","Turma","Aluno","Nota","% acerto"],rows:V.map((x,i)=>[(i+1)+"º",x.s.turma,x.s.nome,+x.v.nota.toFixed(2),pc(x.v.p)])}}},
+ return{kp:[[new Set(R.map(r=>r[1][0]+"|"+r[1][1])).size,"alunos em atenção"],[R.length,"alertas (aluno/dia)"],[R.filter(r=>r[0]===9).length,"sem gabarito"]],head:["Turma","Aluno","Dia","% acerto","Disciplina mais fraca","Em branco","Motivo"],rows:R.map(r=>r[1])}}},
+{id:"rank",ico:"🏆",nome:"Ranking de notas",desc:"Os melhores de cada dia (Top N), pela nota do dia",fn:(o,C)=>{
+ const R=[],kp=[[0,"no ranking"]];let n=0;
+ for(const d of o.ds){const V=C.stu.filter(s=>s.d[d]).sort((a,b)=>b.d[d].nota-a.d[d].nota).slice(0,o.n);n+=V.length;
+  kp.push([V.length?fmt(V[0].d[d].nota):"—","maior nota Dia "+d]);
+  V.forEach((s,i)=>R.push([(i+1)+"º","Dia "+d,s.turma,s.nome,+s.d[d].nota.toFixed(2),s.d[d].tot+"/"+NV(d),pc(s.d[d].tot/NV(d))]))}
+ kp[0][0]=n;
+ return{kp,head:["Pos.","Dia","Turma","Aluno","Nota do dia","Acertos","% acerto"],rows:R}}},
 {id:"pend",ico:"🔎",nome:"Pendências de leitura",desc:"Sem gabarito, erros de leitura, brancos e duplas",fn:o=>{
  const rows=[];for(const k of o.keys)store[k].alunos.forEach((a,i)=>{for(const d of o.ds){const f=store[k].folhas[d].find(x=>x.ai===i);let m="";
   if(!f)m="Sem gabarito lido";else if(f.erro)m="Erro de leitura";else{const rs=Object.values(f.resp).slice(0,NQ[d]),br=rs.filter(r=>r[1]==="BRANCO").length,mu=rs.filter(r=>r[1]==="MÚLTIPLA").length;if(br||mu)m=`${br} em branco, ${mu} dupla(s)`}
@@ -737,7 +773,7 @@ function gerar(){
  ["bPr","bXl","bCs","bCp"].forEach(id=>$(id).disabled=true);$("rMsg").textContent="";
  if(!o.keys.length||(!o.ds.some(d=>C[d].n)&&rTipo!=="pend")){$("rOut").innerHTML='<div class="empty">Leia gabaritos na aba Correção para gerar relatórios.</div>';return}
  const r=t.fn(o,C),sc=(scopeOpts(1).find(x=>x[0]===rSel)||["",""])[1];
- Object.assign(r,{titulo:t.nome,escopo:sc+" · "+(o.ds.length>1?"Dias 1 e 2":"Dia "+o.ds[0]),data:new Date().toLocaleDateString("pt-BR")});rep=r;
+ Object.assign(r,{titulo:t.nome,escopo:sc+" · "+(o.ds.length>1?"Dias 1 e 2":"Dia "+o.ds[0])+(anTxt(o.ds)?" · anuladas: "+anTxt(o.ds):""),data:new Date().toLocaleDateString("pt-BR")});rep=r;
  const cell=c=>/^\d+%$/.test(c)?`<td class="hm" style="--h:${hue(parseInt(c)/100)}">${c}</td>`:`<td>${c}</td>`;
  if(t.html){$("rOut").innerHTML=t.html(o,C,r);["bPr","bXl","bCs","bCp"].forEach(id=>$(id).disabled=!r.rows.length);return}
   $("rOut").innerHTML=`<div class="rh"><b>${t.ico} ${r.titulo}</b><div class="mut">${ESC}</div><div class="mut">${r.escopo} · emitido em ${r.data}</div></div><div class="kpis">${r.kp.map(k=>kpi(k[0],k[1],"sm")).join("")}</div>`+
@@ -763,24 +799,25 @@ $("tbC").onclick=()=>aba(0);$("tbP").onclick=()=>aba(1);$("tbR").onclick=()=>aba
 
 $("exp").onclick=async()=>{
   const turma=$("turma").value.trim(),wb=XLSX.utils.book_new(),H=["Turma","Nome"];
-  for(const d of [1,2]){DISC[d].forEach(x=>H.push(`${x[0]} (Dia ${d})`));H.push(`Acertos Dia ${d}`,`Nota Dia ${d}`)}H.push("Nota Total");
+  for(const d of [1,2]){DISC[d].forEach(x=>H.push(`${x[0]} (Dia ${d})`));H.push(`Acertos Dia ${d}`,`Nota Dia ${d}`)}
   const rows=[H],alert=[["Dia","Aluno","Problema"]];
-  alunos.forEach((a,i)=>{const r=[turma,a.nome];let tot=0;
+  alunos.forEach((a,i)=>{const r=[turma,a.nome];
     for(const d of [1,2]){const f=folhaDe(d,i);
       if(!f||f.erro){DISC[d].forEach(()=>r.push(""));r.push("","");alert.push([`Dia ${d}`,a.nome,f?"Não foi possível ler a folha":"Aluno sem gabarito lido neste dia"]);continue}
       const ch=CH[a.tipo][d];let t=0;
-      for(const[,ini,fim]of DISC[d]){let s=0;for(let q=ini;q<=fim;q++){const x=f.resp[q];if(x&&x[1]===""&&x[0]===ch[q-1])s++}r.push(s);t+=s}
-      const nota=+(t*VALOR/NQ[d]).toFixed(2);r.push(t,nota);tot+=nota}
-    r.push(+tot.toFixed(2));rows.push(r)});
+      for(const[,ini,fim]of DISC[d]){let s=0;for(let q=ini;q<=fim;q++){const x=f.resp[q];if(!isAn(d,q)&&x&&x[1]===""&&x[0]===ch[q-1])s++}r.push(s);t+=s}
+      const nota=+(t*VALOR/NV(d)).toFixed(2);r.push(t,nota)}
+    rows.push(r)});
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rows),"Resumo");
-  for(const d of [1,2]){const R=[["Turma","Nome",...[...Array(NQ[d])].map((_,i)=>"Q"+(i+1))],["","GABARITO REGULAR",...CH.regular[d].split("")],["","GABARITO ADAPTADA",...CH.adaptada[d].split("")]];
+  for(const d of [1,2]){const R=[["Turma","Nome",...[...Array(NQ[d])].map((_,i)=>"Q"+(i+1)+(isAn(d,i+1)?" (ANULADA)":""))],["","GABARITO REGULAR",...CH.regular[d].split("")],["","GABARITO ADAPTADA",...CH.adaptada[d].split("")]];
     alunos.forEach((a,i)=>{const f=folhaDe(d,i),ch=CH[a.tipo][d];
       if(!f||f.erro){R.push([turma,a.nome,"SEM FOLHA"]);return}
-      R.push([turma,a.nome,...[...Array(NQ[d])].map((_,q)=>{const x=f.resp[q+1]||["","BRANCO"];return x[1]==="BRANCO"?"-":x[0]+(x[1]?" (dupla)":"")+(x[1]===""&&x[0]!==ch[q]?" ✗":"")})])});
+      R.push([turma,a.nome,...[...Array(NQ[d])].map((_,q)=>{const x=f.resp[q+1]||["","BRANCO"];return x[1]==="BRANCO"?"-":x[0]+(x[1]?" (dupla)":"")+(x[1]===""&&x[0]!==ch[q]&&!isAn(d,q+1)?" ✗":"")})])});
     XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(R),`Respostas Dia ${d}`)}
   {const C=calc([cur]),P=[["Turma","Dia","Disciplina","Alunos lidos","Média de acertos","Nº de questões","% de acertos"]];
-    for(const d of [1,2])for(const z of C[d].disc){const tq=z.fim-z.ini+1,m=z.n?z.sum/z.n:0;P.push([turma,"Dia "+d,z.nome,C[d].n,+m.toFixed(2),tq,z.n?+(m*100/tq).toFixed(1)+"%":""])}
+    for(const d of [1,2])for(const z of C[d].disc){const tq=z.tq||1,m=z.n?z.sum/z.n:0;P.push([turma,"Dia "+d,z.nome,C[d].n,+m.toFixed(2),tq,z.n?+(m*100/tq).toFixed(1)+"%":""])}
     XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(P),"Panorama")}
+  if(anTxt())XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([["Dia","Questão","Disciplina"],...[1,2].flatMap(d=>anul[d].map(q=>["Dia "+d,"Q"+q,DISC[d].find(z=>q>=z[1]&&q<=z[2])[0]]))]),"Anuladas");
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(alert),"Alertas");
   const data=XLSX.write(wb,{type:"array",bookType:"xlsx"});
   const blob=new Blob([data],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
@@ -793,7 +830,7 @@ $("exp").onclick=async()=>{
 /* ---------- armazenamento local (localStorage) ---------- */
 const LS_KEY="corretor_gabaritos_v1";
 let carregado=false,saveT=0;
-const dumpState=(semThumb)=>JSON.stringify({v:1,cur,dia,sel,auto:$("auto").checked,store:(cur&&(store[cur]={alunos,folhas}),store)},
+const dumpState=(semThumb)=>JSON.stringify({v:1,cur,dia,sel,anul,auto:$("auto").checked,store:(cur&&(store[cur]={alunos,folhas}),store)},
   (k,v)=>k==="cells"||(semThumb&&k==="thumb")?undefined:v);
 function status(t,bad){const e=$("sav");e.textContent=t;e.style.color=bad?"var(--bad)":""}
 function salvar(){if(!carregado)return;clearTimeout(saveT);saveT=setTimeout(salvarAgora,350)}
@@ -804,7 +841,7 @@ function salvarAgora(){if(!carregado)return;clearTimeout(saveT);
     catch(e){localStorage.setItem(LS_KEY,dumpState(true));status("💾 Salvo às "+hora+" (sem as miniaturas das folhas: o navegador ficou sem espaço). Baixe um backup.",true)}
   }catch(e){status("⚠️ Não foi possível salvar neste navegador (modo privado ou sem espaço). Use “Baixar backup”.",true)}}
 function aplicar(D){
-  store=D.store||{};alunos=[];folhas={1:[],2:[]};cur="";sel=0;dia=1;
+  store=D.store||{};anul=sanAnul(D.anul);alunos=[];folhas={1:[],2:[]};cur="";sel=0;dia=1;
   if(typeof D.auto==="boolean")$("auto").checked=D.auto;
   const v=D.cur||"";
   if(v&&[...$("turma").options].some(o=>o.value===v)){
