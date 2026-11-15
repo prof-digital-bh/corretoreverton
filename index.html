@@ -187,6 +187,20 @@ button.aq{padding:0;width:34px;height:34px;border-radius:9px;background:var(--bg
 button.aq.on{background:var(--badS);color:var(--bad);border-color:var(--bad);text-decoration:line-through}
 .eq.a{background:var(--bg);color:var(--mut);opacity:.75}.qsq i.an{background:var(--bg);color:var(--mut);text-decoration:line-through}.fq .n{background:#eceff4;color:#7a8696}
 .lq th,.lq td{padding:4px 5px;text-align:center;white-space:nowrap}.lq th:nth-child(2),.lq td:nth-child(2){text-align:left}.lq td.v{background:var(--okS);color:var(--ok);font-weight:800}.lq td.x{background:var(--badS);color:var(--bad);font-weight:800}.lq td.a{background:var(--bg);color:var(--mut)}
+
+/* Listagem por turma: cada tabela (turma + dia) em 1 folha A4 paisagem */
+@page lista{size:A4 landscape;margin:8mm}
+@media print{
+.lqp{page:lista;break-inside:avoid}
+.lqp.lqp{margin-top:0!important}
+.lqp .rh{margin-bottom:4px;padding-bottom:4px}.lqp .rh b{font-size:14px}.lqp .rh .mut{font-size:9px;line-height:1.25}
+.lqp .tw{margin:0;overflow:visible}
+.lqp table.lq.rp{width:100%;table-layout:auto}
+.lqp table.lq.rp th,.lqp table.lq.rp td{white-space:nowrap!important;text-align:center!important;padding:0 2px!important;height:var(--rh);font-size:var(--fs);line-height:1.05}
+.lqp table.lq.rp th{height:calc(var(--rh)*2);font-size:calc(var(--fs)*.95)}
+.lqp table.lq.rp td:nth-child(2),.lqp table.lq.rp th:nth-child(2){text-align:left!important;max-width:60mm;overflow:hidden;text-overflow:ellipsis}
+.lqp .fleg{font-size:8.5px;margin-top:3px}
+}
 </style>
 </head>
 <body>
@@ -220,7 +234,7 @@ button.aq.on{background:var(--badS);color:var(--bad);border-color:var(--bad);tex
 
 <section class="step" id="st4"><div class="sh"><span class="num">4</span><div><h2>Baixar resultado</h2><p class="sub">Planilha Excel com turma, nomes, notas e respostas</p></div></div>
 <button id="exp" class="big">⬇️ Baixar Excel</button><div id="msg" class="mut" style="margin-top:8px;text-align:center"></div>
-<div class="row" style="margin-top:14px"><button class="ghost sm" id="bkx">💾 Baixar backup</button><label class="btn ghost sm" for="bki" style="padding:6px 11px;font-size:13px;border-radius:9px">📂 Restaurar backup</label><input id="bki" type="file" accept=".json,application/json"><button class="ghost sm" id="clr" style="color:var(--bad)">🗑️ Apagar dados salvos</button></div>
+<div class="row" style="margin-top:14px"><button class="ghost sm" id="bkx">💾 Baixar backup</button><label class="btn ghost sm" for="bki" style="padding:6px 11px;font-size:13px;border-radius:9px">📂 Mesclar backup</label><input id="bki" type="file" accept=".json,application/json"><button class="ghost sm" id="clr" style="color:var(--bad)">🗑️ Apagar dados salvos</button></div>
 <div id="sav" class="mut" style="margin-top:8px;font-size:12.5px;text-align:center"></div></section>
 </main>
 <main id="tabP" hidden>
@@ -235,6 +249,7 @@ button.aq.on{background:var(--badS);color:var(--bad);border-color:var(--bad);tex
 <div id="rMsg" class="mut noprint" style="margin:8px 0 12px"></div><div id="rOut"></div></section></main>
 <div id="esp"><div class="pn" id="espc"></div></div>
 <div id="cf"><div class="pn" id="cfc"></div></div>
+<div id="mgAv" style="position:fixed;inset:0;background:rgba(8,12,20,.75);display:none;align-items:center;justify-content:center;z-index:12;padding:14px"><div style="background:var(--card);color:var(--tx);border-radius:16px;max-width:460px;width:100%;max-height:90vh;overflow:auto;padding:18px 18px 14px;box-shadow:0 10px 40px rgba(0,0,0,.4)"><h3 style="margin:0 0 8px">✅ Backup mesclado</h3><div id="mgRes" class="mut" style="margin-bottom:10px"></div><div style="background:var(--priS);border-left:4px solid var(--warn);border-radius:10px;padding:10px 12px;font-size:14px"><b style="color:var(--warn)">⚠️ Não esqueça:</b><ul style="margin:6px 0 0;padding-left:18px"><li><b>Questões anuladas</b> são somadas entre os dois lados. Se você <u>desfez</u> uma anulação em um aparelho, ela não some ao mesclar: desfaça também no outro.</li><li><b>Tipo de prova</b> (regular ou adaptada): se o aluno já tinha folha neste aparelho, o tipo atual é mantido. Confira se está certo.</li><li>Quando o aluno tem folha nos dois lados, fica a <b>mais completa</b>. Confira as folhas que você corrigiu por último.</li></ul></div><div style="margin-top:12px;text-align:right"><button onclick="document.getElementById('mgAv').style.display='none'">Entendi</button></div></div></div>
 <div id="modal"><div id="mcap"></div><img id="mimg" alt="conferência"><span class="mut" style="color:#cbd5e1">Toque para fechar</span></div>
 
 <script>/*! xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
@@ -697,7 +712,7 @@ function fichaOpts(){const ks=keysOf(rSel),C=calc(ks),L=C.stu.slice().sort(byT),
 $("rOut").addEventListener("input",e=>{const el=e.target.closest&&e.target.closest(".fo");if(!el||!store[el.dataset.k])return;store[el.dataset.k].alunos[+el.dataset.i].obs=(el.innerText!==undefined?el.innerText:el.textContent).replace(/\u00a0/g," ").trim();salvar()});
 $("rA").onchange=e=>{rAl=e.target.value;gerar()};$("rM").onchange=()=>gerar();
 window.abrirFicha=ai=>{fecharEsp();rTipo="ficha";rSel=cur;rAl=cur+"|"+ai;$("rD").value="0";repOpts();drawRT();aba(2)};
-const markQ=(s,d,q)=>{if(isAn(d,q))return"⊘";const f=store[s.turma].folhas[d].find(x=>x.ai===s.i);if(!f||f.erro)return"—";const r=f.resp[q];return r&&r[1]===""&&r[0]===CH[s.tipo][d][q-1]?"✓":"✗"};
+const markQ=(s,d,q)=>{if(isAn(d,q))return"⊘";const f=store[s.turma].folhas[d].find(x=>x.ai===s.i);if(!f||f.erro)return"—";const r=f.resp[q];if(!r||r[1]==="BRANCO")return"BR";if(r[1]!=="")return"2×";return r[0]===CH[s.tipo][d][q-1]?"✓":(r[0]||"✗")};
 const RT=[
 {id:"ficha",ico:"🪪",nome:"Ficha do aluno",desc:"Análise individual: nota de cada dia, por disciplina e por questão",fn:(o,C)=>{
  const cc={},CT=k=>cc[k]||(cc[k]=calc([k]));let L;
@@ -716,7 +731,7 @@ const RT=[
   kp.push([L.length?fmt(mean(L.map(s=>s.d[d].nota))):"—","nota média Dia "+d+" (de "+VALOR+")"],[ok,"adequado Dia "+d],[L.length-ok,"abaixo do esperado Dia "+d],[S.length-L.length,"sem gabarito Dia "+d])}
  return{kp,head:["Turma","Aluno","Prova",...o.ds.flatMap(d=>[`Acertos D${d}`,`Nota D${d}`,`% D${d}`,`Situação D${d}`])],
  rows:S.map(s=>[s.turma,s.nome,s.tipo,...o.ds.flatMap(d=>{const x=s.d[d];return x?[`${x.tot}/${NV(d)}`,+x.nota.toFixed(2),pc(x.tot/NV(d)),sit(x.tot/NV(d),o.corte)]:["—","—","—","Sem gabarito"]})])}}},
-{id:"lista",ico:"📋",nome:"Listagem por turma",desc:"Nome, acertos, nota do dia e ✓/✗ de cada questão, uma tabela por turma e dia",fn:(o,C)=>{
+{id:"lista",ico:"📋",nome:"Listagem por turma",desc:"Nome, acertos, nota do dia e, em cada questão, ✓ se acertou ou a letra marcada se errou; uma tabela por turma e dia",fn:(o,C)=>{
  const S=C.stu.slice().sort(byT),n={},qs=d=>[...Array(NQ[d])].map((_,i)=>i+1);
  const head=["Turma","Nº","Aluno",...o.ds.flatMap(d=>[`Acertos D${d} (de ${NV(d)})`,`Nota D${d} (de ${VALOR})`,...qs(d).map(q=>`D${d} Q${q}`)])];
  const rows=S.map(s=>{n[s.turma]=(n[s.turma]||0)+1;return[s.turma,n[s.turma],s.nome,...o.ds.flatMap(d=>{const x=s.d[d];return x?[x.tot,+x.nota.toFixed(2),...qs(d).map(q=>markQ(s,d,q))]:["—","—",...qs(d).map(()=>"—")]})]});
@@ -724,9 +739,10 @@ const RT=[
  html:(o,C,r)=>{const g={},nt=v=>String(+v.toFixed(2)).replace(".",","),qs=d=>[...Array(NQ[d])].map((_,i)=>i+1);let first=true;
   C.stu.slice().sort(byT).forEach(s=>(g[s.turma]=g[s.turma]||[]).push(s));
   return Object.keys(g).map(k=>o.ds.map(d=>{const pb=first?"":"break-before:page;margin-top:22px";first=false;
-   let h=`<div style="${pb}"><div class="rh"><b>📋 ${r.titulo} · ${eH(k)} · Dia ${d}</b><div class="mut">${ESC}</div><div class="mut">${r.escopo} · emitido em ${r.data}</div></div><div class="tw"><table class="tbl rp lq"><tr><th>Nº</th><th>Aluno</th><th>Acertos<br>(de ${NV(d)})</th><th>Nota<br>(de ${VALOR})</th>${qs(d).map(q=>`<th${isAn(d,q)?' title="anulada"':""}>${q}</th>`).join("")}</tr>`;
-   g[k].forEach((s,i)=>{const x=s.d[d];h+=`<tr><td>${i+1}</td><td>${eH(s.nome)}</td>`+(x?`<td><b>${x.tot}</b></td><td><b>${nt(x.nota)}</b></td>`:"<td>—</td><td>—</td>")+qs(d).map(q=>{const m=x?markQ(s,d,q):"—";return`<td class="${m==="✓"?"v":m==="✗"?"x":m==="⊘"?"a":""}">${m}</td>`}).join("")+"</tr>"});
-   return h+`</table></div><div class="fleg">✓ acertou · ✗ errou ou deixou em branco${anul[d].length?` · ⊘ anulada (${anul[d].map(q=>"Q"+q).join(", ")}); a nota é calculada sobre ${NV(d)} questões válidas`:""}</div></div>`}).join("")).join("")}},
+   const nL=g[k].length,rh=Math.max(3.4,Math.min(6.5,158/(nL+2.5))),fs=Math.max(6.5,Math.min(10.5,rh*3.78*.62));
+   let h=`<div class="lqp" style="${pb};--rh:${rh.toFixed(2)}mm;--fs:${fs.toFixed(1)}px"><div class="rh"><b>📋 ${r.titulo} · ${eH(k)} · Dia ${d}</b><div class="mut">${ESC}</div><div class="mut">${r.escopo} · emitido em ${r.data}</div></div><div class="tw"><table class="tbl rp lq"><tr><th>Nº</th><th>Aluno</th><th>Acertos<br>(de ${NV(d)})</th><th>Nota<br>(de ${VALOR})</th>${qs(d).map(q=>`<th${isAn(d,q)?' title="anulada"':""}>${q}</th>`).join("")}</tr>`;
+   g[k].forEach((s,i)=>{const x=s.d[d];h+=`<tr><td>${i+1}</td><td>${eH(s.nome)}</td>`+(x?`<td><b>${x.tot}</b></td><td><b>${nt(x.nota)}</b></td>`:"<td>—</td><td>—</td>")+qs(d).map(q=>{const m=x?markQ(s,d,q):"—";return`<td class="${m==="✓"?"v":m==="⊘"?"a":m==="—"?"":"x"}">${m}</td>`}).join("")+"</tr>"});
+   return h+`</table></div><div class="fleg">✓ acertou · letra em vermelho = alternativa marcada pelo aluno (errada) · BR em branco · 2× marcação dupla${anul[d].length?` · ⊘ anulada (${anul[d].map(q=>"Q"+q).join(", ")}); a nota é calculada sobre ${NV(d)} questões válidas`:""}</div></div>`}).join("")).join("")}},
 {id:"disc",ico:"📚",nome:"Desempenho por disciplina",desc:"Média e % de acerto por turma, dia e disciplina",fn:(o,C)=>{
  const R=[],it=[...o.keys.map(k=>[k,calc([k])]),...(o.keys.length>1?[["Geral",C]]:[])];
  for(const[k,c]of it)for(const d of o.ds)c[d].disc.forEach(z=>{if(!z.n)return;const tq=z.tq;R.push([k,"Dia "+d,z.nome,c[d].n,fmt(z.sum/z.n),tq,pc(z.sum/z.n/(tq||1))])});
@@ -856,10 +872,40 @@ function carregar(){
   catch(e){status("⚠️ Não consegui recuperar os dados salvos.",true)}}
 function baixarArq(blob,fn){const u=URL.createObjectURL(blob),l=document.createElement("a");l.href=u;l.download=fn;document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),4000)}
 $("bkx").onclick=()=>{try{baixarArq(new Blob([dumpState(false)],{type:"application/json"}),"backup_gabaritos_"+new Date().toISOString().slice(0,10)+".json");status("Backup gerado ✓")}catch(e){status("Não foi possível gerar o backup.",true)}};
+/* ---------- mesclar backup (acrescenta o que falta; mantém a folha mais completa) ---------- */
+const nn=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim().toLowerCase();
+const fRank=(f,d)=>{if(!f)return[-1,0,0,0];if(f.erro)return[0,0,0,0];let a=0;for(let q=1;q<=NQ[d];q++){const r=f.resp&&f.resp[q];if(r&&r[1]!=="BRANCO")a++}return[1,f.conf?1:0,Object.keys(f.man||{}).length,a]};
+const cmpR=(x,y)=>{for(let k=0;k<4;k++)if(x[k]!==y[k])return x[k]-y[k];return 0};
+function mesclar(D){
+  if(cur)store[cur]={alunos,folhas};
+  const S=D.store||{},r={turmas:0,alunos:0,novas:0,melhoradas:0};
+  for(const[k,T]of Object.entries(S)){
+    if(!T||!Array.isArray(T.alunos))continue;
+    const B={alunos:T.alunos,folhas:{1:(T.folhas&&T.folhas[1])||[],2:(T.folhas&&T.folhas[2])||[]}};
+    if(!store[k]){store[k]=B;r.turmas++;r.alunos+=B.alunos.length;r.novas+=B.folhas[1].length+B.folhas[2].length;continue}
+    const E=store[k],idx=new Map(E.alunos.map((a,i)=>[nn(a.nome),i])),map=[];
+    const tem=new Set([...E.folhas[1],...E.folhas[2]].map(f=>f.ai));
+    B.alunos.forEach((a,bi)=>{const key=nn(a.nome);let i=idx.get(key);
+      if(i===undefined){i=E.alunos.push({...a})-1;idx.set(key,i);r.alunos++}
+      else if(!tem.has(i)&&a.tipo)E.alunos[i].tipo=a.tipo;
+      map[bi]=i});
+    for(const d of[1,2])for(const f of B.folhas[d]){
+      const i=map[f.ai];if(i===undefined)continue;
+      const g={...f,ai:i},ex=E.folhas[d].find(x=>x.ai===i);
+      if(!ex){E.folhas[d].push(g);r.novas++}
+      else if(cmpR(fRank(g,d),fRank(ex,d))>0){if(!g.thumb&&ex.thumb)g.thumb=ex.thumb;E.folhas[d]=E.folhas[d].filter(x=>x!==ex);E.folhas[d].push(g);r.melhoradas++}
+      else if(!ex.thumb&&g.thumb)ex.thumb=g.thumb}
+  }
+  const A=sanAnul(D.anul);for(const d of[1,2])anul[d]=[...new Set([...anul[d],...A[d]])].sort((a,b)=>a-b);
+  if(cur&&store[cur]){alunos=store[cur].alunos;folhas=store[cur].folhas}
+  const s0=sel,d0=dia;$("turma").onchange();dia=d0;sel=Math.max(0,Math.min(s0,alunos.length-1));render();
+  return r}
 $("bki").onchange=async e=>{const fl=e.target.files[0];e.target.value="";if(!fl)return;
   try{const D=JSON.parse(await fl.text());if(!D||typeof D.store!=="object")throw 0;
-    if(!confirm("Restaurar este backup vai substituir os dados atuais deste navegador. Continuar?"))return;
-    aplicar(D);render();salvarAgora();status("📂 Backup restaurado ✓")}
+    if(!confirm("Mesclar este backup com os dados atuais? Nada será apagado: alunos e folhas que faltam são acrescentados e, se o aluno já tiver folha, fica a mais completa."))return;
+    const r=mesclar(D);salvarAgora();
+    const rs=r.alunos+" aluno(s) novo(s) · "+r.novas+" folha(s) nova(s) · "+r.melhoradas+" folha(s) atualizada(s)";
+    status("📂 Backup mesclado ✓ · "+rs);$("mgRes").textContent=rs;$("mgAv").style.display="flex"}
   catch(err){status("Arquivo de backup inválido.",true)}};
 $("clr").onclick=()=>{if(!confirm("Apagar TODAS as turmas e gabaritos salvos neste navegador? Isso não pode ser desfeito."))return;
   try{localStorage.removeItem(LS_KEY)}catch(e){}
