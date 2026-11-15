@@ -256,6 +256,26 @@ button:active,.btn:active{transform:scale(.98)}
 @media(min-width:1000px){#tabC:not([hidden]) #st3{top:76px!important;max-height:calc(100vh - 90px)!important}}
 @media(max-width:480px){.hero h1{font-size:19px}.hero p{font-size:11.5px}}
 @media print{.hero{position:static;box-shadow:none}}
+#capBar button{flex:1;padding:14px 10px}#capBar .btn{font-size:15px}
+
+/* ===== v2: lista de leituras compacta e recolhível, cores por dia ===== */
+#res .dh{cursor:pointer;border-radius:12px;padding:9px 12px;margin:12px 0 8px;align-items:center;user-select:none}
+#res .dh b:before{content:"▾";display:inline-block;margin-right:8px;transition:transform .15s}
+#res .dh.off b:before{transform:rotate(-90deg)}
+#res .dh[data-d="1"]{background:rgba(36,87,214,.14);color:var(--pri)}
+#res .dh[data-d="2"]{background:rgba(18,160,125,.16);color:var(--ok)}
+#res .sheet[data-d="1"]:not(.err){background:rgba(36,87,214,.07)}
+#res .sheet[data-d="2"]:not(.err){background:rgba(18,160,125,.09)}
+#res .sheet.gh{display:none!important}
+#res .sheet{cursor:pointer}
+#res .sheet:not(.op){padding:9px 12px;margin-bottom:5px;align-items:center;gap:0 10px}
+#res .sheet:not(.op) :is(.tags,.act,.bar){display:none}
+#res .sheet:not(.op) .score{font-size:17px}
+#res .sheet:not(.op) .nm b{font-weight:600}
+#res .sheet:not(.op):has(.tag.warn,.tag.err) .nm b:after{content:" ⚠";color:var(--warn)}
+#res .sheet.err:not(.op) .nm b:after{color:var(--bad)}
+#res .sheet.op{box-shadow:0 0 0 2px var(--pri)}
+#res .sheet .act button{cursor:pointer}
 </style>
 </head>
 <body class="wide">
@@ -278,15 +298,15 @@ button:active,.btn:active{transform:scale(.98)}
 <label class="field">Prova<select id="selT"><option value="regular">regular</option><option value="adaptada">adaptada</option></select></label><button type="button" class="ghost" style="align-self:flex-end" onclick="transfSel()">⇄ Transferido</button></div>
 <div id="prog" class="mut" style="margin:10px 0 2px"></div><div class="bar" style="width:100%;margin:0 0 8px"><i id="progb" style="width:0"></i></div>
 <div id="busy" class="mut" style="margin:0 0 6px;font-weight:600"></div>
-<div class="row" id="capBar"><label class="btn" for="fc" style="flex:1">📷 Tirar foto</label><input id="fc" type="file" accept="image/*" capture="environment">
-<label class="btn ghost" for="fg" style="flex:1">🖼️ Galeria</label><input id="fg" type="file" accept="image/*"></div>
+<div class="row" id="capBar"><label class="btn" for="fc" style="flex:1">📷 Foto</label><input id="fc" type="file" accept="image/*" capture="environment">
+<label class="btn ghost" for="fg" style="flex:1">🖼️ Galeria</label><input id="fg" type="file" accept="image/*"><button type="button" class="ghost" id="bMan" title="Marcar as respostas à mão, sem foto">✎ À mão</button></div>
 <label class="mut" style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="auto" checked> Abrir o espelho (certas e erradas) depois de cada correção</label>
 <div class="help"><b>Dica:</b> fotografe de cima, com a folha inteira, boa luz, sem sombra e com os quadrados pretos visíveis. Depois da leitura, o próximo aluno é selecionado automaticamente.<br><span class="mut">No computador: <span class="kbd">←</span> <span class="kbd">→</span> trocam de aluno e <span class="kbd">1</span> <span class="kbd">2</span> trocam o dia.</span></div>
 <details id="anuBox" class="anub"><summary>🚫 Anular questão <span id="anuSum" class="mut"></span></summary><div class="mut" style="margin:8px 0 6px">Se o professor encontrar erro em uma questão, toque no número dela. A questão deixa de valer para todos os alunos (prova regular e adaptada) e a nota do dia (de 24) passa a ser calculada só sobre as questões válidas. Toque de novo para desfazer.</div><div id="anuQ"></div></details>
 <details id="trBox" class="anub"><summary>⇄ Alunos transferidos <span id="trSum" class="mut"></span></summary><div class="mut" style="margin:8px 0 6px">Marque os alunos que foram transferidos. Eles saem da correção, das notas, das listas e dos relatórios, e não precisam de folha. Desmarque para reativar.</div><div id="trL" style="max-height:240px;overflow:auto"></div></details></section>
 
 <section class="step" id="st3"><div class="sh"><span class="num">3</span><div><h2>Conferir leituras</h2><p class="sub">Revise avisos e corrija o registro, se preciso</p></div><span class="chip" id="c3">aguardando</span></div>
-<div id="stats" class="stats"></div><div class="rf" id="rf" hidden><input type="text" id="resQ" placeholder="🔎 Buscar aluno nas folhas lidas…" aria-label="Buscar aluno"><div class="seg2" id="resF"><button type="button" data-f="" class="on">Todas</button><button type="button" data-f="w">Com avisos</button><button type="button" data-f="ok">Sem avisos</button></div></div><div id="res"><div class="empty">As folhas lidas aparecerão aqui.</div></div><div class="nores" id="nores">Nenhuma folha encontrada com esse filtro.</div></section>
+<div id="stats" class="stats"></div><div class="rf" id="rf" hidden><input type="text" id="resQ" placeholder="🔎 Buscar aluno nas folhas lidas…" aria-label="Buscar aluno"><div class="seg2" id="resF"><button type="button" data-f="" class="on">Todas</button><button type="button" data-f="w">Com avisos</button><button type="button" data-f="ok">Sem avisos</button></div><button type="button" class="ghost sm" id="resAll">Expandir tudo</button></div><div id="res"><div class="empty">As folhas lidas aparecerão aqui.</div></div><div class="nores" id="nores">Nenhuma folha encontrada com esse filtro.</div></section>
 
 <section class="step" id="st4"><div class="sh"><span class="num">4</span><div><h2>Baixar resultado</h2><p class="sub">Planilha Excel com turma, nomes, notas e respostas</p></div></div>
 <button id="exp" class="big">⬇️ Baixar Excel</button><div id="msg" class="mut" style="margin-top:8px;text-align:center"></div>
@@ -1023,6 +1043,46 @@ render();
   else if(e.key==="ArrowLeft"){irAluno(-1);e.preventDefault()}
   else if(e.key==="1")g("sg1").click();else if(e.key==="2")g("sg2").click()});
  pos();
+})();
+
+/* ---------- v2: marcar à mão direto na barra de captura ---------- */
+(function(){
+ let ini=null;
+ document.getElementById("bMan").onclick=()=>{
+  if(!nAtivos()){document.getElementById("busy").textContent="Carregue a lista de alunos primeiro (etapa 1).";return}
+  const d=dia,ai=sel;
+  if(!folhaDe(d,ai)){folhas[d].push({arq:"manual",dia:d,ai,erro:"Preenchimento manual",resp:{},manual:true});ini={d,ai};render()}
+  else ini=null;
+  ver(d,ai)};
+ const _f=window.fecharCf;
+ window.fecharCf=function(){
+  const m=ini;ini=null;_f();
+  if(!m)return;const f=folhaDe(m.d,m.ai);
+  if(f&&f.manual&&f.erro){folhas[m.d]=folhas[m.d].filter(x=>x!==f);render();return}
+  if(f&&dia===m.d){for(let k=1;k<=alunos.length;k++){const j=(m.ai+k)%alunos.length;if(!folhaDe(m.d,j)&&!alunos[j].transf){sel=j;break}}render()}};
+})();
+
+/* ---------- v2: lista recolhível por aluno e por dia ---------- */
+(function(){
+ const g=id=>document.getElementById(id),open=new Set(),gone=new Set();
+ function deco(){let d=0,all=true,any=false;
+  g("res").querySelectorAll(".dh,.sheet").forEach(el=>{
+   if(el.classList.contains("dh")){const m=/Dia (\d)/.exec(el.textContent);d=m?+m[1]:0;el.dataset.d=d;el.classList.toggle("off",gone.has(d));el.tabIndex=0;el.setAttribute("role","button");el.setAttribute("aria-expanded",String(!gone.has(d)));return}
+   const b=el.querySelector(".act button"),m=b&&/ver\((\d),(\d+)\)/.exec(b.getAttribute("onclick")||""),k=m?m[1]+"-"+m[2]:"";
+   el.dataset.d=d;el.dataset.k=k;el.classList.toggle("gh",gone.has(d));const o=open.has(k);el.classList.toggle("op",o);
+   el.tabIndex=0;el.setAttribute("role","group");el.setAttribute("aria-expanded",String(o));any=true;if(!o)all=false});
+  g("resAll").textContent=any&&all?"Recolher tudo":"Expandir tudo"}
+ const _r=render;render=function(){_r.apply(this,arguments);deco()};
+ const tog=el=>{const dh=el.closest(".dh"),sh=el.closest(".sheet");
+  if(dh){const d=+dh.dataset.d;gone.has(d)?gone.delete(d):gone.add(d)}
+  else if(sh&&sh.dataset.k){const k=sh.dataset.k;open.has(k)?open.delete(k):open.add(k)}
+  deco()};
+ g("res").addEventListener("click",e=>{if(e.target.closest("button,a,input,select"))return;if(e.target.closest(".dh,.sheet"))tog(e.target)});
+ g("res").addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.matches(".dh,.sheet")){e.preventDefault();tog(e.target)}});
+ g("resAll").onclick=()=>{const sh=[...g("res").querySelectorAll(".sheet")];
+  if(g("resAll").textContent==="Recolher tudo")open.clear();else sh.forEach(x=>x.dataset.k&&open.add(x.dataset.k));
+  gone.clear();deco()};
+ deco();
 })();
 </script>
 </body>
