@@ -284,6 +284,11 @@ button:active,.btn:active{transform:scale(.98)}
 @media(max-width:380px){.tabs button{font-size:12px}}
 .tailw{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;padding:9px 12px;border-radius:12px;background:var(--warnS);color:var(--warn);font-weight:600;font-size:13px}
 .tailw button{min-height:34px;padding:5px 12px;font-size:13px;background:var(--warn);color:#fff}
+
+.ausOn{background:var(--badS)!important;color:var(--bad)!important;border-color:var(--bad)!important}
+.ausR{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd);font-size:14px;flex-wrap:wrap}
+.ausR .bt{display:flex;gap:5px;flex-wrap:wrap}.ausR button{min-height:34px}
+#foco .fst .sm{background:#fff;color:#7a4b00;min-height:32px;padding:4px 10px}
 </style>
 </head>
 <body class="wide">
@@ -303,7 +308,7 @@ button:active,.btn:active{transform:scale(.98)}
 <div id="foco" class="foco vazio" aria-live="polite"></div>
 <div class="row" style="margin-top:12px">
 <label class="field" style="flex:1;min-width:210px">Trocar aluno<select id="selA" style="width:100%"></select></label>
-<label class="field">Prova<select id="selT"><option value="regular">regular</option><option value="adaptada">adaptada</option></select></label><button type="button" class="ghost" style="align-self:flex-end" onclick="transfSel()">⇄ Transferido</button></div>
+<label class="field">Prova<select id="selT"><option value="regular">regular</option><option value="adaptada">adaptada</option></select></label><button type="button" class="ghost" style="align-self:flex-end" onclick="transfSel()">⇄ Transferido</button><button type="button" class="ghost" id="bAus" style="align-self:flex-end">🚫 Ausente</button></div>
 <div id="prog" class="mut" style="margin:10px 0 2px"></div><div class="bar" style="width:100%;margin:0 0 8px"><i id="progb" style="width:0"></i></div>
 <div id="busy" class="mut" style="margin:0 0 6px;font-weight:600"></div>
 <div class="row" id="capBar"><label class="btn" for="fc" style="flex:1">📷 Foto</label><input id="fc" type="file" accept="image/*" capture="environment">
@@ -311,6 +316,7 @@ button:active,.btn:active{transform:scale(.98)}
 <label class="mut" style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="auto" checked> Abrir o espelho (certas e erradas) depois de cada correção</label>
 <div class="help"><b>Dica:</b> fotografe de cima, com a folha inteira, boa luz, sem sombra e com os quadrados pretos visíveis. Depois da leitura, o próximo aluno é selecionado automaticamente.<br><span class="mut">No computador: <span class="kbd">←</span> <span class="kbd">→</span> trocam de aluno e <span class="kbd">1</span> <span class="kbd">2</span> trocam o dia.</span></div>
 <details id="anuBox" class="anub"><summary>🚫 Anular questão <span id="anuSum" class="mut"></span></summary><div class="mut" style="margin:8px 0 6px">Se o professor encontrar erro em uma questão, toque no número dela. A questão deixa de valer para todos os alunos (prova regular e adaptada) e a nota do dia (de 24) passa a ser calculada só sobre as questões válidas. Toque de novo para desfazer.</div><div id="anuQ"></div></details>
+<details id="ausBox" class="anub"><summary>🚫 Ausentes e nova chamada <span id="ausSum" class="mut"></span></summary><div class="mut" style="margin:8px 0 6px">Marque o dia em que o aluno faltou. Ele não conta como pendente e fica na lista de nova chamada. Quando ele fizer a prova, toque em “↻ Fazer agora” (ou apenas tire a foto da folha): a ausência é desfeita.</div><div id="ausL" style="max-height:260px;overflow:auto"></div></details>
 <details id="trBox" class="anub"><summary>⇄ Alunos transferidos <span id="trSum" class="mut"></span></summary><div class="mut" style="margin:8px 0 6px">Marque os alunos que foram transferidos. Eles saem da correção, das notas, das listas e dos relatórios, e não precisam de folha. Desmarque para reativar.</div><div id="trL" style="max-height:240px;overflow:auto"></div></details></section>
 
 <section class="step" id="st3"><div class="sh"><span class="num">3</span><div><h2>Conferir leituras</h2><p class="sub">Revise avisos e corrija o registro, se preciso</p></div><span class="chip" id="c3">aguardando</span></div>
@@ -874,7 +880,7 @@ const RT=[
  return{kp,head:["Pos.","Dia","Turma","Aluno","Nota do dia","Acertos","% acerto"],rows:R}}},
 {id:"pend",ico:"🔎",nome:"Pendências de leitura",desc:"Sem gabarito, erros de leitura, brancos e duplas",fn:o=>{
  const rows=[];for(const k of o.keys)store[k].alunos.forEach((a,i)=>{if(a.transf)return;for(const d of o.ds){const f=store[k].folhas[d].find(x=>x.ai===i);let m="";
-  if(!f)m="Sem gabarito lido";else if(f.erro)m="Erro de leitura";else{const rs=Object.values(f.resp).slice(0,NQ[d]),br=rs.filter(r=>r[1]==="BRANCO").length,mu=rs.filter(r=>r[1]==="MÚLTIPLA").length;if(br||mu)m=`${br} em branco, ${mu} dupla(s)`}
+  if(!f)m=a.aus&&a.aus[d]?"Ausente (nova chamada)":"Sem gabarito lido";else if(f.erro)m="Erro de leitura";else{const rs=Object.values(f.resp).slice(0,NQ[d]),br=rs.filter(r=>r[1]==="BRANCO").length,mu=rs.filter(r=>r[1]==="MÚLTIPLA").length;if(br||mu)m=`${br} em branco, ${mu} dupla(s)`}
   if(m)rows.push([k,"Dia "+d,a.nome,m])}});
  return{kp:[[rows.filter(r=>r[3]==="Sem gabarito lido").length,"sem gabarito"],[rows.filter(r=>r[3]==="Erro de leitura").length,"erros de leitura"],[rows.filter(r=>/branco/.test(r[3])).length,"com branco/dupla"]],head:["Turma","Dia","Aluno","Ocorrência"],rows}}}
 ];
@@ -885,7 +891,7 @@ function gerar(){
  const fi=rTipo==="ficha";$("rAw").hidden=$("rMw").hidden=!fi;if(fi)fichaOpts();
   const dv=+$("rD").value,o={keys:keysOf(rSel),ds:dv?[dv]:[1,2],corte:(+$("rC").value||60)/100,n:+$("rN").value||10,aluno:$("rA").value,cmp:$("rM").checked},t=RT.find(x=>x.id===rTipo),C=calc(o.keys);rep=null;
  ["bPr","bXl","bCs","bCp"].forEach(id=>$(id).disabled=true);$("rMsg").textContent="";
- if(!o.keys.length||(!o.ds.some(d=>C[d].n)&&rTipo!=="pend")){$("rOut").innerHTML='<div class="empty">Leia gabaritos na aba Correção para gerar relatórios.</div>';return}
+ if(!o.keys.length||(!o.ds.some(d=>C[d].n)&&rTipo!=="pend"&&rTipo!=="pres")){$("rOut").innerHTML='<div class="empty">Leia gabaritos na aba Correção para gerar relatórios.</div>';return}
  const r=t.fn(o,C),sc=(scopeOpts(1).find(x=>x[0]===rSel)||["",""])[1];
  Object.assign(r,{titulo:t.nome,escopo:sc+" · "+(o.ds.length>1?"Dias 1 e 2":"Dia "+o.ds[0])+(anTxt(o.ds)?" · anuladas: "+anTxt(o.ds):""),data:new Date().toLocaleDateString("pt-BR")});rep=r;
  const cell=c=>/^\d+%$/.test(c)?`<td class="hm" style="--h:${hue(parseInt(c)/100)}">${c}</td>`:`<td>${c}</td>`;
@@ -1102,6 +1108,54 @@ render();
   const b=document.getElementById("busy");
   b.insertAdjacentHTML("beforeend",`<div class="tailw">⚠️ As últimas ${n} questões (Q${NQ[d]-n+1} a Q${NQ[d]}) saíram em branco. Provavelmente a parte de baixo da folha não foi lida: confira a foto.<button type="button" onclick="ver(${d},${ai})">✎ Completar à mão</button></div>`)};
  for(const id of ["fc","fg"]){const el=document.getElementById(id);el.onchange=e=>{const f=e.target.files[0];e.target.value="";if(f)processar(f)}}
+})();
+
+/* ---------- v2: ausentes, nova chamada e relatório de presença ---------- */
+(function(){
+ const g=id=>document.getElementById(id);
+ const isA=(i,d)=>!!(alunos[i]&&alunos[i].aus&&alunos[i].aus[d])&&!folhaDe(d,i);
+ const setA=(i,d,v)=>{const a=alunos[i];if(!a)return;a.aus=a.aus||{};if(v)a.aus[d]=true;else delete a.aus[d]};
+ const prox=(d,de)=>{for(let k=1;k<=alunos.length;k++){const j=(de+k)%alunos.length;if(!folhaDe(d,j)&&!alunos[j].transf&&!isA(j,d)){sel=j;return true}}return false};
+ window.ausTog=(i,d)=>{const a=alunos[i];if(!a)return;
+  if(folhaDe(d,i)){alert(a.nome+" já tem folha lida no Dia "+d+". Apague a folha antes de marcar ausência.");return}
+  const v=!isA(i,d);setA(i,d,v);if(v&&i===sel&&d===dia)prox(d,i);g("busy").textContent="";render()};
+ window.novaCh=(i,d)=>{setA(i,d,false);sel=i;dia=d;g("busy").textContent="";render();g("st2").scrollIntoView({behavior:"smooth"})};
+ g("bAus").onclick=()=>ausTog(sel,dia);
+ function deco(){
+  const nA=nAtivos();let n=0;alunos.forEach((a,i)=>{if(!a.transf&&isA(i,dia))n++});
+  const lidos=folhas[dia].filter(f=>ativo(f.ai)).length;
+  if(nA)g("prog").textContent=`Dia ${dia}: ${lidos} de ${nA} alunos lidos`+(n?` · ${n} ausente${n>1?"s":""}`:"");
+  g("selA").querySelectorAll("option").forEach(o=>{if(isA(+o.value,dia)&&!o.textContent.startsWith("🚫"))o.textContent="🚫 "+o.textContent});
+  const ab=isA(sel,dia);g("bAus").disabled=!nA;g("bAus").textContent=ab?"↻ Nova chamada":"🚫 Ausente";g("bAus").classList.toggle("ausOn",!ab&&false);
+  const st=g("foco").querySelector(".fst");
+  if(st&&ab){st.className="fst jl";st.innerHTML=`🚫 Ausente no Dia ${dia}. <button type="button" class="sm" onclick="novaCh(${sel},${dia})">↻ Fazer nova chamada</button>`}
+  const L=g("ausL"),sc=L.scrollTop;let tot=0;
+  L.innerHTML=alunos.length?alunos.map((a,i)=>{if(a.transf)return"";
+   const bt=[1,2].map(d=>{const f=!!folhaDe(d,i),x=isA(i,d);if(x)tot++;
+    return f?`<button type="button" class="ghost sm" disabled>D${d} ✓ lido</button>`:x?`<button type="button" class="ghost sm ausOn" onclick="ausTog(${i},${d})" title="Desmarcar ausência">D${d} ausente ✕</button><button type="button" class="sm" onclick="novaCh(${i},${d})">↻ D${d}</button>`:`<button type="button" class="ghost sm" onclick="ausTog(${i},${d})">D${d} faltou</button>`}).join("");
+   return`<div class="ausR"><span>${eH(a.nome)}</span><span class="bt">${bt}</span></div>`}).join(""):'<div class="mut">Carregue a lista de alunos primeiro.</div>';
+  L.scrollTop=sc;g("ausSum").textContent=tot?"· "+tot:""}
+ const _r=render;render=function(){_r.apply(this,arguments);deco()};
+ const _p=processar;
+ processar=async function(f){if(isA(sel,dia)){setA(sel,dia,false)}const d=dia;await _p.apply(this,arguments);
+  if(alunos[sel]&&isA(sel,d)){prox(d,sel);render()}};
+ g("bMan").addEventListener("click",()=>{if(isA(sel,dia)){setA(sel,dia,false);render()}},true);
+ const _m=mesclar;
+ mesclar=function(D){const r=_m.apply(this,arguments);
+  try{const nm=x=>String(x).trim().toLowerCase(),S=(D&&D.store)||{};
+   for(const k in S){const T=store[k];if(!T||!S[k].alunos)continue;const m=new Map(T.alunos.map(a=>[nm(a.nome),a]));
+    S[k].alunos.forEach(b=>{const a=m.get(nm(b.nome));if(a&&b.aus){a.aus=a.aus||{};for(const d in b.aus)if(b.aus[d])a.aus[d]=true}})}
+   render()}catch(e){}return r};
+ RT.push({id:"pres",ico:"🧾",nome:"Presença nas provas",desc:"Quem realizou e quem não realizou cada dia (ausentes para nova chamada)",fn:o=>{
+  const R=[];let ok=0,au=0,sl=0;
+  for(const k of o.keys)store[k].alunos.forEach((a,i)=>{if(a.transf)return;const st=[],falt=[];
+   for(const d of o.ds){const f=store[k].folhas[d].find(x=>x.ai===i);
+    if(f&&!f.erro)st.push("Realizou");else if(a.aus&&a.aus[d]){st.push("Ausente · nova chamada");au++;falt.push(d)}else{st.push("Sem leitura");sl++;falt.push(d)}}
+   if(!falt.length)ok++;
+   R.push([k,falt.length?0:1,a.nome,[k,a.nome,...st,falt.length?"Não realizou "+(falt.length>1?"os dias "+falt.join(" e "):"o Dia "+falt[0]):"Realizou "+(o.ds.length>1?"os dois dias":"a prova")]])});
+  R.sort((x,y)=>x[0].localeCompare(y[0],"pt")||x[1]-y[1]||x[2].localeCompare(y[2],"pt"));
+  return{kp:[[ok,"realizaram tudo"],[R.length-ok,"com prova pendente"],[au,"ausências (aluno/dia)"],[sl,"sem leitura (não marcados ausentes)"]],head:["Turma","Aluno",...o.ds.map(d=>"Dia "+d),"Situação"],rows:R.map(r=>r[3])}}});
+ drawRT();render();
 })();
 </script>
 </body>
