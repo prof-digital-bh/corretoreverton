@@ -299,6 +299,9 @@ button[onclick="transfSel()"],#bAus{display:none!important}
 .dlg>div{background:var(--card);color:var(--tx);border-radius:18px;max-width:420px;width:100%;padding:20px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
 .dlg h3{margin:0 0 8px;font-size:18px}.dlg .bt{display:flex;gap:8px;margin-top:16px}.dlg .bt button{flex:1}
 .obh{background:var(--priS);border-radius:12px;padding:10px 12px;font-size:13px;margin:10px 0 0}
+
+.lq th small.gk{display:block;font-size:.8em;font-weight:800;color:var(--tx);line-height:1.15}
+@media print{.lqp .lq th small.gk{font-size:calc(var(--fs)*.85);color:#000}}
 </style>
 </head>
 <body class="wide">
@@ -848,16 +851,16 @@ const RT=[
  rows:S.map(s=>[s.turma,s.nome,s.tipo,...o.ds.flatMap(d=>{const x=s.d[d];return x?[`${x.tot}/${NV(d)}`,+x.nota.toFixed(2),pc(x.tot/NV(d)),sit(x.tot/NV(d),o.corte)]:["—","—","—","Sem gabarito"]})])}}},
 {id:"lista",ico:"📋",nome:"Listagem por turma",desc:"Nome, acertos, nota do dia e, em cada questão, ✓ se acertou ou a letra marcada se errou; uma tabela por turma e dia",fn:(o,C)=>{
  const S=C.stu.slice().sort(byT),n={},qs=d=>[...Array(NQ[d])].map((_,i)=>i+1);
- const head=["Turma","Nº","Aluno",...o.ds.flatMap(d=>[`Acertos D${d} (de ${NV(d)})`,`Nota D${d} (de ${VALOR})`,...qs(d).map(q=>`D${d} Q${q}`)])];
+ const head=["Turma","Nº","Aluno",...o.ds.flatMap(d=>[`Acertos D${d} (de ${NV(d)})`,`Nota D${d} (de ${VALOR})`,...qs(d).map(q=>`D${d} Q${q} (${gkL(d,q,S.some(s=>s.tipo==="adaptada"))})`)])];
  const rows=S.map(s=>{n[s.turma]=(n[s.turma]||0)+1;return[s.turma,n[s.turma],s.nome,...o.ds.flatMap(d=>{const x=s.d[d];return x?[x.tot,+x.nota.toFixed(2),...qs(d).map(q=>markQ(s,d,q))]:["—","—",...qs(d).map(()=>"—")]})]});
  return{kp:[[Object.keys(n).length,"turmas"],[S.length,"alunos"],...o.ds.map(d=>[S.filter(s=>!s.d[d]).length,"sem gabarito Dia "+d])],head,rows}},
  html:(o,C,r)=>{const g={},nt=v=>String(+v.toFixed(2)).replace(".",","),qs=d=>[...Array(NQ[d])].map((_,i)=>i+1);let first=true;
   C.stu.slice().sort(byT).forEach(s=>(g[s.turma]=g[s.turma]||[]).push(s));
   return Object.keys(g).map(k=>o.ds.map(d=>{const pb=first?"":"break-before:page;margin-top:22px";first=false;
    const nL=g[k].length,rh=Math.max(3.4,Math.min(6.5,158/(nL+2.5))),fs=Math.max(6.5,Math.min(10.5,rh*3.78*.62));
-   let h=`<div class="lqp" style="${pb};--rh:${rh.toFixed(2)}mm;--fs:${fs.toFixed(1)}px"><div class="rh"><b>📋 ${r.titulo} · ${eH(k)} · Dia ${d}</b><div class="mut">${ESC}</div><div class="mut">${r.escopo} · emitido em ${r.data}</div></div><div class="tw"><table class="tbl rp lq"><tr><th>Nº</th><th>Aluno</th><th>Acertos<br>(de ${NV(d)})</th><th>Nota<br>(de ${VALOR})</th>${qs(d).map(q=>`<th${isAn(d,q)?' title="anulada"':""}>${q}</th>`).join("")}</tr>`;
+   let h=`<div class="lqp" style="${pb};--rh:${rh.toFixed(2)}mm;--fs:${fs.toFixed(1)}px"><div class="rh"><b>📋 ${r.titulo} · ${eH(k)} · Dia ${d}</b><div class="mut">${ESC}</div><div class="mut">${r.escopo} · emitido em ${r.data}</div></div><div class="tw"><table class="tbl rp lq"><tr><th>Nº</th><th>Aluno</th><th>Acertos<br>(de ${NV(d)})</th><th>Nota<br>(de ${VALOR})</th>${qs(d).map(q=>`<th${isAn(d,q)?' title="anulada"':""}>${q}<small class="gk">${isAn(d,q)?"⊘":gkL(d,q,g[k].some(s=>s.tipo==="adaptada"))}</small></th>`).join("")}</tr>`;
    g[k].forEach((s,i)=>{const x=s.d[d];h+=`<tr><td>${i+1}</td><td>${eH(s.nome)}</td>`+(x?`<td><b>${x.tot}</b></td><td><b>${nt(x.nota)}</b></td>`:"<td>—</td><td>—</td>")+qs(d).map(q=>{const m=x?markQ(s,d,q):"—";return`<td class="${m==="✓"?"v":m==="⊘"?"a":m==="—"?"":"x"}">${m}</td>`}).join("")+"</tr>"});
-   return h+`</table></div><div class="fleg">✓ acertou · letra em vermelho = alternativa marcada pelo aluno (errada) · BR em branco · 2× marcação dupla${anul[d].length?` · ⊘ anulada (${anul[d].map(q=>"Q"+q).join(", ")}); a nota é calculada sobre ${NV(d)} questões válidas`:""}</div></div>`}).join("")).join("")}},
+   return h+`</table></div><div class="fleg">Letra abaixo do número = gabarito correto${g[k].some(s=>s.tipo==="adaptada")?" (regular/adaptada)":""} · ✓ acertou · letra em vermelho = alternativa marcada pelo aluno (errada) · BR em branco · 2× marcação dupla${anul[d].length?` · ⊘ anulada (${anul[d].map(q=>"Q"+q).join(", ")}); a nota é calculada sobre ${NV(d)} questões válidas`:""}</div></div>`}).join("")).join("")}},
 {id:"disc",ico:"📚",nome:"Desempenho por disciplina",desc:"Média e % de acerto por turma, dia e disciplina",fn:(o,C)=>{
  const R=[],it=[...o.keys.map(k=>[k,calc([k])]),...(o.keys.length>1?[["Geral",C]]:[])];
  for(const[k,c]of it)for(const d of o.ds)c[d].disc.forEach(z=>{if(!z.n)return;const tq=z.tq;R.push([k,"Dia "+d,z.nome,c[d].n,fmt(z.sum/z.n),tq,pc(z.sum/z.n/(tq||1))])});
@@ -1218,6 +1221,9 @@ render();
  g("goObs").onclick=e=>{e.preventDefault();aba(3);window.scrollTo({top:0})};
  fill();
 })();
+
+/* gabarito correto de cada questão (regular e, se houver, adaptada) para cabeçalhos de relatório */
+const gkL=(d,q,ad)=>CH.regular[d][q-1]+(ad?"/"+CH.adaptada[d][q-1]:"");
 </script>
 </body>
 </html>
