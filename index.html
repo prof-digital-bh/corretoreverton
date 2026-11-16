@@ -309,6 +309,19 @@ button[onclick="transfSel()"],#bAus{display:none!important}
 .lq tr:last-child td{border-bottom:1px solid var(--bd)}
 @media print{.lq th,.lq td{border-left:1px solid #b4bfce!important}.lq th:first-child,.lq td:first-child{border-left:0!important}.lq td{border-top:1px solid #b4bfce!important}.lq tr:last-child td{border-bottom:1px solid #b4bfce!important}}
 .lkt{color:var(--pri)!important;font-weight:700;text-decoration:underline}
+
+/* tabelas dos relatórios: grade completa e cabeçalho repetido em cada página impressa */
+.tbl.rp{border-collapse:collapse}
+.tbl.rp th,.tbl.rp td{border:1px solid var(--bd)}
+.tbl.rp th{background:var(--priS);color:var(--tx);vertical-align:middle}
+.tbl.rp thead{display:table-header-group}
+@media print{
+ .tbl.rp th,.tbl.rp td{border:1px solid #8f9bad!important}
+ .tbl.rp th{background:#e3eafa!important;color:#14202f!important}
+ .tbl.rp thead{display:table-header-group!important}
+ .tbl.rp tfoot{display:table-footer-group}
+ .tbl.rp tr{break-inside:avoid;page-break-inside:avoid}
+}
 </style>
 </head>
 <body class="wide">
@@ -914,7 +927,7 @@ function gerar(){
  const cell=c=>/^\d+%$/.test(c)?`<td class="hm" style="--h:${hue(parseInt(c)/100)}">${c}</td>`:`<td>${c}</td>`;
  if(t.html){$("rOut").innerHTML=t.html(o,C,r);["bPr","bXl","bCs","bCp"].forEach(id=>$(id).disabled=!r.rows.length);return}
   $("rOut").innerHTML=`<div class="rh"><b>${t.ico} ${r.titulo}</b><div class="mut">${ESC}</div><div class="mut">${r.escopo} · emitido em ${r.data}</div></div><div class="kpis">${r.kp.map(k=>kpi(k[0],k[1],"sm")).join("")}</div>`+
-  (r.rows.length?`<div class="tw"><table class="tbl rp"><tr>${r.head.map(x=>`<th>${x}</th>`).join("")}</tr>${r.rows.map(x=>`<tr>${x.map(cell).join("")}</tr>`).join("")}</table></div>`:'<div class="empty">Nada a listar com esses filtros 🎉</div>');
+  (r.rows.length?`<div class="tw"><table class="tbl rp"><thead><tr>${r.head.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${r.rows.map(x=>`<tr>${x.map(cell).join("")}</tr>`).join("")}</tbody></table></div>`:'<div class="empty">Nada a listar com esses filtros 🎉</div>');
  ["bPr","bXl","bCs","bCp"].forEach(id=>$(id).disabled=false)}
 const tabela=()=>[[ESC],[rep.titulo+" — "+rep.escopo+" — "+rep.data],[],rep.head,...rep.rows];
 const slug=()=>"relatorio_"+rTipo+"_"+rSel.replace(/[^\wÀ-ú]+/g,"_");
