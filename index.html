@@ -302,6 +302,13 @@ button[onclick="transfSel()"],#bAus{display:none!important}
 
 .lq th small.gk{display:block;font-size:.8em;font-weight:800;color:var(--tx);line-height:1.15}
 @media print{.lqp .lq th small.gk{font-size:calc(var(--fs)*.85);color:#000}}
+
+/* linhas verticais na listagem por turma */
+.lq th,.lq td{border-left:1px solid var(--bd)}
+.lq th:first-child,.lq td:first-child{border-left:0}
+.lq tr:last-child td{border-bottom:1px solid var(--bd)}
+@media print{.lq th,.lq td{border-left:1px solid #b4bfce!important}.lq th:first-child,.lq td:first-child{border-left:0!important}.lq td{border-top:1px solid #b4bfce!important}.lq tr:last-child td{border-bottom:1px solid #b4bfce!important}}
+.lkt{color:var(--pri)!important;font-weight:700;text-decoration:underline}
 </style>
 </head>
 <body class="wide">
@@ -310,10 +317,10 @@ button[onclick="transfSel()"],#bAus{display:none!important}
 
 <section class="step" id="st1"><div class="sh" id="h1" role="button" tabindex="0" aria-expanded="true"><span class="num">1</span><div><h2>Turma e lista de alunos</h2><p class="sub">Escolha a turma e envie os nomes</p></div><span class="chip" id="c1">pendente</span></div>
 <div id="b1"><div class="row">
-<label class="field">Turma<select id="turma" style="min-width:160px"><option value="">Selecione a turma…</option><option value="6º ano A">6º ano A</option><option value="6º ano B">6º ano B</option><option value="6º ano C">6º ano C</option><option value="7º ano A">7º ano A</option><option value="7º ano B">7º ano B</option><option value="7º ano C">7º ano C</option><option value="8º ano A">8º ano A</option><option value="8º ano B">8º ano B</option><option value="8º ano C">8º ano C</option><option value="9º ano A">9º ano A</option><option value="9º ano B">9º ano B</option><option value="9º ano C">9º ano C</option></select></label>
+<label class="field">Turma<select id="turma" style="min-width:160px"><option value="">Selecione a turma…</option><option value="5º ano A">5º ano A</option><option value="6º ano A">6º ano A</option><option value="6º ano B">6º ano B</option><option value="6º ano C">6º ano C</option><option value="7º ano A">7º ano A</option><option value="7º ano B">7º ano B</option><option value="7º ano C">7º ano C</option><option value="8º ano A">8º ano A</option><option value="8º ano B">8º ano B</option><option value="8º ano C">8º ano C</option><option value="9º ano A">9º ano A</option><option value="9º ano B">9º ano B</option><option value="9º ano C">9º ano C</option></select></label>
 <div class="field" style="flex:1;min-width:200px">Lista de alunos (CSV ou Excel)<label class="btn ghost" id="flb" for="fl" style="opacity:.45;pointer-events:none">📋 Escolher arquivo</label><input id="fl" type="file" accept=".csv,.txt,.xlsx,.xls"></div>
 </div>
-<div id="lst" class="mut" style="margin-top:8px">Escolha a turma primeiro para liberar o envio da lista.</div><div id="avs" style="display:none;margin-top:8px;padding:10px 12px;border-radius:12px;background:var(--warnS);color:var(--warn);font-size:13px;font-weight:600">Atenção: os gabaritos de respostas carregados aqui são do 8º ano. Para outras séries, envie os gabaritos oficiais para eu incluir.</div>
+<div id="lst" class="mut" style="margin-top:8px">Escolha a turma primeiro para liberar o envio da lista.</div><div id="profT" class="mut" style="margin-top:8px;font-weight:600"></div><div id="avs" style="display:none;margin-top:8px;padding:10px 12px;border-radius:12px;background:var(--warnS);color:var(--warn);font-size:13px;font-weight:600">Atenção: os gabaritos de respostas carregados aqui são do 8º ano. Para outras séries, envie os gabaritos oficiais para eu incluir.</div>
 <div class="help">A lista precisa ter uma coluna <b>Nome</b>. Colunas opcionais: Turma e Tipo (“adaptada” para quem fez a prova adaptada).</div></div></section>
 
 <section class="step" id="st2"><div class="sh"><span class="num">2</span><div><h2>Ler os gabaritos</h2><p class="sub">Escolha o dia e o aluno, depois fotografe a folha</p></div><span class="chip" id="c2">nenhuma folha</span></div>
@@ -812,7 +819,7 @@ function fichaHTML(F,o){
   const at=[];if(F.br.length)at.push(`<b>Em branco:</b> ${porDia(F.br)}`);if(F.mu.length)at.push(`<b>Dupla marcação:</b> ${porDia(F.mu)}`);
   if(o.cmp&&F.fac.length)at.push(`<b>Questões que 70% ou mais da turma acertou e não foram acertadas:</b> ${F.fac.slice(0,12).map(x=>`Q${x[1]}${F.ds.length>1?` (D${x[0]})`:""}`).join(", ")}${F.fac.length>12?` e mais ${F.fac.length-12}`:""}`);
   let h=`<article class="fch"><div class="fh"><div><div class="fe">${ESC}</div><h2>Ficha individual de desempenho</h2></div><div class="fd">Emitida em ${new Date().toLocaleDateString("pt-BR")}</div></div>
-<div class="fid"><div><span>Aluno(a)</span><b>${eH(s.nome)}</b></div><div><span>Turma</span><b>${eH(s.turma)}</b></div><div><span>Prova</span><b>${s.tipo==="adaptada"?"Adaptada":"Regular"}</b></div><div><span>Avaliação</span><b>${o.ds.length>1?"Dias 1 e 2":"Dia "+o.ds[0]}</b></div></div>
+<div class="fid"><div><span>Aluno(a)</span><b>${eH(s.nome)}</b></div><div><span>Turma</span><b>${eH(s.turma)}</b></div><div><span>Prova</span><b>${s.tipo==="adaptada"?"Adaptada":"Regular"}</b></div><div><span>Avaliação</span><b>${o.ds.length>1?"Dias 1 e 2":"Dia "+o.ds[0]}</b></div><div style="grid-column:1/-1"><span>Professor(a) responsável pela correção</span><b>${eH(PROF[s.turma]||"—")}</b></div></div>
 ${F.dias.map(x=>fichaDia(F,x,o)).join("")}${F.falt.length?`<div class="fdias">${F.falt.map(d=>`<div style="color:var(--bad)">Dia ${d} sem gabarito lido</div>`).join("")}</div>`:""}
 <h3>Desempenho por disciplina e por questão</h3><table class="ft"><tr><th>Disciplina</th><th>Questões</th><th>Acertos</th><th style="width:30%">Aproveitamento</th></tr>`;
   for(const d of F.ds){h+=`<tr class="fdh"><td colspan="4">Dia ${d} · nota ${fmt(s.d[d].nota)} de ${VALOR}</td></tr>`;
@@ -857,8 +864,8 @@ const RT=[
  html:(o,C,r)=>{const g={},nt=v=>String(+v.toFixed(2)).replace(".",","),qs=d=>[...Array(NQ[d])].map((_,i)=>i+1);let first=true;
   C.stu.slice().sort(byT).forEach(s=>(g[s.turma]=g[s.turma]||[]).push(s));
   return Object.keys(g).map(k=>o.ds.map(d=>{const pb=first?"":"break-before:page;margin-top:22px";first=false;
-   const nL=g[k].length,rh=Math.max(3.4,Math.min(6.5,158/(nL+2.5))),fs=Math.max(6.5,Math.min(10.5,rh*3.78*.62));
-   let h=`<div class="lqp" style="${pb};--rh:${rh.toFixed(2)}mm;--fs:${fs.toFixed(1)}px"><div class="rh"><b>📋 ${r.titulo} · ${eH(k)} · Dia ${d}</b><div class="mut">${ESC}</div><div class="mut">${r.escopo} · emitido em ${r.data}</div></div><div class="tw"><table class="tbl rp lq"><tr><th>Nº</th><th>Aluno</th><th>Acertos<br>(de ${NV(d)})</th><th>Nota<br>(de ${VALOR})</th>${qs(d).map(q=>`<th${isAn(d,q)?' title="anulada"':""}>${q}<small class="gk">${isAn(d,q)?"⊘":gkL(d,q,g[k].some(s=>s.tipo==="adaptada"))}</small></th>`).join("")}</tr>`;
+   const nL=g[k].length,rh=Math.max(3.4,Math.min(6.5,152/(nL+2.5))),fs=Math.max(6.5,Math.min(10.5,rh*3.78*.62));
+   let h=`<div class="lqp" style="${pb};--rh:${rh.toFixed(2)}mm;--fs:${fs.toFixed(1)}px"><div class="rh"><b>📋 ${r.titulo} · ${eH(k)} · Dia ${d}</b><div class="mut">${ESC}</div><div class="mut"><b>Professor(a) responsável pela correção:</b> ${eH(PROF[k]||"—")} · <a class="lkt" href="https://docs.google.com/spreadsheets/d/11c3ogr60BGQYgDPk8MXDHo2nhHXZFROB628M1IjWCJY/edit?usp=sharing" target="_blank" rel="noopener">Acesso à tabela</a></div><div class="mut">${r.escopo} · emitido em ${r.data}</div></div><div class="tw"><table class="tbl rp lq"><tr><th>Nº</th><th>Aluno</th><th>Acertos<br>(de ${NV(d)})</th><th>Nota<br>(de ${VALOR})</th>${qs(d).map(q=>`<th${isAn(d,q)?' title="anulada"':""}>${q}<small class="gk">${isAn(d,q)?"⊘":gkL(d,q,g[k].some(s=>s.tipo==="adaptada"))}</small></th>`).join("")}</tr>`;
    g[k].forEach((s,i)=>{const x=s.d[d];h+=`<tr><td>${i+1}</td><td>${eH(s.nome)}</td>`+(x?`<td><b>${x.tot}</b></td><td><b>${nt(x.nota)}</b></td>`:"<td>—</td><td>—</td>")+qs(d).map(q=>{const m=x?markQ(s,d,q):"—";return`<td class="${m==="✓"?"v":m==="⊘"?"a":m==="—"?"":"x"}">${m}</td>`}).join("")+"</tr>"});
    return h+`</table></div><div class="fleg">Letra abaixo do número = gabarito correto${g[k].some(s=>s.tipo==="adaptada")?" (regular/adaptada)":""} · ✓ acertou · letra em vermelho = alternativa marcada pelo aluno (errada) · BR em branco · 2× marcação dupla${anul[d].length?` · ⊘ anulada (${anul[d].map(q=>"Q"+q).join(", ")}); a nota é calculada sobre ${NV(d)} questões válidas`:""}</div></div>`}).join("")).join("")}},
 {id:"disc",ico:"📚",nome:"Desempenho por disciplina",desc:"Média e % de acerto por turma, dia e disciplina",fn:(o,C)=>{
@@ -907,7 +914,7 @@ function gerar(){
  ["bPr","bXl","bCs","bCp"].forEach(id=>$(id).disabled=true);$("rMsg").textContent="";
  if(!o.keys.length||(!o.ds.some(d=>C[d].n)&&rTipo!=="pend"&&rTipo!=="pres")){$("rOut").innerHTML='<div class="empty">Leia gabaritos na aba Correção para gerar relatórios.</div>';return}
  const r=t.fn(o,C),sc=(scopeOpts(1).find(x=>x[0]===rSel)||["",""])[1];
- Object.assign(r,{titulo:t.nome,escopo:sc+" · "+(o.ds.length>1?"Dias 1 e 2":"Dia "+o.ds[0])+(anTxt(o.ds)?" · anuladas: "+anTxt(o.ds):""),data:new Date().toLocaleDateString("pt-BR")});rep=r;
+ Object.assign(r,{titulo:t.nome,escopo:sc+profEsc(rSel,rTipo)+" · "+(o.ds.length>1?"Dias 1 e 2":"Dia "+o.ds[0])+(anTxt(o.ds)?" · anuladas: "+anTxt(o.ds):""),data:new Date().toLocaleDateString("pt-BR")});rep=r;
  const cell=c=>/^\d+%$/.test(c)?`<td class="hm" style="--h:${hue(parseInt(c)/100)}">${c}</td>`:`<td>${c}</td>`;
  if(t.html){$("rOut").innerHTML=t.html(o,C,r);["bPr","bXl","bCs","bCp"].forEach(id=>$(id).disabled=!r.rows.length);return}
   $("rOut").innerHTML=`<div class="rh"><b>${t.ico} ${r.titulo}</b><div class="mut">${ESC}</div><div class="mut">${r.escopo} · emitido em ${r.data}</div></div><div class="kpis">${r.kp.map(k=>kpi(k[0],k[1],"sm")).join("")}</div>`+
@@ -1224,6 +1231,15 @@ render();
 
 /* gabarito correto de cada questão (regular e, se houver, adaptada) para cabeçalhos de relatório */
 const gkL=(d,q,ad)=>CH.regular[d][q-1]+(ad?"/"+CH.adaptada[d][q-1]:"");
+
+/* professor responsável pela correção, por turma */
+const PROF={"5º ano A":"Priscila Oliveira","6º ano A":"Cássio","6º ano B":"Eliene","6º ano C":"Ana Cristina Guimarães","7º ano A":"Poliana","7º ano B":"Camila Miranda","7º ano C":"Alberto","8º ano A":"Everton","8º ano B":"Mônica","8º ano C":"Kellen","9º ano A":"Jean","9º ano B":"Paula","9º ano C":"João Paulo"};
+const profEsc=(k,t)=>t==="lista"||t==="ficha"?"":PROF[k]?" · Prof. "+PROF[k]:k==="8*"?" · Profs.: Everton (8º A), Mônica (8º B), Kellen (8º C)":"";
+(function(){
+ const g=id=>document.getElementById(id);
+ function pt(){const v=g("turma").value;g("profT").innerHTML=v&&PROF[v]?"👩‍🏫 Professor(a) responsável pela correção: <b>"+PROF[v]+"</b>":""}
+ const _r=render;render=function(){_r.apply(this,arguments);pt()};pt();
+})();
 </script>
 </body>
 </html>
