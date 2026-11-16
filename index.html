@@ -289,6 +289,16 @@ button:active,.btn:active{transform:scale(.98)}
 .ausR{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd);font-size:14px;flex-wrap:wrap}
 .ausR .bt{display:flex;gap:5px;flex-wrap:wrap}.ausR button{min-height:34px}
 #foco .fst .sm{background:#fff;color:#7a4b00;min-height:32px;padding:4px 10px}
+
+/* ===== v2: aba Observações ===== */
+button[onclick="transfSel()"],#bAus{display:none!important}
+.tabs{overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tabs button,.tabs button:first-child{flex:1 0 auto;padding:10px 12px}
+#tabO{max-width:760px}
+.dlg{position:fixed;inset:0;background:rgba(8,12,20,.75);display:none;align-items:center;justify-content:center;z-index:13;padding:14px}
+.dlg>div{background:var(--card);color:var(--tx);border-radius:18px;max-width:420px;width:100%;padding:20px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+.dlg h3{margin:0 0 8px;font-size:18px}.dlg .bt{display:flex;gap:8px;margin-top:16px}.dlg .bt button{flex:1}
+.obh{background:var(--priS);border-radius:12px;padding:10px 12px;font-size:13px;margin:10px 0 0}
 </style>
 </head>
 <body class="wide">
@@ -309,6 +319,7 @@ button:active,.btn:active{transform:scale(.98)}
 <div class="row" style="margin-top:12px">
 <label class="field" style="flex:1;min-width:210px">Trocar aluno<select id="selA" style="width:100%"></select></label>
 <label class="field">Prova<select id="selT"><option value="regular">regular</option><option value="adaptada">adaptada</option></select></label><button type="button" class="ghost" style="align-self:flex-end" onclick="transfSel()">⇄ Transferido</button><button type="button" class="ghost" id="bAus" style="align-self:flex-end">🚫 Ausente</button></div>
+<div class="mut" style="margin-top:8px;font-size:12.5px">Aluno ausente ou transferido? Registre na aba <a href="#" id="goObs" style="color:var(--pri);font-weight:700">🗒️ Observações</a>.</div>
 <div id="prog" class="mut" style="margin:10px 0 2px"></div><div class="bar" style="width:100%;margin:0 0 8px"><i id="progb" style="width:0"></i></div>
 <div id="busy" class="mut" style="margin:0 0 6px;font-weight:600"></div>
 <div class="row" id="capBar"><label class="btn" for="fc" style="flex:1">📷 Foto</label><input id="fc" type="file" accept="image/*" capture="environment">
@@ -1156,6 +1167,56 @@ render();
   R.sort((x,y)=>x[0].localeCompare(y[0],"pt")||x[1]-y[1]||x[2].localeCompare(y[2],"pt"));
   return{kp:[[ok,"realizaram tudo"],[R.length-ok,"com prova pendente"],[au,"ausências (aluno/dia)"],[sl,"sem leitura (não marcados ausentes)"]],head:["Turma","Aluno",...o.ds.map(d=>"Dia "+d),"Situação"],rows:R.map(r=>r[3])}}});
  drawRT();render();
+})();
+
+/* ---------- v2: aba Observações (ausente / transferido com confirmação) ---------- */
+(function(){
+ const g=id=>document.getElementById(id);
+ g("tbR").insertAdjacentHTML("afterend",'<button id="tbO" type="button">🗒️ Observações</button>');
+ g("tabR").insertAdjacentHTML("afterend",`<main id="tabO" hidden><section class="step"><div class="sh"><span class="num">🗒️</span><div><h2>Observações</h2><p class="sub">Registre alunos ausentes ou transferidos · turma <b id="obT">—</b></p></div></div>
+<div class="row"><label class="field" style="flex:1;min-width:220px">Aluno<select id="obA" style="width:100%"></select></label>
+<label class="field">Ocorrência<select id="obK"><option value="aus">🚫 Ausente</option><option value="tr">⇄ Transferido</option></select></label>
+<label class="field" id="obDw">Dia da prova<select id="obD"><option value="1">Dia 1</option><option value="2">Dia 2</option><option value="3">Dias 1 e 2</option></select></label></div>
+<button type="button" class="big" id="obGo" style="margin-top:12px">Registrar</button><div id="obMsg" class="mut" style="margin-top:8px;text-align:center" aria-live="polite"></div>
+<div class="obh"><b>Ausente</b>: o aluno não precisa de folha naquele dia e entra na lista de nova chamada. <b>Transferido</b>: sai da correção, das notas, das listas e dos relatórios. Os dois podem ser desfeitos nas listas abaixo.</div></section>
+<section class="step" id="obL"></section></main>
+<div class="dlg" id="obM"><div><h3 id="obMt"></h3><div id="obMb" class="mut"></div><div class="bt"><button type="button" class="ghost" id="obMn">Cancelar</button><button type="button" id="obMy">Confirmar</button></div></div></div>`);
+ const L=g("obL");L.appendChild(g("ausBox"));L.appendChild(g("trBox"));g("ausBox").open=true;
+ let ok=null;
+ const conf=(t,b,fn)=>{g("obMt").innerHTML=t;g("obMb").innerHTML=b;ok=fn;g("obM").style.display="flex";g("obMy").focus()};
+ const fecha=()=>{g("obM").style.display="none";ok=null};
+ g("obMn").onclick=fecha;g("obM").onclick=e=>{if(e.target.id==="obM")fecha()};
+ g("obMy").onclick=()=>{const f=ok;fecha();if(f)f()};
+ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&g("obM").style.display==="flex")fecha()});
+ const isA=(i,d)=>!!(alunos[i]&&alunos[i].aus&&alunos[i].aus[d])&&!folhaDe(d,i);
+ // marcar ausência pela lista também pede confirmação
+ const _a=window.ausTog;
+ window.ausTog=function(i,d){const a=alunos[i];if(!a)return;
+  if(folhaDe(d,i)||isA(i,d))return _a(i,d);
+  conf("Marcar como ausente?","<b>"+eH(a.nome)+"</b> ficará ausente no <b>Dia "+d+"</b> e entrará na lista de nova chamada.",()=>_a(i,d))};
+ function fill(){const A=g("obA"),v=A.value;g("obT").textContent=cur||"—";
+  A.innerHTML=nAtivos()?alunos.map((a,i)=>a.transf?"":`<option value="${i}">${eH(a.nome)}${[1,2].filter(d=>isA(i,d)).map(d=>" · ausente D"+d).join("")}</option>`).join(""):'<option value="">Carregue a lista primeiro</option>';
+  if(v&&[...A.options].some(o=>o.value===v))A.value=v}
+ g("obK").onchange=()=>{g("obDw").hidden=g("obK").value!=="aus"};
+ g("obGo").onclick=()=>{const i=+g("obA").value,a=alunos[i],m=g("obMsg");m.textContent="";
+  if(!a||!nAtivos()){m.textContent="Escolha uma turma e carregue a lista de alunos na aba Correção.";return}
+  const nome="<b>"+eH(a.nome)+"</b>";
+  if(g("obK").value==="tr"){
+   conf("Marcar como transferido?",nome+" sai da correção, das notas, das listas e dos relatórios."+([1,2].some(d=>folhaDe(d,i))?" A folha já lida fica guardada.":"")+" Dá para reativar depois.",()=>{
+    const c=window.confirm;window.confirm=()=>true;try{transf(i,true)}finally{window.confirm=c}
+    m.innerHTML='<span class="ok">✓ '+eH(a.nome)+' marcado como transferido.</span>'});return}
+  const sel=+g("obD").value,ds=sel===3?[1,2]:[sel],livres=ds.filter(d=>!folhaDe(d,i)&&!isA(i,d)),com=ds.filter(d=>folhaDe(d,i));
+  if(!livres.length){m.textContent=com.length?"Esse aluno já tem folha lida no(s) dia(s) escolhido(s). Apague a folha antes de marcar ausência.":"Esse aluno já está ausente no(s) dia(s) escolhido(s).";return}
+  conf("Marcar como ausente?",nome+" ficará ausente no "+(livres.length>1?"<b>Dia 1 e Dia 2</b>":"<b>Dia "+livres[0]+"</b>")+" e entrará na lista de nova chamada.",()=>{
+   livres.forEach(d=>_a(i,d));m.innerHTML='<span class="ok">✓ '+eH(a.nome)+' marcado como ausente.</span>'})};
+ const _r=render;render=function(){_r.apply(this,arguments);fill()};
+ const _aba=aba;
+ aba=function(n){const o=g("tabO"),b=g("tbO");
+  if(n===3){["tabC","tabP","tabR"].forEach(id=>g(id).hidden=true);o.hidden=false;["tbC","tbP","tbR"].forEach(id=>g(id).classList.remove("on"));b.classList.add("on");document.body.classList.remove("wide");fill();return}
+  o.hidden=true;b.classList.remove("on");_aba.apply(this,arguments)};
+ g("tbO").onclick=()=>{aba(3);window.scrollTo({top:0})};
+ g("goObs").onclick=e=>{e.preventDefault();aba(3);window.scrollTo({top:0})};
+ fill();
 })();
 </script>
 </body>
